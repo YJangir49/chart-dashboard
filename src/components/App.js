@@ -3,6 +3,7 @@ import CustomBar from "./charts/CustomBar";
 import CustomComposed from "./charts/CustomComposed";
 import CustomGroupBar from "./charts/GroupBar";
 import HorizontalBar from "./charts/HorizontalBar";
+import CustomLine from "./charts/CustomLine";
 
 const App = () => {
   return (
@@ -18,6 +19,9 @@ const App = () => {
       </div>
       <div className="p-4">
         <HorizontalBar />
+      </div>
+      <div className="p-4">
+        <CustomLine />
       </div>
     </div>
   );
