@@ -4,10 +4,14 @@ import CustomComposed from "./charts/CustomComposed";
 import CustomGroupBar from "./charts/GroupBar";
 import HorizontalBar from "./charts/HorizontalBar";
 import CustomLine from "./charts/CustomLine";
+import CustomPie from "./charts/CustomPie";
 
 const App = () => {
   return (
     <div className="bg-black flex flex-wrap justify-center ">
+      <div className="p-4">
+        <CustomPie />
+      </div>
       <div className="p-4">
         <CustomBar />
       </div>

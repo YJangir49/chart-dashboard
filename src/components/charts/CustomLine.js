@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CartesianGrid, XAxis, YAxis, Line, LineChart } from "recharts";
 
 const getData = (hours) => {
@@ -32,7 +32,7 @@ const CustomYAxisLabel = ({ x, y, payload }) => {
 };
 
 const CustomLine = () => {
-  const [data, setData] = useState(getData(8));
+  const [data] = useState(getData(8));
 
   return (
     <LineChart width={900} height={300} data={data}>
