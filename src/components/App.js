@@ -1,6 +1,7 @@
 import React from "react";
 import CustomBar from "./charts/CustomBar";
 import CustomComposed from "./charts/CustomComposed";
+import CustomGroupBar from "./charts/GroupBar";
 
 const App = () => {
   return (
@@ -11,6 +12,9 @@ const App = () => {
       </div>
       <div className="p-4">
         <CustomComposed />
+      </div>
+      <div className="p-4">
+        <CustomGroupBar />
       </div>
     </div>
   );
