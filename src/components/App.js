@@ -2,11 +2,11 @@ import React from "react";
 import CustomBar from "./charts/CustomBar";
 import CustomComposed from "./charts/CustomComposed";
 import CustomGroupBar from "./charts/GroupBar";
+import HorizontalBar from "./charts/HorizontalBar";
 
 const App = () => {
   return (
-    <div className="h-screen w-screen bg-black ">
-      <h1>Welcome to dashboaard</h1>
+    <div className="bg-black flex flex-wrap justify-center ">
       <div className="p-4">
         <CustomBar />
       </div>
@@ -15,6 +15,9 @@ const App = () => {
       </div>
       <div className="p-4">
         <CustomGroupBar />
+      </div>
+      <div className="p-4">
+        <HorizontalBar />
       </div>
     </div>
   );

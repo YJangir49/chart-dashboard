@@ -75,7 +75,6 @@ const CustomXAxisLabel = ({ x, y, payload }) => {
 
 const CustomYAxisLabel = ({ x, y, payload }) => {
   // You can customize the appearance of the label here
-  console.log(payload);
   return (
     <text x={x} y={y} dx={-16} fill="white" fontSize={12} textAnchor="middle">
       {payload.value}
@@ -84,7 +83,6 @@ const CustomYAxisLabel = ({ x, y, payload }) => {
 };
 
 const CustomLabel = ({ x, y, value, width, height, index }) => {
-  console.log("x: ", x, "y: ", y, "width: ", width, "height:", height);
   const fontSize = 10;
   const labelHeight = 14;
   const labelWidth = width * 0.8;

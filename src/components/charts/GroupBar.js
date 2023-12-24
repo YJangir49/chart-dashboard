@@ -49,7 +49,6 @@ const CustomYAxisLabel = ({ x, y, payload }) => {
 };
 
 const CustomLabel = ({ x, y, value, width, height, index }) => {
-  console.log("x: ", x, "y: ", y, "width: ", width, "height:", height);
   const fontSize = 10;
   const labelHeight = 14;
   const labelWidth = width * 0.8;
