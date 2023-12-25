@@ -1,9 +1,9 @@
-import CustomBar from "../charts/CustomBar";
-import CustomLine from "../charts/CustomLine";
-import CustomPie from "../charts/CustomPie";
+import GroupBar from "../charts/GroupBar";
+import HorizontalBar from "../charts/HorizontalBar";
+import CustomComposed from "../charts/CustomComposed";
+import CustomTables from "../ui/CustomTables";
+import LogoSection from "../ui/LogoSection";
 import CustomContainer from "../reusable/CustomContainer";
-import CustomTables from "./CustomTables";
-import LogoSection from "./LogoSection";
 
 const batchData = [
   { id: "1", item1: "Mixer-1", item2: "0", item3: "0", item4: "120000" },
@@ -44,7 +44,7 @@ const shiftData = [
   },
 ];
 
-export default function PageLayout() {
+export default function TGM() {
   return (
     <>
       <div className="w-full h-screen bg-[#666668]">
@@ -53,17 +53,19 @@ export default function PageLayout() {
             <LogoSection />
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419]">
-            <CustomContainer title="hello">
-              <CustomPie />
+            <CustomContainer title="Production" subTitle={"(Nos)"}>
+              <HorizontalBar />
             </CustomContainer>
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]">
-            <CustomContainer title="hello">
-              <CustomLine />
+            <CustomContainer title="Power" subTitle={"(KWH)"}>
+              <GroupBar />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-gray-400">
-            8
+          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]">
+            <CustomContainer title="Air" subTitle={"(CFM)"}>
+              <HorizontalBar />
+            </CustomContainer>
           </div>
           <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm">
             <CustomTables
@@ -76,8 +78,8 @@ export default function PageLayout() {
             <CustomTables tableData={shiftData} tableTitle="Shift Parameters" />
           </div>
           <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]">
-            <CustomContainer title="hello">
-              <CustomBar />
+            <CustomContainer title="Daily Production & OEE">
+              <CustomComposed />
             </CustomContainer>
           </div>
           <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-pink-300">

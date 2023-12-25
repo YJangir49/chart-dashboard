@@ -69,7 +69,7 @@ const CustomLabel = ({ x, y, value, width, height }) => {
 
 const HorizontalBar = () => {
   return (
-    <ResponsiveContainer width={900} height={300}>
+    <ResponsiveContainer width={"100%"} height={"100%"}>
       <BarChart data={data} layout="vertical">
         <XAxis type="number" tick={<CustomXAxisLabel />} />
         <YAxis dataKey="name" type="category" tick={<CustomYAxisLabel />} />

@@ -7,6 +7,7 @@ import {
   YAxis,
   LabelList,
   Rectangle,
+  ResponsiveContainer,
 } from "recharts";
 
 const data = [
@@ -74,51 +75,52 @@ const CustomLabel = ({ x, y, value, width, height, index }) => {
   );
 };
 
-const CustomGroupBar = () => {
+const GroupBar = () => {
   return (
-    <BarChart
-      width={900}
-      height={300}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-      style={{
-        backgroundColor: "black",
-      }}
-    >
-      <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
-      <XAxis dataKey="name" tick={<CustomXAxisLabel />} />
-      <YAxis tick={<CustomYAxisLabel />} padding={{ top: 30 }} />
-      <Bar
-        dataKey="value1"
-        fill="#418cf1"
-        activeBar={<Rectangle fill="pink" stroke="#blue" />}
-        type="number"
-      >
-        <LabelList dataKey="value1" position="top" content={<CustomLabel />} />
-      </Bar>
-      <Bar
-        dataKey="value2"
-        fill="yellow"
-        activeBar={<Rectangle fill="pink" stroke="#blue" />}
-        type="number"
-      >
-        <LabelList dataKey="value2" position="top" content={<CustomLabel />} />
-      </Bar>
-      <Bar
-        dataKey="value3"
-        fill="red"
-        activeBar={<Rectangle fill="pink" stroke="#blue" />}
-        type="number"
-      >
-        <LabelList dataKey="value3" position="top" content={<CustomLabel />} />
-      </Bar>
-    </BarChart>
+    <ResponsiveContainer width={"100%"} height={"100%"}>
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
+        <XAxis dataKey="name" tick={<CustomXAxisLabel />} />
+        <YAxis tick={<CustomYAxisLabel />} padding={{ top: 30 }} />
+        <Bar
+          dataKey="value1"
+          fill="#418cf1"
+          activeBar={<Rectangle fill="pink" stroke="#blue" />}
+          type="number"
+        >
+          <LabelList
+            dataKey="value1"
+            position="top"
+            content={<CustomLabel />}
+          />
+        </Bar>
+        <Bar
+          dataKey="value2"
+          fill="yellow"
+          activeBar={<Rectangle fill="pink" stroke="#blue" />}
+          type="number"
+        >
+          <LabelList
+            dataKey="value2"
+            position="top"
+            content={<CustomLabel />}
+          />
+        </Bar>
+        <Bar
+          dataKey="value3"
+          fill="red"
+          activeBar={<Rectangle fill="pink" stroke="#blue" />}
+          type="number"
+        >
+          <LabelList
+            dataKey="value3"
+            position="top"
+            content={<CustomLabel />}
+          />
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 
-export default CustomGroupBar;
+export default GroupBar;
