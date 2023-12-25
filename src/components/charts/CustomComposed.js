@@ -8,6 +8,7 @@ import {
   LabelList,
   Rectangle,
   Line,
+  ResponsiveContainer,
 } from "recharts";
 
 const data = [
@@ -117,48 +118,52 @@ const CustomLineLabel = ({ x, y, value }) => {
 
 const CustomComposed = () => {
   return (
-    <ComposedChart
-      width={900}
-      height={300}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-      style={{
-        backgroundColor: "black",
-      }}
-    >
-      <Bar
-        dataKey="pc"
-        fill="#418cf1"
-        activeBar={<Rectangle fill="pink" stroke="#blue" />}
-        type="number"
-        yAxisId="bar"
+    <ResponsiveContainer width={"100%"} height={"100%"}>
+      <ComposedChart
+        data={data}
+        // margin={{
+        //   top: 5,
+        //   right: 30,
+        //   left: 20,
+        //   bottom: 5,
+        // }}
+        // style={{
+        //   backgroundColor: "black",
+        // }}
       >
-        <LabelList dataKey="pc" position="top" content={<CustomLabel />} />
-      </Bar>
-      <Line type="monotone" dataKey="percent" stroke="#ff7300" yAxisId="line">
-        <LabelList
-          dataKey="percent"
-          position="top"
-          content={<CustomLineLabel />}
+        <Bar
+          dataKey="pc"
+          fill="#418cf1"
+          activeBar={<Rectangle fill="pink" stroke="#blue" />}
+          type="number"
+          yAxisId="bar"
+        >
+          <LabelList dataKey="pc" position="top" content={<CustomLabel />} />
+        </Bar>
+        <Line type="monotone" dataKey="percent" stroke="#ff7300" yAxisId="line">
+          <LabelList
+            dataKey="percent"
+            position="top"
+            content={<CustomLineLabel />}
+          />
+        </Line>
+        <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
+        <XAxis dataKey="name" tick={<CustomXAxisLabel />} />
+        <YAxis
+          yAxisId="bar"
+          tick={<CustomYAxisLabel />}
+          padding={{ top: 50 }}
         />
-      </Line>
-      <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
-      <XAxis dataKey="name" tick={<CustomXAxisLabel />} />
-      <YAxis yAxisId="bar" tick={<CustomYAxisLabel />} padding={{ top: 50 }} />
-      <YAxis
-        yAxisId="line"
-        tick={<CustomYAxisLabel />}
-        orientation="right"
-        padding={{ top: 20 }}
-        hide
-        domain={[0, Math.max(data.map((o) => o.percent))]}
-      />
-    </ComposedChart>
+        <YAxis
+          yAxisId="line"
+          tick={<CustomYAxisLabel />}
+          orientation="right"
+          padding={{ top: 20 }}
+          hide
+          domain={[0, Math.max(data.map((o) => o.percent))]}
+        />
+      </ComposedChart>
+    </ResponsiveContainer>
   );
 };
 

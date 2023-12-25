@@ -11,7 +11,7 @@ const COLORS = ["green", "yellow", "red"];
 
 const CustomPie = () => {
   return (
-    <ResponsiveContainer width={900} height={300}>
+    <ResponsiveContainer width={"100%"} height={"100%"}>
       <PieChart>
         <Pie
           data={data}
@@ -19,7 +19,7 @@ const CustomPie = () => {
           cy="50%"
           labelLine={false}
           label
-          outerRadius={80}
+          outerRadius={55}
           fill="#8884d8"
           dataKey="value"
           paddingAngle={5}
