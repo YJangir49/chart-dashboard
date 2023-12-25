@@ -1,41 +1,25 @@
 import React from "react";
-import CustomBar from "./charts/CustomBar";
-import CustomComposed from "./charts/CustomComposed";
-import CustomGroupBar from "./charts/GroupBar";
-import HorizontalBar from "./charts/HorizontalBar";
-import CustomLine from "./charts/CustomLine";
-import CustomPie from "./charts/CustomPie";
-import PageLayout from "./ui/PageLayout";
-import Dashboard from "./ui/Dashboard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Dashboard from "./pages/Dashboard";
+import PerformanceDashboard from "./pages/PerformanceDB";
+import QualityDashboard from "./pages/QualityDB";
+import TGM1 from "./pages/TGM1";
+import TGM2 from "./pages/TGM2";
+import TGM3 from "./pages/TGM3";
 
 const App = () => {
   return (
-    <>
-      {/* <PageLayout /> */}
-      <Dashboard />
-    </>
-    // <div className="bg-black flex flex-wrap justify-center ">
-
-    /* <div className="p-4">
-        <CustomPie />
-      </div>
-      <div className="p-4">
-        <CustomBar />
-      </div>
-      <div className="p-4">
-        <CustomComposed />
-      </div>
-      <div className="p-4">
-        <CustomGroupBar />
-      </div>
-      <div className="p-4">
-        <HorizontalBar />
-      </div>
-      <div className="p-4">
-        <CustomLine />
-      </div> */
-
-    // </div>
+    <BrowserRouter basename="/">
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/performance-db" element={<PerformanceDashboard />} />
+        <Route path="/quality-db" element={<QualityDashboard />} />
+        <Route path="/tgm-1" element={<TGM1 />} />
+        <Route path="/tgm-2" element={<TGM2 />} />
+        <Route path="/tgm-3" element={<TGM3 />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

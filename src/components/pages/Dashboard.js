@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Dashboard() {
   return (
     <div className="">
@@ -26,11 +28,21 @@ export default function Dashboard() {
 
       <div>
         <ul className="ml-6 flex gap-4 cursor-pointer">
-          <li className="bg-cyan-300 p-4">TGM - 1</li>
-          <li className="bg-pink-300 p-4">TGM - 2</li>
-          <li className="bg-violet-300 p-4">TGM - 3</li>
-          <li className="bg-orange-300 p-4">performance Dashboard</li>
-          <li className="bg-green-300 p-4">Quality Dashboard</li>
+          <Link to="/tgm-3">
+            <li className="bg-cyan-300 p-4">TGM - 1</li>
+          </Link>
+          <Link to="/tgm-2">
+            <li className="bg-pink-300 p-4">TGM - 2</li>
+          </Link>
+          <Link to="/tgm-3">
+            <li className="bg-violet-300 p-4">TGM - 3</li>
+          </Link>
+          <Link to="/performance-db">
+            <li className="bg-orange-300 p-4">Performance Dashboard</li>
+          </Link>
+          <Link to="/quality-db">
+            <li className="bg-green-300 p-4">Quality Dashboard</li>
+          </Link>
         </ul>
       </div>
     </div>

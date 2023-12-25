@@ -1,5 +1,4 @@
 import CustomBar from "../charts/CustomBar";
-import CustomComposed from "../charts/CustomComposed";
 import CustomLine from "../charts/CustomLine";
 import CustomPie from "../charts/CustomPie";
 import CustomTables from "./CustomTables";
@@ -48,7 +47,7 @@ export default function PageLayout() {
   return (
     <>
       <div className="w-full h-screen">
-        <div className="grid grid-cols-11 grid-rows-8 gap-4 h-[730px]">
+        <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-2 bg-red-400">
             <LogoSection />
           </div>
@@ -73,7 +72,6 @@ export default function PageLayout() {
           </div>
           <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]">
             <CustomBar />
-            {/* <CustomComposed /> */}
           </div>
           <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-pink-300">
             14
@@ -92,7 +90,3 @@ export default function PageLayout() {
     </>
   );
 }
-
-// function GridItem(){
-
-// }
