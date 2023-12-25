@@ -5,11 +5,18 @@ import CustomGroupBar from "./charts/GroupBar";
 import HorizontalBar from "./charts/HorizontalBar";
 import CustomLine from "./charts/CustomLine";
 import CustomPie from "./charts/CustomPie";
+import PageLayout from "./ui/PageLayout";
+import Dashboard from "./ui/Dashboard";
 
 const App = () => {
   return (
-    <div className="bg-black flex flex-wrap justify-center ">
-      <div className="p-4">
+    <>
+      {/* <PageLayout /> */}
+      <Dashboard />
+    </>
+    // <div className="bg-black flex flex-wrap justify-center ">
+
+    /* <div className="p-4">
         <CustomPie />
       </div>
       <div className="p-4">
@@ -26,8 +33,9 @@ const App = () => {
       </div>
       <div className="p-4">
         <CustomLine />
-      </div>
-    </div>
+      </div> */
+
+    // </div>
   );
 };
 

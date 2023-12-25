@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { CartesianGrid, XAxis, YAxis, Line, LineChart } from "recharts";
+import {
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+} from "recharts";
 
 const getData = (hours) => {
   const data = [];
@@ -32,29 +39,31 @@ const CustomYAxisLabel = ({ x, y, payload }) => {
 };
 
 const CustomLine = () => {
-  const [data] = useState(getData(8));
+  const [data] = useState(getData(10));
 
   return (
-    <LineChart width={900} height={300} data={data}>
-      <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
-      <XAxis
-        dataKey="name"
-        tick={<CustomXAxisLabel />}
-        ticks={[8, 7, 6, 5, 4, 3, 2, 1, 0]}
-      />
-      <YAxis
-        tick={<CustomYAxisLabel />}
-        ticks={[100, 80, 60, 40, 20, 0]}
-        padding={{ top: 30 }}
-      />
-      <Line
-        dataKey="value"
-        stroke="#4de643"
-        strokeWidth={2}
-        type="number"
-        dot={null}
-      />
-    </LineChart>
+    <ResponsiveContainer width={"100%"} height={"100%"}>
+      <LineChart data={data}>
+        <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
+        <XAxis
+          dataKey="name"
+          tick={<CustomXAxisLabel />}
+          ticks={[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]}
+        />
+        <YAxis
+          tick={<CustomYAxisLabel />}
+          ticks={[100, 80, 60, 40, 20, 0]}
+          padding={{ top: 30 }}
+        />
+        <Line
+          dataKey="value"
+          stroke="#4de643"
+          strokeWidth={2}
+          type="number"
+          dot={null}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 
