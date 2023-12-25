@@ -49,7 +49,7 @@ export default function PageLayout() {
     <>
       <div className="w-full h-screen bg-[#666668]">
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
-          <div className="col-span-3 row-span-2 bg-red-400">
+          <div className="col-span-3 row-span-2">
             <LogoSection />
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419]">
