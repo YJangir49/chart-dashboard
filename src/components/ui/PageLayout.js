@@ -5,6 +5,7 @@ import CustomGaugeChart from "../charts/GauzeChart";
 import CustomContainer from "../reusable/CustomContainer";
 import CustomTables from "./CustomTables";
 import LogoSection from "./LogoSection";
+import SwitchBoard from "./SwitchBoard";
 
 const batchData = [
   { id: "1", item1: "Mixer-1", item2: "0", item3: "0", item4: "120000" },
@@ -48,23 +49,25 @@ const shiftData = [
 export default function PageLayout() {
   return (
     <>
-      <div className="w-full h-screen bg-[#666668]">
+      <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500">
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-2">
             <LogoSection />
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419]">
-            <CustomContainer title="hello">
+            <CustomContainer title="Sound" subTitle="dB">
               <CustomPie />
             </CustomContainer>
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]">
-            <CustomContainer title="hello">
+            <CustomContainer title="dB Meter-1" subTitle="last 8 hours">
               <CustomLine />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-gray-400">
-            8
+          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]">
+            <CustomContainer title="Bag-Filter">
+              <SwitchBoard />
+            </CustomContainer>
           </div>
           <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm">
             <CustomTables
@@ -77,7 +80,7 @@ export default function PageLayout() {
             <CustomTables tableData={shiftData} tableTitle="Shift Parameters" />
           </div>
           <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]">
-            <CustomContainer title="hello">
+            <CustomContainer title="Power Consumption" subTitle="(KWH/ton)">
               <CustomBar />
             </CustomContainer>
           </div>
