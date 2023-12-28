@@ -8,10 +8,12 @@ const CustomPie = ({ data, title, unit }) => {
     <Chart
       chartType="PieChart"
       data={[[title, unit], ...Object.entries(data)]}
+      width={"100%"}
+      height={"100%"}
       options={{
         chartArea: {
           left: "15%",
-          top: 10,
+          top: 4,
           width: "100%",
           height: "88%",
         },
