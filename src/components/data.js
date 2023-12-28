@@ -404,8 +404,8 @@ export const tgmData = {
           Value: 0,
         },
       ],
-      //      Air: 0,
-      //      Speed: 0,
+      Air: 0,
+      Speed: 0,
     },
     "Shift-B": {
       Production: [
@@ -452,8 +452,8 @@ export const tgmData = {
           Value: 0,
         },
       ],
-      //      Air: 0,
-      //      Speed: 0,
+      Air: 0,
+      Speed: 0,
     },
     "Shift-C": {
       Production: [
@@ -500,11 +500,11 @@ export const tgmData = {
           Value: 0,
         },
       ],
-      //      Air: 0,
-      //      Speed: 0,
+      Air: 0,
+      Speed: 60,
     },
-    // OEE: 84.01,
-    // OR: 0,
+    OEE: 84.01,
+    OR: 0,
   },
 };
 

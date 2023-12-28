@@ -10,6 +10,7 @@ import { converter } from "../../utils/helper";
 
 export default function TGM() {
   const data = converter(tgmData.Shift);
+  console.log(data);
   return (
     <>
       <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500">
@@ -19,14 +20,14 @@ export default function TGM() {
               <div className="flex justify-between px-2 text-sm mt-5">
                 <p>OEE</p>
                 <div className="flex w-full bg-black justify-end items-center ml-16">
-                  <p className="digital-font text-right">{tgmData.Shift.OEE}</p>
+                  <p className="digital-font text-right">{data.OEE}</p>
                   <span className="text-[9px] text-white">%</span>
                 </div>
               </div>
               <div className="flex justify-between px-2 text-sm mt-2">
                 <p className="pr-[6px]">OR</p>
                 <div className="flex w-full bg-black justify-end items-center ml-16">
-                  <p className="digital-font text-right">{tgmData.Shift.OR}</p>
+                  <p className="digital-font text-right">{data.OR}</p>
                 </div>
               </div>
             </LogoSection>
@@ -49,11 +50,10 @@ export default function TGM() {
           <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]">
             <CustomContainer title="Air" subTitle={"(CFM)"}>
               <HorizontalBar
-                data={[
-                  { name: "Shift-A", value: 0 },
-                  { name: "Shift-B", value: 0 },
-                  { name: "Shift-C", value: 0 },
-                ]}
+                data={Object.entries(data.Air).map((entry) => ({
+                  name: entry[0],
+                  value: entry[1],
+                }))}
               />
             </CustomContainer>
           </div>
@@ -70,9 +70,9 @@ export default function TGM() {
           </div>
           <div className="col-span-3 row-span-2 col-start-4 row-start-7 bg-[#151419]">
             <GauzeWithHeader
-              title={"Power"}
-              subTitle={"KWH"}
-              value={370}
+              title={"Speed (Shift-A)"}
+              subTitle={"Per/min"}
+              value={data.Speed["Shift-A"]}
               redFrom={200}
               redTo={500}
               yellowFrom={100}
@@ -83,9 +83,9 @@ export default function TGM() {
           </div>
           <div className="col-span-2 row-span-2 col-start-7 row-start-7 bg-[#151419]">
             <GauzeWithHeader
-              title={"Power"}
-              subTitle={"KWH"}
-              value={370}
+              title={"Speed (Shift-B)"}
+              subTitle={"Per/min"}
+              value={data.Speed["Shift-B"]}
               redFrom={200}
               redTo={500}
               yellowFrom={100}
@@ -96,9 +96,9 @@ export default function TGM() {
           </div>
           <div className="col-span-3 row-span-2 col-start-9 row-start-7 bg-[#151419]">
             <GauzeWithHeader
-              title={"Power"}
-              subTitle={"KWH"}
-              value={370}
+              title={"Speed (Shift-C)"}
+              subTitle={"Per/min"}
+              value={data.Speed["Shift-C"]}
               redFrom={200}
               redTo={500}
               yellowFrom={100}

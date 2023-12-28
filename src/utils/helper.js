@@ -4,6 +4,7 @@ export function reverseConverter(inputObject) {
   // Iterate over each shift in the inputObject
   Object.keys(inputObject).forEach((shift) => {
     // Iterate over each category (Power, Steam, Air, Water) in the current shift
+
     Object.keys(inputObject[shift]).forEach((category) => {
       // If the category is not already a key in resultObject, create an empty object for it
       if (!resultObject[category]) {
@@ -24,23 +25,34 @@ export function converter(inputData) {
   // Iterate over each shift in the inputData
   Object.keys(inputData).forEach((shift) => {
     // Iterate over each category (Production, StopTime) in the current shift
-    Object.keys(inputData[shift]).forEach((category) => {
-      // If the category is not already a key in resultData, create an empty object for it
-      if (!resultData[category]) {
-        resultData[category] = {};
-      }
-
-      // Iterate over each item in the current category
-      inputData[shift][category].forEach((item) => {
-        // If the item key is not already a key in resultData[category], create an empty object for it
-        if (!resultData[category][item.Key]) {
-          resultData[category][item.Key] = {};
+    if (typeof inputData[shift] !== "object") {
+      resultData[shift] = inputData[shift];
+    } else {
+      Object.keys(inputData[shift]).forEach((category) => {
+        // If the category is not already a key in resultData, create an empty object for it
+        if (!resultData[category]) {
+          resultData[category] = {};
         }
+        if (!Array.isArray(inputData[shift][category])) {
+          if (!resultData[category]) {
+            resultData[category] = {};
+          } else {
+            resultData[category][shift] = inputData[shift][category];
+          }
+        } else {
+          // Iterate over each item in the current category
+          inputData[shift][category].forEach((item) => {
+            // If the item key is not already a key in resultData[category], create an empty object for it
+            if (!resultData[category][item.Key]) {
+              resultData[category][item.Key] = {};
+            }
 
-        // Assign the value of the current shift to resultData[category][item.Key]
-        resultData[category][item.Key][shift] = item.Value;
+            // Assign the value of the current shift to resultData[category][item.Key]
+            resultData[category][item.Key][shift] = item.Value;
+          });
+        }
       });
-    });
+    }
   });
 
   return resultData;

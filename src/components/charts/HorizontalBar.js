@@ -61,7 +61,6 @@ const CustomLabel = ({ x, y, value, width, height }) => {
 };
 
 const HorizontalBar = ({ data }) => {
-  console.log(data);
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <BarChart data={data} layout="vertical">
