@@ -1,20 +1,13 @@
 import React from "react";
 import { Chart } from "react-google-charts";
 
-export const data = [
-  ["Sound", "db"],
-  ["Meter 1", 45],
-  ["Meter 2", 54],
-  ["Meter 3", 80],
-];
-
 const COLORS = ["green", "#e1ad01", "red"];
 
-const CustomPie = () => {
+const CustomPie = ({ data, title, unit }) => {
   return (
     <Chart
       chartType="PieChart"
-      data={data}
+      data={[[title, unit], ...Object.entries(data)]}
       options={{
         chartArea: {
           left: "15%",

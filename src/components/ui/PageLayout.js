@@ -6,6 +6,7 @@ import GauzeWithHeader from "../reusable/GauzeWithHeader";
 import CustomTables from "./CustomTables";
 import LogoSection from "./LogoSection";
 import SwitchBoard from "./SwitchBoard";
+import { tpUtilityConstant } from "../data";
 
 const batchData = [
   { id: "1", item1: "Mixer-1", item2: "0", item3: "0", item4: "120000" },
@@ -56,7 +57,11 @@ export default function PageLayout() {
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419]">
             <CustomContainer title="Sound" subTitle="dB">
-              <CustomPie />
+              <CustomPie
+                data={tpUtilityConstant.Sound}
+                title="Sound"
+                unit={"db"}
+              />
             </CustomContainer>
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]">
@@ -66,7 +71,7 @@ export default function PageLayout() {
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]">
             <CustomContainer title="Bag-Filter">
-              <SwitchBoard />
+              <SwitchBoard data={tpUtilityConstant.Bag} />
             </CustomContainer>
           </div>
           <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm">

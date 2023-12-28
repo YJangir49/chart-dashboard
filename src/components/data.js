@@ -256,7 +256,7 @@ const overView = {
 };
 
 // http://localhost:1880/tp/utility/constants
-const tpUtilityConstant = {
+export const tpUtilityConstant = {
   Sound: {
     "Meter-1": 82.77,
     "Meter-2": 54,
