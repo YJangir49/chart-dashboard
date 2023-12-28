@@ -1,36 +1,41 @@
 import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
+import { Chart } from "react-google-charts";
 
-const data = [
-  { name: "Meter 1", value: 45 },
-  { name: "Meter 2", value: 54 },
-  { name: "Meter 3", value: 80 },
+export const data = [
+  ["Sound", "db"],
+  ["Meter 1", 45],
+  ["Meter 2", 54],
+  ["Meter 3", 80],
 ];
 
-const COLORS = ["green", "yellow", "red"];
+const COLORS = ["green", "#e1ad01", "red"];
 
 const CustomPie = () => {
   return (
-    <ResponsiveContainer width={"100%"} height={"100%"}>
-      <PieChart>
-        <Pie
-          data={data}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          label
-          outerRadius={55}
-          fill="#8884d8"
-          dataKey="value"
-          paddingAngle={5}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>
+    <Chart
+      chartType="PieChart"
+      data={data}
+      options={{
+        chartArea: {
+          left: "15%",
+          top: 16,
+          width: "100%",
+          height: "88%",
+        },
+        title: "Sounds",
+        is3D: true,
+        backgroundColor: "black",
+        legend: {
+          textStyle: {
+            color: "white",
+          },
+        },
+        colors: COLORS,
+        slices: {
+          0: { offset: 0.3 },
+        },
+      }}
+    />
   );
 };
 
