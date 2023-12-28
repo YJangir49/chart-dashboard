@@ -1,8 +1,8 @@
 import CustomBar from "../charts/CustomBar";
 import CustomLine from "../charts/CustomLine";
 import CustomPie from "../charts/CustomPie";
-import CustomGaugeChart from "../charts/GauzeChart";
 import CustomContainer from "../reusable/CustomContainer";
+import GauzeWithHeader from "../reusable/GauzeWithHeader";
 import CustomTables from "./CustomTables";
 import LogoSection from "./LogoSection";
 import SwitchBoard from "./SwitchBoard";
@@ -84,136 +84,60 @@ export default function PageLayout() {
               <CustomBar />
             </CustomContainer>
           </div>
-          <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-[#151419] overflow-hidden">
-            <CustomContainer
+          <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Power"}
               subTitle={"KWH"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 2000,
-                  redTo: 5000,
-                  yellowFrom: 1000,
-                  yellowTo: 2000,
-                  greenFrom: 0,
-                  greenTo: 1000,
-                  majorTicks: [
-                    "-1000",
-                    "0",
-                    "1000",
-                    "2000",
-                    "3000",
-                    "4000",
-                    "5000",
-                    "6000",
-                  ],
-                  minorTicks: 10,
-                  max: 6000,
-                  min: -1000,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 1500],
-                ]}
-              />
-            </CustomContainer>
+              value={560}
+              maxValue={5000}
+              redFrom={2000}
+              redTo={5000}
+              yellowFrom={1000}
+              yellowTo={2000}
+              greenFrom={0}
+              greenTo={1000}
+            />
           </div>
-          <div className="col-span-2 row-span-2 col-start-6 row-start-7 bg-[#151419] overflow-hidden">
-            <CustomContainer
+          <div className="col-span-2 row-span-2 col-start-6 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Steam"}
               subTitle={"Kg/hour"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 600,
-                  redTo: 1000,
-                  yellowFrom: 300,
-                  yellowTo: 600,
-                  greenFrom: 0,
-                  greenTo: 300,
-                  majorTicks: [-200, "0", 200, 400, 600, 800, 1000, 1200],
-                  minorTicks: 10,
-                  max: 1200,
-                  min: -200,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 670],
-                ]}
-              />
-            </CustomContainer>
+              value={670}
+              maxValue={1000}
+              redFrom={600}
+              redTo={1000}
+              yellowFrom={300}
+              yellowTo={600}
+              greenFrom={0}
+              greenTo={300}
+            />
           </div>
-          <div className="col-span-2 row-span-2 col-start-8 row-start-7 bg-[#151419] overflow-hidden">
-            <CustomContainer
+          <div className="col-span-2 row-span-2 col-start-8 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Air"}
               subTitle={"CFM"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 2000,
-                  redTo: 5000,
-                  yellowFrom: 1000,
-                  yellowTo: 2000,
-                  greenFrom: 0,
-                  greenTo: 1000,
-                  majorTicks: [
-                    "-1000",
-                    "0",
-                    "1000",
-                    "2000",
-                    "3000",
-                    "4000",
-                    "5000",
-                    "6000",
-                  ],
-                  minorTicks: 10,
-                  max: 6000,
-                  min: -1000,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 370],
-                ]}
-              />
-            </CustomContainer>
+              value={670}
+              maxValue={5000}
+              redFrom={2000}
+              redTo={5000}
+              yellowFrom={1000}
+              yellowTo={2000}
+              greenFrom={0}
+              greenTo={1000}
+            />
           </div>
-          <div className="col-span-2 row-span-2 col-start-10 row-start-7 bg-[#151419] overflow-hidden">
-            <CustomContainer
+          <div className="col-span-2 row-span-2 col-start-10 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Water"}
               subTitle={"Mt3/Hour"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 200,
-                  redTo: 500,
-                  yellowFrom: 100,
-                  yellowTo: 200,
-                  greenFrom: 0,
-                  greenTo: 100,
-                  majorTicks: [
-                    "-100",
-                    "0",
-                    "100",
-                    "200",
-                    "300",
-                    "400",
-                    "500",
-                    "600",
-                  ],
-                  minorTicks: 10,
-                  max: 600,
-                  min: -100,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 370],
-                ]}
-              />
-            </CustomContainer>
+              value={370}
+              redFrom={200}
+              redTo={500}
+              yellowFrom={100}
+              yellowTo={200}
+              greenFrom={0}
+              greenTo={100}
+            />
           </div>
         </div>
       </div>

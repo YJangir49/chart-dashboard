@@ -4,7 +4,7 @@ import CustomComposed from "../charts/CustomComposed";
 import CustomTables from "../ui/CustomTables";
 import LogoSection from "../ui/LogoSection";
 import CustomContainer from "../reusable/CustomContainer";
-import CustomGaugeChart from "../charts/GauzeChart";
+import GauzeWithHeader from "../reusable/GauzeWithHeader";
 
 const batchData = [
   { id: "1", item1: "Mixer-1", item2: "0", item3: "0", item4: "120000" },
@@ -84,114 +84,45 @@ export default function TGM() {
               <CustomComposed />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-4 row-start-7 bg-pink-300">
-            <CustomContainer
+          <div className="col-span-3 row-span-2 col-start-4 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Power"}
               subTitle={"KWH"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 2000,
-                  redTo: 5000,
-                  yellowFrom: 1000,
-                  yellowTo: 2000,
-                  greenFrom: 0,
-                  greenTo: 1000,
-                  majorTicks: [
-                    "-1000",
-                    "0",
-                    "1000",
-                    "2000",
-                    "3000",
-                    "4000",
-                    "5000",
-                    "6000",
-                  ],
-                  minorTicks: 10,
-                  max: 6000,
-                  min: -1000,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 1500],
-                ]}
-              />
-            </CustomContainer>
+              value={370}
+              redFrom={200}
+              redTo={500}
+              yellowFrom={100}
+              yellowTo={200}
+              greenFrom={0}
+              greenTo={100}
+            />
           </div>
-          <div className="col-span-2 row-span-2 col-start-7 row-start-7 bg-amber-500">
-            <CustomContainer
+          <div className="col-span-2 row-span-2 col-start-7 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Power"}
               subTitle={"KWH"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 2000,
-                  redTo: 5000,
-                  yellowFrom: 1000,
-                  yellowTo: 2000,
-                  greenFrom: 0,
-                  greenTo: 1000,
-                  majorTicks: [
-                    "-1000",
-                    "0",
-                    "1000",
-                    "2000",
-                    "3000",
-                    "4000",
-                    "5000",
-                    "6000",
-                  ],
-                  minorTicks: 10,
-                  max: 6000,
-                  min: -1000,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 1500],
-                ]}
-              />
-            </CustomContainer>
+              value={370}
+              redFrom={200}
+              redTo={500}
+              yellowFrom={100}
+              yellowTo={200}
+              greenFrom={0}
+              greenTo={100}
+            />
           </div>
-          <div className="col-span-3 row-span-2 col-start-9 row-start-7 bg-sky-400">
-            <CustomContainer
+          <div className="col-span-3 row-span-2 col-start-9 row-start-7 bg-[#151419]">
+            <GauzeWithHeader
               title={"Power"}
               subTitle={"KWH"}
-              style={{ paddingTop: 20 }}
-            >
-              <CustomGaugeChart
-                gauzeOptions={{
-                  redFrom: 2000,
-                  redTo: 5000,
-                  yellowFrom: 1000,
-                  yellowTo: 2000,
-                  greenFrom: 0,
-                  greenTo: 1000,
-                  majorTicks: [
-                    "-1000",
-                    "0",
-                    "1000",
-                    "2000",
-                    "3000",
-                    "4000",
-                    "5000",
-                    "6000",
-                  ],
-                  minorTicks: 10,
-                  max: 6000,
-                  min: -1000,
-                }}
-                data={[
-                  ["Label", "Value"],
-                  ["", 1500],
-                ]}
-              />
-            </CustomContainer>
+              value={370}
+              redFrom={200}
+              redTo={500}
+              yellowFrom={100}
+              yellowTo={200}
+              greenFrom={0}
+              greenTo={100}
+            />
           </div>
-          {/* <div className="col-span-2 row-span-2 col-start-10 row-start-7 bg-violet-400">
-            18
-          </div> */}
         </div>
       </div>
     </>

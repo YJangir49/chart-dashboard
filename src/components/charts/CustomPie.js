@@ -18,13 +18,13 @@ const CustomPie = () => {
       options={{
         chartArea: {
           left: "15%",
-          top: 16,
+          top: 10,
           width: "100%",
           height: "88%",
         },
-        title: "Sounds",
+        title: "",
         is3D: true,
-        backgroundColor: "black",
+        backgroundColor: "#151419",
         legend: {
           textStyle: {
             color: "white",
