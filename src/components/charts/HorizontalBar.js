@@ -9,21 +9,6 @@ import {
   LabelList,
 } from "recharts";
 
-const data = [
-  {
-    name: "Shift - A",
-    pc: 121656,
-  },
-  {
-    name: "Shift - B",
-    pc: 131522,
-  },
-  {
-    name: "Shift - C",
-    pc: 108463,
-  },
-];
-
 const CustomXAxisLabel = ({ x, y, payload }) => {
   // You can customize the appearance of the label here
   return (
@@ -42,39 +27,48 @@ const CustomYAxisLabel = ({ x, y, payload }) => {
 };
 
 const CustomLabel = ({ x, y, value, width, height }) => {
+  const isInteger = Number.isInteger(value);
   const fontSize = 10;
   const labelHeight = 14;
-  const labelWidth = height * 0.8;
+  let labelScaler = value > 9999 ? 1.5 : value > 99 ? 1 : 0.8;
+  if (isInteger) {
+    labelScaler -= 0.2;
+  }
+  const labelWidth = height * labelScaler;
+
+  const rectX = x - width - labelWidth < 0 ? x + width - labelWidth : x + 2;
+  const textX = x - width - labelWidth < 0 ? x + width - labelWidth + 2 : x + 4;
 
   return (
     <g>
       <rect
-        x={x + width - labelWidth}
+        x={rectX}
         y={y + height * 0.4}
         width={labelWidth}
         height={labelHeight}
         fill="white"
       />
       <text
-        x={x + width - labelWidth}
+        x={textX}
         y={y + height * 0.4 + labelHeight - labelHeight * 0.25}
         fill="black"
         fontSize={fontSize}
       >
-        {value.toFixed(2)}
+        {Number.isInteger(value) ? value : value.toFixed(2)}
       </text>
     </g>
   );
 };
 
-const HorizontalBar = () => {
+const HorizontalBar = ({ data }) => {
+  console.log(data);
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <BarChart data={data} layout="vertical">
         <XAxis type="number" tick={<CustomXAxisLabel />} />
         <YAxis dataKey="name" type="category" tick={<CustomYAxisLabel />} />
-        <Bar dataKey="pc" fill="green" type="number">
-          <LabelList dataKey="pc" content={<CustomLabel />} />
+        <Bar dataKey="value" fill="green" type="number">
+          <LabelList dataKey="value" content={<CustomLabel />} />
         </Bar>
         <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
       </BarChart>

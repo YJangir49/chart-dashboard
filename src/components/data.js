@@ -357,7 +357,7 @@ const tp = [
 
 // http://localhost:1880/tp/tgm4
 
-const tgmData = {
+export const tgmData = {
   Shift: {
     "Shift-A": {
       Production: [
@@ -404,8 +404,8 @@ const tgmData = {
           Value: 0,
         },
       ],
-      Air: 0,
-      Speed: 0,
+      //      Air: 0,
+      //      Speed: 0,
     },
     "Shift-B": {
       Production: [
@@ -452,8 +452,8 @@ const tgmData = {
           Value: 0,
         },
       ],
-      Air: 0,
-      Speed: 0,
+      //      Air: 0,
+      //      Speed: 0,
     },
     "Shift-C": {
       Production: [
@@ -500,11 +500,11 @@ const tgmData = {
           Value: 0,
         },
       ],
-      Air: 0,
-      Speed: 0,
+      //      Air: 0,
+      //      Speed: 0,
     },
-    OEE: 84.01,
-    OR: 0,
+    // OEE: 84.01,
+    // OR: 0,
   },
 };
 

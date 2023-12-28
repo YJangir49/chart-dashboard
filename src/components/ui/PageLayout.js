@@ -7,45 +7,7 @@ import CustomTables from "./CustomTables";
 import LogoSection from "./LogoSection";
 import SwitchBoard from "./SwitchBoard";
 import { tpUtilityConstant } from "../data";
-
-const batchData = [
-  { id: "1", item1: "Mixer-1", item2: "0", item3: "0", item4: "120000" },
-  { id: "2", item1: "Mixer-2", item2: "522", item3: "6.31", item4: "139000" },
-  { id: "3", item1: "Mixer-3", item2: "526", item3: "6.38", item4: "132000" },
-  { id: "4", item1: "Mixer-4", item2: "421", item3: "6.69", item4: "136000" },
-  { id: "5", item1: "Mixer-5", item2: "4945", item3: "0", item4: "0" },
-];
-
-const shiftData = [
-  {
-    id: "1",
-    item1: "Power (KWH)",
-    item2: "849",
-    item3: "871.44",
-    item4: "858.50",
-  },
-  {
-    id: "2",
-    item1: "Steam (Kg/hour)",
-    item2: "0",
-    item3: "0",
-    item4: "0",
-  },
-  {
-    id: "3",
-    item1: "Air (CFM)",
-    item2: "3996.47",
-    item3: "3860.59",
-    item4: "3986.89",
-  },
-  {
-    id: "4",
-    item1: "Water (Mt/hour)",
-    item2: "0",
-    item3: "0",
-    item4: "0",
-  },
-];
+import { reverseConverter } from "../../utils/helper";
 
 export default function PageLayout() {
   return (
@@ -76,13 +38,16 @@ export default function PageLayout() {
           </div>
           <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm">
             <CustomTables
-              tableData={batchData}
-              tableTitle="Batch Quality"
-              subHeading="(recent)"
+              data={tpUtilityConstant.Mixer}
+              title="Batch Quality"
+              subTitle="(recent)"
             />
           </div>
           <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm">
-            <CustomTables tableData={shiftData} tableTitle="Shift Parameters" />
+            <CustomTables
+              data={reverseConverter(tpUtilityConstant.Shift)}
+              title="Shift Parameters"
+            />
           </div>
           <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]">
             <CustomContainer title="Power Consumption" subTitle="(KWH/ton)">
@@ -93,7 +58,7 @@ export default function PageLayout() {
             <GauzeWithHeader
               title={"Power"}
               subTitle={"KWH"}
-              value={560}
+              value={tpUtilityConstant.Shift["Shift-A"].Power}
               maxValue={5000}
               redFrom={2000}
               redTo={5000}
@@ -107,7 +72,7 @@ export default function PageLayout() {
             <GauzeWithHeader
               title={"Steam"}
               subTitle={"Kg/hour"}
-              value={670}
+              value={tpUtilityConstant.Shift["Shift-A"].Steam}
               maxValue={1000}
               redFrom={600}
               redTo={1000}
@@ -121,7 +86,7 @@ export default function PageLayout() {
             <GauzeWithHeader
               title={"Air"}
               subTitle={"CFM"}
-              value={670}
+              value={tpUtilityConstant.Shift["Shift-A"].Air}
               maxValue={5000}
               redFrom={2000}
               redTo={5000}
@@ -135,7 +100,7 @@ export default function PageLayout() {
             <GauzeWithHeader
               title={"Water"}
               subTitle={"Mt3/Hour"}
-              value={370}
+              value={tpUtilityConstant.Shift["Shift-A"].Water}
               redFrom={200}
               redTo={500}
               yellowFrom={100}

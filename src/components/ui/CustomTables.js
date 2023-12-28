@@ -1,32 +1,47 @@
-export default function CustomTables({ tableData, tableTitle, subHeading }) {
+/**
+ * data format
+ * columns = {id, name}[]
+ * rows = {id, name, values: { [columns.name]: value }}[]
+ */
+
+import CustomContainer from "../reusable/CustomContainer";
+
+export default function CustomTables({ data, title, subTitle }) {
+  const columns = Object.keys(Object.values(data)[0]).map((c, index) => ({
+    id: index,
+    name: c,
+  }));
+  const rows = Object.keys(data).map((item, index) => ({
+    id: index,
+    name: item,
+    value: data[item],
+  }));
   return (
-    <div className="h-full w-full px-2">
-      <div className="bg-black flex justify-between">
-        <p className="text-xs text-[#91b9a2]">{tableTitle}</p>
-        {subHeading && <p className="text-xs text-[#91b9a2]">{subHeading}</p>}
-      </div>
-      <table className="w-full border-separate">
-        <tr className="text-xs font-[500] text-[#bd9755]">
-          <th></th>
-          <th>Batch No.</th>
-          <th>PH</th>
-          <th>Viscosity</th>
-        </tr>
-        {tableData.map((item) => (
-          <tr className="">
-            <td className="text-xs">{item?.item1}</td>
-            <td className="border border-solid digital-font text-center">
-              {item?.item2}
-            </td>
-            <td className="border border-solid digital-font text-center">
-              {item?.item3}
-            </td>
-            <td className="border border-solid digital-font text-center">
-              {item?.item4}
-            </td>
+    <CustomContainer title={title} subTitle={subTitle}>
+      <div className="h-full w-full px-2">
+        <table className="w-full border-separate">
+          <tr className="text-xs font-[500] text-[#bd9755]">
+            <th></th>
+            {columns.map((c) => (
+              <th key={c.id}>{c.name}</th>
+            ))}
           </tr>
-        ))}
-      </table>
-    </div>
+          {rows.map((row) => (
+            <tr key={row.id} className="">
+              <td className="text-xs">{row.name}</td>
+
+              {columns.map((c) => (
+                <td
+                  key={`${row.id}-${c.id}`}
+                  className="border border-solid digital-font text-center"
+                >
+                  {row.value[c.name]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </table>
+      </div>
+    </CustomContainer>
   );
 }
