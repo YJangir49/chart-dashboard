@@ -31,6 +31,9 @@ export default function Dashboard() {
           <Link to="/tgm-3">
             <li className="bg-cyan-300 p-4">TGM - 1</li>
           </Link>
+          <Link to="/overview">
+            <li className="bg-sky-300 p-4">Overview</li>
+          </Link>
           <Link to="/tgm-2">
             <li className="bg-pink-300 p-4">TGM - 2</li>
           </Link>

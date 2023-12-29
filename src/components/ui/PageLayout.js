@@ -13,6 +13,8 @@ import { dateFormat } from "../../utils/date";
 import { addDays, format, parseISO } from "date-fns";
 import { generateDataBetweenDates } from "../../utils/mockDataGenerator";
 
+// import imagePath from "";
+
 const BASE_URL =
   "https://658ee7892871a9866e7a02ac.mockapi.io/chart/tp_utility_constant";
 
@@ -25,11 +27,9 @@ export default function PageLayout() {
   useEffect(() => {
     let currentDate = new Date();
     let startDate = isLive
-      ? addDays(currentDate, -15)
-      : addDays(currentDate, -Math.random() * 10);
-    const endDate = isLive
-      ? currentDate
-      : addDays(currentDate, -Math.random() * 1);
+      ? addDays(currentDate, -9)
+      : addDays(currentDate, -Math.random() * 10 - 10);
+    const endDate = isLive ? currentDate : addDays(startDate, 10);
     const data = generateDataBetweenDates(startDate, endDate);
     setBarData(data);
   }, [isLive]);
@@ -49,9 +49,14 @@ export default function PageLayout() {
   if (!utility) {
     return <></>;
   }
+
+  // bg-gradient-to-br from-neutral-300 to-neutral-500
   return (
     <>
-      <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500">
+      <div
+        className="w-full h-screen bg-no-repeat bg-cover bg-center px-2"
+        style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
+      >
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-2">
             <LogoSection isLive={isLive} setIsLive={setIsLive} />

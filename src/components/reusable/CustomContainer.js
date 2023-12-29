@@ -1,6 +1,6 @@
 export default function CustomContainer({ children, title, subTitle, style }) {
   return (
-    <div className="h-full w-full relative">
+    <div className="h-full w-full relative outline rounded outline-2 outline-offset-2 outline-zinc-800 shadow-lg shadow-slate-800">
       <div className="absolute flex justify-between items-center left-0 right-0 bg-black text-white px-4">
         <p className="text-base text-[#91b9a2]">{title}</p>
         {subTitle && <p className="text-xs text-[#91b9a2]">{subTitle}</p>}

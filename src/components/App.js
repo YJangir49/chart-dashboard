@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import PerformanceDashboard from "./pages/PerformanceDB";
 import QualityDashboard from "./pages/QualityDB";
 import TGM from "./reusable/TGM";
+import Overview from "./pages/Overview";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/tgm-1" element={<TGM />} />
         <Route path="/tgm-2" element={<TGM />} />
         <Route path="/tgm-3" element={<TGM />} />
+        <Route path="/overview" element={<Overview />} />
       </Routes>
     </BrowserRouter>
   );
