@@ -2,7 +2,7 @@
 
 import CustomButton from "../reusable/CustomButton";
 
-export default function LogoSection({ children }) {
+export default function LogoSection({ isLive, setIsLive, children }) {
   return (
     <>
       <div className="flex justify-between p-2">
@@ -22,12 +22,24 @@ export default function LogoSection({ children }) {
         </div> */}
 
         <form action="" className="flex items-center text-xs gap-2">
-          <input type="radio" id="vehicle1" name="vehicle1" value="Bike" />
+          <input
+            type="radio"
+            id="vehicle1"
+            name="vehicle1"
+            value={isLive}
+            onClick={() => setIsLive(true)}
+          />
           <label for="vehicle1" className="">
             Live
           </label>
 
-          <input type="radio" id="vehicle3" name="vehicle3" value="Boat" />
+          <input
+            type="radio"
+            id="vehicle3"
+            name="vehicle3"
+            value={!isLive}
+            onClick={() => setIsLive(false)}
+          />
           <label for="vehicle3" className="">
             Specific-Time
           </label>

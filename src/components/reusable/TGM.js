@@ -32,7 +32,7 @@ export default function TGM() {
               </div>
             </LogoSection>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-1 row-start-3 dotted-bg">
             <CustomContainer title="Production" subTitle={"(Nos)"}>
               <HorizontalBar
                 data={Object.entries(data.Production.TGM).map((entry) => ({
@@ -42,12 +42,12 @@ export default function TGM() {
               />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-1 row-start-5 dotted-bg">
             <CustomContainer title="Power" subTitle={"(KWH)"}>
               <GroupBar />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-1 row-start-7 dotted-bg">
             <CustomContainer title="Air" subTitle={"(CFM)"}>
               <HorizontalBar
                 data={Object.entries(data.Air).map((entry) => ({
@@ -57,18 +57,18 @@ export default function TGM() {
               />
             </CustomContainer>
           </div>
-          <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm">
+          <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm dotted-bg">
             <CustomTables data={data.StopTime} title="Stop-Time" />
           </div>
-          <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm">
+          <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm dotted-bg">
             <CustomTables data={data.Production} title="Production" />
           </div>
-          <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]">
+          <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419] dotted-bg">
             <CustomContainer title="Daily Production & OEE">
               <CustomComposed />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-4 row-start-7 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-4 row-start-7 bg-[#151419] dotted-bg">
             <GauzeWithHeader
               title={"Speed (Shift-A)"}
               subTitle={"Per/min"}
@@ -81,7 +81,7 @@ export default function TGM() {
               greenTo={100}
             />
           </div>
-          <div className="col-span-2 row-span-2 col-start-7 row-start-7 bg-[#151419]">
+          <div className="col-span-2 row-span-2 col-start-7 row-start-7 bg-[#151419] dotted-bg">
             <GauzeWithHeader
               title={"Speed (Shift-B)"}
               subTitle={"Per/min"}
@@ -94,7 +94,7 @@ export default function TGM() {
               greenTo={100}
             />
           </div>
-          <div className="col-span-3 row-span-2 col-start-9 row-start-7 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-9 row-start-7 bg-[#151419] dotted-bg">
             <GauzeWithHeader
               title={"Speed (Shift-C)"}
               subTitle={"Per/min"}

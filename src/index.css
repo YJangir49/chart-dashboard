@@ -50,3 +50,12 @@ code {
   font-size: larger;
   letter-spacing: 2px;
 }
+
+.dotted-bg {
+  background: #151419;
+  background-image: radial-gradient(black 2px, transparent 0);
+  background-size: 10px 10px;
+  background-position: -19px -19px;
+}
+
+/* https://658ee7892871a9866e7a02ac.mockapi.io/chart/tp_utility_constant */

@@ -535,3 +535,87 @@ const tgmHistorical = {
     OEE: 22.09,
   },
 };
+
+// http://localhost:1880/tp/utility/tphistorical
+// curl --location 'http://localhost:1880/tp/utility/tphistorical' \
+// --header 'Content-Type: application/json' \
+// --data '{
+//     "startDate" : 1702339200,
+//     "endDate" : 1703849710,
+//     "type":"air"
+// }'
+
+export const tpHistoricalPower = [
+  {
+    TotalVal: 10142.481994628906,
+    DateAndTime: "2023-12-12T23:59:55.000Z",
+  },
+  {
+    TotalVal: 12784.079833984375,
+    DateAndTime: "2023-12-13T20:17:55.000Z",
+  },
+  {
+    TotalVal: 9630.875854492188,
+    DateAndTime: "2023-12-14T23:59:03.000Z",
+  },
+  {
+    TotalVal: 9934.481750488281,
+    DateAndTime: "2023-12-15T23:59:31.000Z",
+  },
+  {
+    TotalVal: 10221.996826171875,
+    DateAndTime: "2023-12-16T23:59:31.000Z",
+  },
+  {
+    TotalVal: 7958.920593261719,
+    DateAndTime: "2023-12-17T23:59:31.000Z",
+  },
+  {
+    TotalVal: 11130.079223632812,
+    DateAndTime: "2023-12-18T23:59:31.000Z",
+  },
+  {
+    TotalVal: 10393.444152832031,
+    DateAndTime: "2023-12-19T23:59:31.000Z",
+  },
+  {
+    TotalVal: 9802.705169677734,
+    DateAndTime: "2023-12-20T23:59:31.000Z",
+  },
+  {
+    TotalVal: 9826.969360351562,
+    DateAndTime: "2023-12-21T23:59:31.000Z",
+  },
+  {
+    TotalVal: 10493.15283203125,
+    DateAndTime: "2023-12-22T23:59:31.000Z",
+  },
+  {
+    TotalVal: 10232.025146484375,
+    DateAndTime: "2023-12-23T23:59:31.000Z",
+  },
+  {
+    TotalVal: 9468.451629638672,
+    DateAndTime: "2023-12-24T23:59:31.000Z",
+  },
+  {
+    TotalVal: 10153.654602050781,
+    DateAndTime: "2023-12-25T23:59:55.000Z",
+  },
+  {
+    TotalVal: 10248.171630859375,
+    DateAndTime: "2023-12-26T23:59:55.000Z",
+  },
+  {
+    TotalVal: 11002.86083984375,
+    DateAndTime: "2023-12-27T23:59:55.000Z",
+  },
+  {
+    TotalVal: 7791.054382324219,
+    DateAndTime: "2023-12-28T23:59:55.000Z",
+  },
+  {
+    TotalVal: 10011.94677734375,
+    DateAndTime: "2023-12-29T11:59:55.000Z",
+  },
+];

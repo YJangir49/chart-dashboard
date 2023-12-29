@@ -6,59 +6,99 @@ import GauzeWithHeader from "../reusable/GauzeWithHeader";
 import CustomTables from "./CustomTables";
 import LogoSection from "./LogoSection";
 import SwitchBoard from "./SwitchBoard";
-import { tpUtilityConstant } from "../data";
 import { reverseConverter } from "../../utils/helper";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { dateFormat } from "../../utils/date";
+import { addDays, format, parseISO } from "date-fns";
+import { generateDataBetweenDates } from "../../utils/mockDataGenerator";
+
+const BASE_URL =
+  "https://658ee7892871a9866e7a02ac.mockapi.io/chart/tp_utility_constant";
 
 export default function PageLayout() {
+  const [utility, setUtilityData] = useState();
+  const [isLive, setIsLive] = useState(true);
+  const [barData, setBarData] = useState();
+  const [] = useState();
+
+  useEffect(() => {
+    let currentDate = new Date();
+    let startDate = isLive
+      ? addDays(currentDate, -15)
+      : addDays(currentDate, -Math.random() * 10);
+    const endDate = isLive
+      ? currentDate
+      : addDays(currentDate, -Math.random() * 1);
+    const data = generateDataBetweenDates(startDate, endDate);
+    setBarData(data);
+  }, [isLive]);
+
+  useEffect(() => {
+    axios
+      .get(BASE_URL)
+      .then((response) => {
+        if (response) {
+          const data = response.data[0];
+          setUtilityData(data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  if (!utility) {
+    return <></>;
+  }
   return (
     <>
       <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500">
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-2">
-            <LogoSection />
+            <LogoSection isLive={isLive} setIsLive={setIsLive} />
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419] dotted-bg">
             <CustomContainer title="Sound" subTitle="dB">
-              <CustomPie
-                data={tpUtilityConstant.Sound}
-                title="Sound"
-                unit={"db"}
-              />
+              <CustomPie data={utility.Sound} title="Sound" unit={"db"} />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]  dotted-bg">
             <CustomContainer title="dB Meter-1" subTitle="last 8 hours">
               <CustomLine />
             </CustomContainer>
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]">
+          <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]  dotted-bg">
             <CustomContainer title="Bag-Filter">
-              <SwitchBoard data={tpUtilityConstant.Bag} />
+              <SwitchBoard data={utility.Bag} />
             </CustomContainer>
           </div>
-          <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm">
+          <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm  dotted-bg">
             <CustomTables
-              data={tpUtilityConstant.Mixer}
+              data={utility.Mixer}
               title="Batch Quality"
               subTitle="(recent)"
             />
           </div>
-          <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm">
+          <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm  dotted-bg">
             <CustomTables
-              data={reverseConverter(tpUtilityConstant.Shift)}
+              data={reverseConverter(utility.Shift)}
               title="Shift Parameters"
             />
           </div>
-          <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]">
+          <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]  dotted-bg">
             <CustomContainer title="Power Consumption" subTitle="(KWH/ton)">
-              <CustomBar />
+              <CustomBar
+                data={barData}
+                xKey={"DateAndTime"}
+                yKey={"TotalVal"}
+                xFormatter={dateFormat}
+              />
             </CustomContainer>
           </div>
-          <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-[#151419]">
+          <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
               title={"Power"}
               subTitle={"KWH"}
-              value={tpUtilityConstant.Shift["Shift-A"].Power}
+              value={utility.Shift["Shift-A"].Power}
               maxValue={5000}
               redFrom={2000}
               redTo={5000}
@@ -68,11 +108,11 @@ export default function PageLayout() {
               greenTo={1000}
             />
           </div>
-          <div className="col-span-2 row-span-2 col-start-6 row-start-7 bg-[#151419]">
+          <div className="col-span-2 row-span-2 col-start-6 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
               title={"Steam"}
               subTitle={"Kg/hour"}
-              value={tpUtilityConstant.Shift["Shift-A"].Steam}
+              value={utility.Shift["Shift-A"].Steam}
               maxValue={1000}
               redFrom={600}
               redTo={1000}
@@ -82,11 +122,11 @@ export default function PageLayout() {
               greenTo={300}
             />
           </div>
-          <div className="col-span-2 row-span-2 col-start-8 row-start-7 bg-[#151419]">
+          <div className="col-span-2 row-span-2 col-start-8 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
               title={"Air"}
               subTitle={"CFM"}
-              value={tpUtilityConstant.Shift["Shift-A"].Air}
+              value={utility.Shift["Shift-A"].Air}
               maxValue={5000}
               redFrom={2000}
               redTo={5000}
@@ -96,11 +136,11 @@ export default function PageLayout() {
               greenTo={1000}
             />
           </div>
-          <div className="col-span-2 row-span-2 col-start-10 row-start-7 bg-[#151419]">
+          <div className="col-span-2 row-span-2 col-start-10 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
               title={"Water"}
               subTitle={"Mt3/Hour"}
-              value={tpUtilityConstant.Shift["Shift-A"].Water}
+              value={utility.Shift["Shift-A"].Water}
               redFrom={200}
               redTo={500}
               yellowFrom={100}

@@ -10,54 +10,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "1 Dec",
-    pc: 37.09,
-  },
-  {
-    name: "2 Dec",
-    pc: 47.12,
-  },
-  {
-    name: "3 Dec",
-    pc: 41.88,
-  },
-  {
-    name: "4 Dec",
-    pc: 44.54,
-  },
-  {
-    name: "5 Dec",
-    pc: 44.9,
-  },
-  {
-    name: "6 Dec",
-    pc: 42.02,
-  },
-  {
-    name: "7 Dec",
-    pc: 25.74,
-  },
-  {
-    name: "8 Dec",
-    pc: 41.51,
-  },
-  {
-    name: "9 Dec",
-    pc: 49.27,
-  },
-  {
-    name: "10 Dec",
-    pc: 59.0,
-  },
-];
-
-const CustomXAxisLabel = ({ x, y, payload }) => {
+const CustomXAxisLabel = ({ x, y, payload, formatter }) => {
+  console.log("X->", payload);
   // You can customize the appearance of the label here
   return (
     <text x={x} y={y} dy={16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
+      {formatter ? formatter(payload.value) : payload.value}
     </text>
   );
 };
@@ -97,21 +55,20 @@ const CustomLabel = ({ x, y, value, width, height, index }) => {
   );
 };
 
-const CustomBar = () => {
+const CustomBar = ({ data, xKey, yKey, xFormatter }) => {
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <BarChart width={900} height={400} data={data}>
         <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
-        <XAxis dataKey="name" tick={<CustomXAxisLabel />} />
+        <XAxis
+          dataKey={xKey}
+          interval={0}
+          tick={<CustomXAxisLabel formatter={xFormatter} />}
+        />
         <YAxis tick={<CustomYAxisLabel />} padding={{ top: 30 }} />
-        <Bar
-          dataKey="pc"
-          fill="#418cf1"
-          activeBar={<Rectangle fill="pink" stroke="#blue" />}
-          type="number"
-        >
+        <Bar dataKey={yKey} fill="#418cf1" type="number">
           <LabelList
-            dataKey="pc"
+            dataKey={yKey}
             position="top"
             className="bg-white"
             content={<CustomLabel />}
