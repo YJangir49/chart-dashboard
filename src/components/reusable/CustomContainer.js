@@ -5,7 +5,7 @@ export default function CustomContainer({ children, title, subTitle, style }) {
         <p className="text-base text-[#91b9a2]">{title}</p>
         {subTitle && <p className="text-xs text-[#91b9a2]">{subTitle}</p>}
       </div>
-      <div className="w-full h-full pt-8" style={style}>
+      <div className="w-full h-full pt-8 overflow-y-scroll" style={style}>
         {children}
       </div>
     </div>
