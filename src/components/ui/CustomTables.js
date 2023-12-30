@@ -18,7 +18,7 @@ export default function CustomTables({ data, title, subTitle }) {
   }));
   return (
     <CustomContainer title={title} subTitle={subTitle}>
-      <div className="h-full w-full px-2">
+      <div className="h-full w-full px-2 flex align-middle">
         <table className="w-full border-separate">
           <tr className="text-xs font-[500] text-[#bd9755]">
             <th></th>

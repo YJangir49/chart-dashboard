@@ -13,10 +13,13 @@ export default function TGM() {
   // console.log(data);
   return (
     <>
-      <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500 p-2">
+      <div
+        className="w-full h-screen bg-no-repeat bg-cover bg-center p-2"
+        style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
+      >
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-2">
-            <LogoSection>
+            <LogoSection pageName={"TGM"}>
               <div className="flex justify-between px-2 text-sm mt-5">
                 <p>OEE</p>
                 <div className="flex w-full bg-black justify-end items-center ml-16">

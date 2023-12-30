@@ -1,4 +1,4 @@
-export default function CustomButton() {
+export default function CustomButton({ name }) {
   return (
     <div className="relative text-center">
       <img
@@ -8,7 +8,7 @@ export default function CustomButton() {
         alt="capsule-button"
       />
       <p className="absolute top-3 left-16 text-white font-semibold drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-gray-800">
-        TP
+        {name}
       </p>
     </div>
   );

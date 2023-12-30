@@ -13,8 +13,6 @@ import { dateFormat } from "../../utils/date";
 import { addDays } from "date-fns";
 import { generateDataBetweenDates } from "../../utils/mockDataGenerator";
 
-// import imagePath from "";
-
 const BASE_URL =
   "https://658ee7892871a9866e7a02ac.mockapi.io/chart/tp_utility_constant";
 
@@ -53,12 +51,16 @@ export default function PageLayout() {
   return (
     <>
       <div
-        className="w-full h-screen bg-no-repeat bg-cover bg-center p-2"
+        className="w-full bg-no-repeat bg-cover bg-center p-2"
         style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
       >
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-1">
-            <LogoSection isLive={isLive} setIsLive={setIsLive} />
+            <LogoSection
+              pageName={"TP"}
+              isLive={isLive}
+              setIsLive={setIsLive}
+            />
           </div>
           <div className="col-span-3 row-span-3 col-start-1 row-start-2 bg-[#151419] dotted-bg">
             <CustomContainer title="Sound" subTitle="dB">

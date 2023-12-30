@@ -3,11 +3,11 @@
 import { Link } from "react-router-dom";
 import CustomButton from "../reusable/CustomButton";
 
-export default function LogoSection({ isLive, setIsLive, children }) {
+export default function LogoSection({ pageName, isLive, setIsLive, children }) {
   return (
-    <>
+    <div className="flex h-full flex-col ">
       <div className="flex justify-between p-2">
-        <div className="w-14 h-14">
+        <div className="w-16 h-16">
           <img
             height={"100%"}
             width={"100%"}
@@ -17,7 +17,7 @@ export default function LogoSection({ isLive, setIsLive, children }) {
         </div>
 
         <div className="flex">
-          <CustomButton />
+          <CustomButton name={pageName} />
           <Link to="/">
             <div className="w-8 h-8 mt-2 cursor-pointer">
               <img
@@ -30,38 +30,34 @@ export default function LogoSection({ isLive, setIsLive, children }) {
           </Link>
         </div>
       </div>
-      <div className="flex justify-between items-center px-2">
-        <p className="text-xs">Log-Time</p>
-        {/* <div className="text-xs flex">
-          <p>Live</p>
-          <p>Specific-Time</p>
-        </div> */}
 
-        <form action="" className="flex items-center text-xs gap-2">
-          <input
-            type="radio"
-            id="vehicle1"
-            name="vehicle1"
-            value={isLive}
-            onClick={() => setIsLive(true)}
-          />
-          <label for="vehicle1" className="">
-            Live
-          </label>
+      <div className="flex flex-col flex-1  justify-end">
+        <div className="flex justify-between items-center px-2 font-bold">
+          <p className="text-xs">Log-Time</p>
+          <div className="flex items-center text-xs gap-4 ">
+            <label className="flex align-middle gap-1">
+              <input
+                type="radio"
+                value="live"
+                checked={isLive}
+                onChange={() => setIsLive(true)}
+              />
+              Live
+            </label>
 
-          <input
-            type="radio"
-            id="vehicle3"
-            name="vehicle3"
-            value={!isLive}
-            onClick={() => setIsLive(false)}
-          />
-          <label for="vehicle3" className="">
-            Specific-Time
-          </label>
-        </form>
+            <label className="flex align-middle gap-1">
+              <input
+                type="radio"
+                value="specificTime"
+                checked={!isLive}
+                onChange={() => setIsLive(false)}
+              />
+              Specific Time
+            </label>
+          </div>
+        </div>
+        {children}
       </div>
-      {children}
-    </>
+    </div>
   );
 }
