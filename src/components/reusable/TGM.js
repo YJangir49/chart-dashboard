@@ -10,10 +10,10 @@ import { converter } from "../../utils/helper";
 
 export default function TGM() {
   const data = converter(tgmData.Shift);
-  console.log(data);
+  // console.log(data);
   return (
     <>
-      <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500">
+      <div className="w-full h-screen bg-gradient-to-br from-neutral-300 to-neutral-500 p-2">
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
           <div className="col-span-3 row-span-2">
             <LogoSection>

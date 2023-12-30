@@ -53,7 +53,7 @@ export default function PageLayout() {
   return (
     <>
       <div
-        className="w-full h-screen bg-no-repeat bg-cover bg-center px-2"
+        className="w-full h-screen bg-no-repeat bg-cover bg-center p-2"
         style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
       >
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">

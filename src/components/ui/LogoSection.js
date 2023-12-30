@@ -1,18 +1,34 @@
 // import LogoImage from "../../../public/Unilever-logo.svg";
 
+import { Link } from "react-router-dom";
 import CustomButton from "../reusable/CustomButton";
 
 export default function LogoSection({ isLive, setIsLive, children }) {
   return (
     <>
       <div className="flex justify-between p-2">
-        <img
-          height={60}
-          width={60}
-          src="/images/unilever-logo.png"
-          alt="logo"
-        />
-        <CustomButton />
+        <div className="w-14 h-14">
+          <img
+            height={"100%"}
+            width={"100%"}
+            src="/images/unilever-logo.png"
+            alt="logo"
+          />
+        </div>
+
+        <div className="flex">
+          <CustomButton />
+          <Link to="/">
+            <div className="w-8 h-8 mt-2 cursor-pointer">
+              <img
+                height={"100%"}
+                width={"100%"}
+                src="/images/home-icon.png"
+                alt="home-icon"
+              />
+            </div>
+          </Link>
+        </div>
       </div>
       <div className="flex justify-between items-center px-2">
         <p className="text-xs">Log-Time</p>
