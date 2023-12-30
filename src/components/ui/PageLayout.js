@@ -10,7 +10,7 @@ import { reverseConverter } from "../../utils/helper";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { dateFormat } from "../../utils/date";
-import { addDays, format, parseISO } from "date-fns";
+import { addDays } from "date-fns";
 import { generateDataBetweenDates } from "../../utils/mockDataGenerator";
 
 // import imagePath from "";
@@ -22,7 +22,6 @@ export default function PageLayout() {
   const [utility, setUtilityData] = useState();
   const [isLive, setIsLive] = useState(true);
   const [barData, setBarData] = useState();
-  const [] = useState();
 
   useEffect(() => {
     let currentDate = new Date();
