@@ -1,4 +1,4 @@
-import { addDays, format, parseISO } from "date-fns";
+import { addDays, format } from "date-fns";
 
 export const generateDataBetweenDates = (startDate, endDate) => {
   const generatedData = [];
