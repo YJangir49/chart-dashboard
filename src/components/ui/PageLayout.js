@@ -58,10 +58,10 @@ export default function PageLayout() {
         style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
       >
         <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
-          <div className="col-span-3 row-span-2">
+          <div className="col-span-3 row-span-1">
             <LogoSection isLive={isLive} setIsLive={setIsLive} />
           </div>
-          <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419] dotted-bg">
+          <div className="col-span-3 row-span-3 col-start-1 row-start-2 bg-[#151419] dotted-bg">
             <CustomContainer title="Sound" subTitle="dB">
               <CustomPie data={utility.Sound} title="Sound" unit={"db"} />
             </CustomContainer>
