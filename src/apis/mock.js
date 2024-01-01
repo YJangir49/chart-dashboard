@@ -9,7 +9,7 @@ import {
 import { generateDataBetweenDates } from "../utils/mockDataGenerator";
 
 const apiMock = () => {
-  const mock = new MockAdapter(axios, { delayResponse: 5000 });
+  const mock = new MockAdapter(axios, { delayResponse: 2000 });
   mock
     .onGet("http://localhost:1880/tp/overview")
     .reply(200, tpOverviewMockResp);
