@@ -10,46 +10,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
-  {
-    name: "7 Dec",
-    value1: 75,
-    value2: 40,
-    value3: 0,
-  },
-  {
-    name: "9 Dec",
-    value1: 74,
-    value2: 65,
-    value3: 66,
-  },
-  {
-    name: "10 Dec",
-    value1: 73,
-    value2: 69,
-    value3: 69,
-  },
-];
+import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
+import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
 
-const CustomXAxisLabel = ({ x, y, payload }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dy={16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
-};
-
-const CustomYAxisLabel = ({ x, y, payload }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dx={-16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
-};
-
-const CustomLabel = ({ x, y, value, width, height, index }) => {
+const CustomLabel = ({ x, y, value, width }) => {
   const fontSize = 10;
   const labelHeight = 14;
   const labelWidth = width * 0.8;
@@ -75,12 +39,16 @@ const CustomLabel = ({ x, y, value, width, height, index }) => {
   );
 };
 
-const GroupBar = () => {
+const GroupBar = ({ data, xFormatter }) => {
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <BarChart data={data}>
         <CartesianGrid strokeDasharray="1 1" strokeOpacity={0.3} />
-        <XAxis dataKey="name" tick={<CustomXAxisLabel />} />
+        <XAxis
+          dataKey="name"
+          interval={0}
+          tick={<CustomXAxisLabel format={xFormatter} />}
+        />
         <YAxis tick={<CustomYAxisLabel />} padding={{ top: 30 }} />
         <Bar
           dataKey="value1"

@@ -8,6 +8,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
+import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
+
 const getData = (hours) => {
   const data = [];
   const minuts = hours * 60;
@@ -18,24 +21,6 @@ const getData = (hours) => {
     });
   }
   return data;
-};
-
-const CustomXAxisLabel = ({ x, y, payload }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dy={16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
-};
-
-const CustomYAxisLabel = ({ x, y, payload }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dx={-16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
 };
 
 const CustomLine = () => {

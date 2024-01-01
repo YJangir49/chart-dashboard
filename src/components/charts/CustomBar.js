@@ -8,24 +8,8 @@ import {
   LabelList,
   ResponsiveContainer,
 } from "recharts";
-
-const CustomXAxisLabel = ({ x, y, payload, formatter }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dy={16} fill="white" fontSize={12} textAnchor="middle">
-      {formatter ? formatter(payload.value) : payload.value}
-    </text>
-  );
-};
-
-const CustomYAxisLabel = ({ x, y, payload }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dx={-16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
-};
+import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
+import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
 
 const CustomLabel = ({ x, y, value, width, height, index }) => {
   const fontSize = 10;

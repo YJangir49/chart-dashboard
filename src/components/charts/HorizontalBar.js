@@ -9,22 +9,8 @@ import {
   LabelList,
 } from "recharts";
 
-const CustomXAxisLabel = ({ x, y, payload }) => {
-  // You can customize the appearance of the label here
-  return (
-    <text x={x} y={y} dy={16} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
-};
-
-const CustomYAxisLabel = ({ x, y, payload }) => {
-  return (
-    <text x={x} y={y} dx={-24} fill="white" fontSize={12} textAnchor="middle">
-      {payload.value}
-    </text>
-  );
-};
+import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
+import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
 
 const CustomLabel = ({ x, y, value, width, height }) => {
   const isInteger = Number.isInteger(value);

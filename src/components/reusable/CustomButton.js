@@ -7,7 +7,7 @@ export default function CustomButton({ name }) {
         src="/images/red-capsule-button.png"
         alt="capsule-button"
       />
-      <p className="absolute top-3 left-16 text-white font-semibold drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-gray-800">
+      <p className="absolute left-[50%] top-[35%] transform -translate-x-1/2 -translate-y-1/2 text-white font-semibold drop-shadow-[2px_2px_var(--tw-shadow-color)] shadow-gray-800">
         {name}
       </p>
     </div>
