@@ -10,7 +10,6 @@ import { converter } from "../../utils/helper";
 
 export default function TGM() {
   const data = converter(tgmData.Shift);
-  // console.log(data);
   return (
     <>
       <div

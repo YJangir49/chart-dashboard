@@ -13,9 +13,6 @@ import { dateFormat } from "../../utils/date";
 import { addDays } from "date-fns";
 import { generateDataBetweenDates } from "../../utils/mockDataGenerator";
 
-const BASE_URL =
-  "https://658ee7892871a9866e7a02ac.mockapi.io/chart/tp_utility_constant";
-
 export default function PageLayout() {
   const [utility, setUtilityData] = useState();
   const [isLive, setIsLive] = useState(true);
@@ -33,10 +30,10 @@ export default function PageLayout() {
 
   useEffect(() => {
     axios
-      .get(BASE_URL)
+      .get("http://localhost:1880/tp/utility/constants")
       .then((response) => {
         if (response) {
-          const data = response.data[0];
+          const data = response.data;
           setUtilityData(data);
         }
       })

@@ -38,11 +38,6 @@ export default function Sidebar() {
           showSidebar ? "translate-x-0 " : "translate-x-full"
         }`}
       >
-        <Link to="/quality-db">
-          <h3 className="mt-20 text-2xl cursor-pointer font-semibold">
-            Quality Dashboard
-          </h3>
-        </Link>
         <Link to="/performance-db">
           <h3 className="mt-12 text-2xl cursor-pointer font-semibold">
             Performance Dashboard

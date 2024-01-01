@@ -1,38 +1,64 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import CustomCard from "../reusable/CustomCard";
 import Sidebar from "../reusable/Sidebar";
-
-const cardData = [
-  { id: "1", name: "TGM-1", route: "/tgm-1" },
-  { id: "2", name: "TGM-2", route: "/tgm-2" },
-  { id: "3", name: "TGM-3", route: "/tgm-3" },
-  { id: "4", name: "TGM-4", route: "/tgm-1" },
-  { id: "5", name: "NORDEN-1", route: "/tgm-1" },
-  { id: "6", name: "NORDEN-2", route: "/tgm-1" },
-  { id: "7", name: "PACMAC-1", route: "/tgm-1" },
-  { id: "8", name: "PACMAC-2", route: "/tgm-1" },
-  { id: "9", name: "PACMAC-3", route: "/tgm-1" },
-  { id: "10", name: "PACMAC-4", route: "/tgm-1" },
-  { id: "11", name: "PACMAC-5", route: "/tgm-1" },
-];
+import Loader from "../reusable/Loader";
+import { OVER_VIEW_ROUTES } from "../../constants/routes";
 
 export default function Overview() {
-  return (
-    <div
-      className="w-full   bg-cover bg-center p-2"
-      style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
-    >
-      <Sidebar />
-      <h1 className="px-4 pt-8 pl-8 text-3xl font-bold">Overview</h1>
-      <div className="my-8 flex flex-wrap">
-        {cardData.map((item) => (
-          <div className="w-1/4 px-4 py-6">
-            <Link to={item.route}>
-              <CustomCard name={item.name} key={item.id} />
-            </Link>
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+
+  const fetchOverViewData = async () => {
+    try {
+      const response = await axios.get("http://localhost:1880/tp/overview");
+      if (response) {
+        setData(response.data);
+      } else {
+        throw new Error("No data received");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchOverViewData();
+  }, []);
+
+  if (loading) {
+    return <Loader dotStyle={{ backgroundColor: "black" }} />;
+  }
+
+  if (data) {
+    return (
+      <div
+        className="w-full bg-cover bg-center p-2"
+        style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
+      >
+        {loading ? (
+          <div className="h-screen">
+            <Loader dotStyle={{ backgroundColor: "black" }} />
           </div>
-        ))}
+        ) : (
+          <>
+            <Sidebar />
+            <h1 className="px-4 pt-8 pl-8 text-3xl font-bold">Overview</h1>
+            <div className="my-8 flex flex-wrap">
+              {Object.entries(data).map((item) => (
+                <div className="w-1/4 px-4 py-6" key={item[0]}>
+                  <CustomCard
+                    name={item[0]}
+                    value={item[1]}
+                    route={OVER_VIEW_ROUTES[item[0]]}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
-    </div>
-  );
+    );
+  }
 }

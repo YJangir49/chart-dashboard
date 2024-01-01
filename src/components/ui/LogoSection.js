@@ -1,9 +1,15 @@
-// import LogoImage from "../../../public/Unilever-logo.svg";
-
 import { Link } from "react-router-dom";
 import CustomButton from "../reusable/CustomButton";
+import { useState } from "react";
 
-export default function LogoSection({ pageName, isLive, setIsLive, children }) {
+export default function LogoSection({
+  pageName,
+  isLive,
+  onLiveChange,
+  children,
+}) {
+  const [date, setDate] = useState();
+
   return (
     <div className="flex h-full flex-col ">
       <div className="flex justify-between p-2">
@@ -40,17 +46,21 @@ export default function LogoSection({ pageName, isLive, setIsLive, children }) {
                 type="radio"
                 value="live"
                 checked={isLive}
-                onChange={() => setIsLive(true)}
+                onChange={() => onLiveChange({ live: true, date: new Date() })}
               />
               Live
             </label>
 
             <label className="flex align-middle gap-1">
               <input
-                type="radio"
-                value="specificTime"
+                type="date"
+                value={date}
                 checked={!isLive}
-                onChange={() => setIsLive(false)}
+                onChange={(e) => {
+                  const date = new Date(e.target.value);
+                  setDate(e.target.value);
+                  onLiveChange({ live: false, date });
+                }}
               />
               Specific Time
             </label>
