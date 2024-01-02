@@ -28,6 +28,17 @@ export default function MachineData({ machineId }) {
     shift: "Shift-A",
   });
 
+  const getActiveShiftIndex = () => {
+    switch (graphInfo.shift) {
+      case "Shift-A":
+        return 0;
+      case "Shift-B":
+        return 1;
+      default:
+        return 2;
+    }
+  };
+
   useEffect(() => {
     const fetchTGMData = async () => {
       try {
@@ -98,7 +109,7 @@ export default function MachineData({ machineId }) {
               </LogoSection>
             </div>
             <div className="col-span-3 row-span-2 col-start-1 row-start-3 dotted-bg">
-              <CustomContainer title="Production" subTitle={"(Nos)"}>
+              <CustomContainer headingLeft="Production" headingRight={"(Nos)"}>
                 <HorizontalBar
                   data={Object.entries(data.Production.TGM).map((entry) => ({
                     name: entry[0],
@@ -108,7 +119,7 @@ export default function MachineData({ machineId }) {
               </CustomContainer>
             </div>
             <div className="col-span-3 row-span-2 col-start-1 row-start-5 dotted-bg">
-              <CustomContainer title="Power" subTitle={"(KWH)"}>
+              <CustomContainer headingLeft="Power" headingRight={"(KWH)"}>
                 <GroupBar
                   data={Object.entries(graphInfo.data)
                     .slice(7)
@@ -123,7 +134,7 @@ export default function MachineData({ machineId }) {
               </CustomContainer>
             </div>
             <div className="col-span-3 row-span-2 col-start-1 row-start-7 dotted-bg">
-              <CustomContainer title="Air" subTitle={"(CFM)"}>
+              <CustomContainer headingLeft="Air" headingRight={"(CFM)"}>
                 <HorizontalBar
                   data={Object.entries(data.Air).map((entry) => ({
                     name: entry[0],
@@ -133,13 +144,21 @@ export default function MachineData({ machineId }) {
               </CustomContainer>
             </div>
             <div className="col-span-4 row-span-2 col-start-4 row-start-1 bg-[#151419] text-white text-sm dotted-bg">
-              <CustomTables data={data.StopTime} title="Stop-Time" />
+              <CustomTables
+                data={data.StopTime}
+                title="Stop-Time"
+                activeCol={getActiveShiftIndex()}
+              />
             </div>
             <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm dotted-bg">
-              <CustomTables data={data.Production} title="Production" />
+              <CustomTables
+                data={data.Production}
+                title="Production"
+                activeCol={getActiveShiftIndex()}
+              />
             </div>
             <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419] dotted-bg">
-              <CustomContainer title="Daily Production & OEE">
+              <CustomContainer headingLeft="Daily Production & OEE">
                 <CustomComposed
                   data={Object.entries(graphInfo.data).map(([key, value]) => ({
                     name: key,
@@ -160,8 +179,9 @@ export default function MachineData({ machineId }) {
               }
             >
               <GauzeWithHeader
-                title={"Speed (Shift-A)"}
-                subTitle={"Per/min"}
+                heading={"Speed"}
+                subHeading={"(Shift-A)"}
+                uom={"Per/min"}
                 value={data.Speed["Shift-A"]}
                 redFrom={200}
                 redTo={500}
@@ -178,8 +198,9 @@ export default function MachineData({ machineId }) {
               }
             >
               <GauzeWithHeader
-                title={"Speed (Shift-B)"}
-                subTitle={"Per/min"}
+                heading={"Speed"}
+                subHeading={"(Shift-B)"}
+                uom={"Per/min"}
                 value={data.Speed["Shift-B"]}
                 redFrom={200}
                 redTo={500}
@@ -196,8 +217,9 @@ export default function MachineData({ machineId }) {
               }
             >
               <GauzeWithHeader
-                title={"Speed (Shift-C)"}
-                subTitle={"Per/min"}
+                heading={"Speed"}
+                subHeading={"(Shift-C)"}
+                uom={"Per/min"}
                 value={data.Speed["Shift-C"]}
                 redFrom={200}
                 redTo={500}

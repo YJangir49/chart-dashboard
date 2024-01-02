@@ -19,7 +19,7 @@ const CustomPie = ({ data, title, unit }) => {
         },
         title: "",
         is3D: true,
-        backgroundColor: "#151419",
+        backgroundColor: "none",
         legend: {
           textStyle: {
             color: "white",

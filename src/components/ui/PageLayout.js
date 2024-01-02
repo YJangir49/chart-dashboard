@@ -60,17 +60,20 @@ export default function PageLayout() {
             />
           </div>
           <div className="col-span-3 row-span-3 col-start-1 row-start-2 bg-[#151419] dotted-bg">
-            <CustomContainer title="Sound" subTitle="dB">
+            <CustomContainer headingLeft="Sound" headingRight="dB">
               <CustomPie data={utility.Sound} title="Sound" unit={"db"} />
             </CustomContainer>
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]  dotted-bg">
-            <CustomContainer title="dB Meter-1" subTitle="last 8 hours">
+            <CustomContainer
+              headingLeft="dB Meter-1"
+              headingRight="last 8 hours"
+            >
               <CustomLine />
             </CustomContainer>
           </div>
           <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]  dotted-bg">
-            <CustomContainer title="Bag-Filter">
+            <CustomContainer headingLeft="Bag-Filter">
               <SwitchBoard data={utility.Bag} />
             </CustomContainer>
           </div>
@@ -88,7 +91,10 @@ export default function PageLayout() {
             />
           </div>
           <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]  dotted-bg">
-            <CustomContainer title="Power Consumption" subTitle="(KWH/ton)">
+            <CustomContainer
+              headingLeft="Power Consumption"
+              headingRight="(KWH/ton)"
+            >
               <CustomBar
                 data={barData}
                 xKey={"DateAndTime"}
@@ -99,8 +105,8 @@ export default function PageLayout() {
           </div>
           <div className="col-span-2 row-span-2 col-start-4 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
-              title={"Power"}
-              subTitle={"KWH"}
+              heading={"Power"}
+              uom={"KWH"}
               value={utility.Shift["Shift-A"].Power}
               maxValue={5000}
               redFrom={2000}
@@ -113,8 +119,8 @@ export default function PageLayout() {
           </div>
           <div className="col-span-2 row-span-2 col-start-6 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
-              title={"Steam"}
-              subTitle={"Kg/hour"}
+              heading={"Steam"}
+              uom={"Kg/hour"}
               value={utility.Shift["Shift-A"].Steam}
               maxValue={1000}
               redFrom={600}
@@ -127,8 +133,8 @@ export default function PageLayout() {
           </div>
           <div className="col-span-2 row-span-2 col-start-8 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
-              title={"Air"}
-              subTitle={"CFM"}
+              heading={"Air"}
+              uom={"CFM"}
               value={utility.Shift["Shift-A"].Air}
               maxValue={5000}
               redFrom={2000}
@@ -141,8 +147,8 @@ export default function PageLayout() {
           </div>
           <div className="col-span-2 row-span-2 col-start-10 row-start-7 bg-[#151419]  dotted-bg">
             <GauzeWithHeader
-              title={"Water"}
-              subTitle={"Mt3/Hour"}
+              heading={"Water"}
+              uom={"Mt3/Hour"}
               value={utility.Shift["Shift-A"].Water}
               redFrom={200}
               redTo={500}

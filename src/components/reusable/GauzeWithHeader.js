@@ -2,8 +2,9 @@ import CustomContainer from "./CustomContainer";
 import CustomGaugeChart from "../charts/GauzeChart";
 
 const GauzeWithHeader = ({
-  title,
-  subTitle,
+  heading,
+  subHeading,
+  uom,
   value,
   minValue = 0,
   maxValue = 500,
@@ -28,8 +29,10 @@ const GauzeWithHeader = ({
 
   return (
     <CustomContainer
-      title={title}
-      subTitle={subTitle}
+      headingLeft={heading}
+      subHeadingLeft={subHeading}
+      headingRight={uom}
+      subHeadingRight={value}
       style={{
         display: "flex",
         justifyContent: "center",
