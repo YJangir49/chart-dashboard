@@ -21,24 +21,20 @@ code {
     monospace;
 }
 
-/* width */
 ::-webkit-scrollbar {
   width: 5px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 5px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #000;
   border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
@@ -60,4 +56,22 @@ code {
 
 .react-datepicker__input-container {
   display: none !important;
+}
+
+#customers td {
+  padding: 7px 0;
+  margin: 10px;
+}
+
+#customers tbody {
+  margin: 10px;
+}
+
+#customers td:first-child {
+  padding-left: 20px;
+  padding-right: 0;
+}
+
+.show {
+  left: 0;
 }
