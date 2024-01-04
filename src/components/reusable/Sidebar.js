@@ -18,13 +18,7 @@ export default function Sidebar2({ children }) {
           className="cursor-pointer bg-black p-4 rounded-full"
           onClick={() => setShow(!show)}
         >
-          <svg
-            // className="fixed cursor-pointer z-30 flex items-center right-10 top-6"
-            fill="#eb3939"
-            viewBox="0 0 100 80"
-            width="20"
-            height="20"
-          >
+          <svg fill="#eb3939" viewBox="0 0 100 80" width="20" height="20">
             <rect width="100" height="10"></rect>
             <rect y="30" width="100" height="10"></rect>
             <rect y="60" width="100" height="10"></rect>

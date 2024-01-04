@@ -48,7 +48,6 @@ const CustomLineLabel = ({ x, y, value }) => {
 };
 
 const CustomComposed = ({ data, xKey, yBarKey, yLineKey, xFormatter }) => {
-  console.log(data, xKey, yBarKey, yLineKey);
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <ComposedChart data={data}>

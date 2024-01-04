@@ -1,13 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import GauzeWithHeader from "./GauzeWithHeader";
 
 export default function OverviewGrid({ name, value, route }) {
-  const [graphInfo, setGraphInfo] = useState({
-    loading: false,
-    data: {},
-    shift: "Shift-A",
-  });
   const { OEE, OR, Shift_A, Shift_B, Shift_C } = value;
   return (
     <div className="grid grid-cols-12 grid-rows-3 gap-4 bg-[#d3dae2] mx-4 border-t-2 border-black my-2">
@@ -50,14 +44,10 @@ export default function OverviewGrid({ name, value, route }) {
           <p>{Shift_C.StopTime}</p>
         </div>
       </div>
-      <div
-        className="col-span-2 row-span-3 col-start-11 bg-transparent rounded-lg dotted-bg"
-        onClick={() => setGraphInfo((prev) => ({ ...prev, shift: "Shift-A" }))}
-      >
-        {/* <div className="dotted-bg cursor-pointer"> */}
+      <div className="col-span-2 row-span-3 col-start-11 bg-transparent rounded-lg dotted-bg">
         <GauzeWithHeader
           heading={"Speed"}
-          subHeading={"(Shift-A)"}
+          subHeading={"(Shift-B)"}
           uom={"Per/min"}
           value={Shift_A.Speed}
           // value={data.Speed["Shift-A"]}
@@ -68,7 +58,6 @@ export default function OverviewGrid({ name, value, route }) {
           greenFrom={0}
           greenTo={100}
         />
-        {/* </div> */}
       </div>
     </div>
   );
