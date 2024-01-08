@@ -46,12 +46,17 @@ const CustomLabel = ({ x, y, value, width, height }) => {
   );
 };
 
-const HorizontalBar = ({ data }) => {
+const HorizontalBar = ({ data, labelColor }) => {
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <BarChart data={data} layout="vertical">
-        <XAxis type="number" tick={<CustomXAxisLabel />} />
-        <YAxis dataKey="name" type="category" tick={<CustomYAxisLabel />} />
+        <XAxis type="number" tick={<CustomXAxisLabel fill={labelColor} />} />
+        <YAxis
+          dataKey="name"
+          type="category"
+          interval={0}
+          tick={<CustomYAxisLabel fill={labelColor} />}
+        />
         <Bar dataKey="value" fill="green" type="number">
           <LabelList dataKey="value" content={<CustomLabel />} />
         </Bar>

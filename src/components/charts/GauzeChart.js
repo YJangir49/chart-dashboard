@@ -34,7 +34,6 @@ const CustomGaugeChart = ({ gauzeOptions, data }) => {
         data={data}
         options={options}
       />
-      ;
     </div>
   );
 };

@@ -15,6 +15,7 @@ const GauzeWithHeader = ({
   yellowTo,
   greenFrom,
   greenTo,
+  hideHeader = false,
 }) => {
   const getMajorTicks = () => {
     const gap = (maxValue - minValue) / (noOfTicks - 1);
@@ -28,36 +29,59 @@ const GauzeWithHeader = ({
   };
 
   return (
-    <CustomContainer
-      headingLeft={heading}
-      subHeadingLeft={subHeading}
-      headingRight={uom}
-      subHeadingRight={value}
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItem: "center",
-      }}
-    >
-      <CustomGaugeChart
-        gauzeOptions={{
-          majorTicks: getMajorTicks(),
-          minorTicks: 10,
-          max: maxValue,
-          min: minValue,
-          redFrom,
-          redTo,
-          yellowFrom,
-          yellowTo,
-          greenFrom,
-          greenTo,
-        }}
-        data={[
-          ["Label", "Value"],
-          ["", value],
-        ]}
-      />
-    </CustomContainer>
+    <>
+      {hideHeader ? (
+        <CustomGaugeChart
+          gauzeOptions={{
+            majorTicks: getMajorTicks(),
+            minorTicks: 10,
+            max: maxValue,
+            min: minValue,
+            redFrom,
+            redTo,
+            yellowFrom,
+            yellowTo,
+            greenFrom,
+            greenTo,
+          }}
+          data={[
+            ["Label", "Value"],
+            ["", value],
+          ]}
+        />
+      ) : (
+        <CustomContainer
+          headingLeft={heading}
+          subHeadingLeft={subHeading}
+          headingRight={uom}
+          subHeadingRight={value}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItem: "center",
+          }}
+        >
+          <CustomGaugeChart
+            gauzeOptions={{
+              majorTicks: getMajorTicks(),
+              minorTicks: 10,
+              max: maxValue,
+              min: minValue,
+              redFrom,
+              redTo,
+              yellowFrom,
+              yellowTo,
+              greenFrom,
+              greenTo,
+            }}
+            data={[
+              ["Label", "Value"],
+              ["", value],
+            ]}
+          />
+        </CustomContainer>
+      )}
+    </>
   );
 };
 

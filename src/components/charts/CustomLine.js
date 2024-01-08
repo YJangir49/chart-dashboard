@@ -24,7 +24,7 @@ const getData = (hours) => {
 };
 
 const CustomLine = () => {
-  const [data] = useState(getData(10));
+  const [data] = useState(getData(3));
 
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
@@ -33,7 +33,7 @@ const CustomLine = () => {
         <XAxis
           dataKey="name"
           tick={<CustomXAxisLabel />}
-          ticks={[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]}
+          ticks={[10, 9, 8, 7, 6, 5, 4, 3, 2, 1, "0"]}
         />
         <YAxis
           tick={<CustomYAxisLabel />}

@@ -7,7 +7,7 @@ import Sidebar from "../reusable/Sidebar";
 import OverviewGrid from "../reusable/OverviewGrid";
 
 export default function Overview() {
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
   const fetchOverViewData = async () => {

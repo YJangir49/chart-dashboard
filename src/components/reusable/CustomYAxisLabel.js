@@ -1,6 +1,6 @@
-const CustomYAxisLabel = ({ x, y, payload }) => {
+const CustomYAxisLabel = ({ x, y, payload, fill = "white" }) => {
   return (
-    <text x={x} y={y} dx={-16} fill="white" fontSize={12} textAnchor="middle">
+    <text x={x} y={y} dx={-16} fill={fill} fontSize={12} textAnchor="middle">
       {payload.value}
     </text>
   );

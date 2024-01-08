@@ -13,13 +13,11 @@ import { dateFormat } from "../../utils/date";
 import { APP_URL } from ".././../constants/url";
 import { addDays } from "date-fns";
 import Loader from "../reusable/Loader";
-import { tpUtilityConstant } from "../../data";
-import { generateDataBetweenDates } from "../../utils/mockDataGenerator";
 
 export default function PerformanceDashboard() {
   const [loding, setLoding] = useState(true);
-  const [utility, setUtilityData] = useState({});
-  const [barData, setBarData] = useState();
+  const [utility, setUtilityData] = useState();
+  const [barData, setBarData] = useState([]);
   const [timeData, setTimeData] = useState({
     live: true,
     date: new Date(),
@@ -38,13 +36,10 @@ export default function PerformanceDashboard() {
         if (response) {
           const data = response.data;
           setUtilityData(data);
-        } else {
-          setUtilityData(tpUtilityConstant);
         }
       })
       .catch((err) => {
         console.log(err);
-        setUtilityData(tpUtilityConstant);
       })
       .finally(() => setLoding(false));
   }, []);
@@ -64,19 +59,16 @@ export default function PerformanceDashboard() {
         if (response) {
           const data = response.data;
           setBarData(data);
-        } else {
-          setBarData(generateDataBetweenDates(startDate, endDate));
         }
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       })
       .catch((err) => {
         console.log(err);
-        setBarData(generateDataBetweenDates(startDate, endDate));
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
   }, [timeData.live, graphInfo.type, timeData.date]);
 
-  if (!utility) {
+  if (!loding && !utility) {
     return <></>;
   }
 
@@ -99,6 +91,7 @@ export default function PerformanceDashboard() {
                 onLiveChange={(data) => {
                   setTimeData((prev) => ({ ...prev, ...data }));
                 }}
+                runningStatus={1} //Replace key
               />
             </div>
             <div className="col-span-3 row-span-3 col-start-1 row-start-2 bg-[#151419] dotted-bg">

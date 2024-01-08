@@ -9,6 +9,7 @@ export default function LogoSection({
   isLive,
   onLiveChange,
   children,
+  runningStatus = 0,
 }) {
   const [show, setShow] = useState();
 
@@ -25,9 +26,9 @@ export default function LogoSection({
         </div>
 
         <div className="flex">
-          <CustomButton name={pageName} />
+          <CustomButton name={pageName} status={runningStatus} />
           <Link to="/">
-            <div className="w-8 h-8 mt-2 cursor-pointer">
+            <div className="w-8 h-8 mt-2 ml-2 cursor-pointer">
               <img
                 height={"100%"}
                 width={"100%"}
