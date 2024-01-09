@@ -35,18 +35,28 @@ export default function PerformanceDashboard() {
 
 
   useEffect(() => {
-    axios
-      .get(`${APP_URL}/tp/utility/constants`)
-      .then((response) => {
+    const fetchUtitlityConstants = async (intervalId) => {
+      try{
+        const response = await axios.get(`${APP_URL}/tp/utility/constants`)
         if (response) {
           const data = response.data;
           setUtilityData(data);
         }
-      })
-      .catch((err) => {
+      }
+      catch(err){
+        if(intervalId) clearInterval(intervalId)
         console.log(err)
-      })
-      .finally(() => setLoding(false));
+      }
+      setLoding(false)
+    }
+    fetchUtitlityConstants()
+
+    const intervalId = setInterval(() => {
+      fetchUtitlityConstants(intervalId);
+    }, process.env.REACT_APP_API_CALL_TIME || 60000);
+    
+    return () => clearInterval(intervalId);
+
   }, []);
 
   useEffect(() => {
