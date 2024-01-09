@@ -10,12 +10,13 @@ export default function Overview() {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
-  const fetchOverViewData = async () => {
+  const fetchOverViewData = async (intervalId) => {
     try {
       const response = await axios.get(`${APP_URL}/tp/overview`);
       if (response) {
         setData(response.data);
       } else {
+        if(intervalId) clearInterval(intervalId)
         throw new Error("No data received");
       }
     } catch (e) {
@@ -25,7 +26,15 @@ export default function Overview() {
   };
 
   useEffect(() => {
+    
     fetchOverViewData();
+
+    const intervalId = setInterval(() => {
+      fetchOverViewData(intervalId);
+    }, process.env.REACT_APP_API_CALL_TIME || 60000);
+    
+    return () => clearInterval(intervalId);
+
   }, []);
 
   return (

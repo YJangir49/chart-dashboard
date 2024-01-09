@@ -11,7 +11,7 @@ import Loader from "../reusable/Loader";
 import { converter } from "../../utils/helper";
 import { addDays } from "date-fns";
 import { dateFormat } from "../../utils/date";
-import { MACHINE_ROUTE_MAP } from "../../constants/routes";
+import { KEY_MAP, MACHINE_ROUTE_MAP } from "../../constants/routes";
 import { APP_URL } from "../../constants/url";
 import { useAppContext } from "../appContext";
 
@@ -45,20 +45,35 @@ export default function MachineData({ machineId }) {
     }
   };
 
+
+
   useEffect(() => {
-    const fetchTGMData = async () => {
+    const fetchTGMData = async (intervalId) => {
       try {
         const response = await axios.get(`${APP_URL}/tp/${machineId}`);
         if (response) {
           setData(converter(response.data.Shift));
         }
       } catch (e) {
+        if(intervalId){
+          clearInterval(intervalId)
+        }
         console.log(e);
       }
       setLoading(false);
     };
+
     fetchTGMData();
+
+    const intervalId = setInterval(() => {
+      fetchTGMData(intervalId);
+    }, process.env.REACT_APP_API_CALL_TIME || 60000);
+    
+    return () => clearInterval(intervalId);
+
   }, [machineId]);
+
+
 
   useEffect(() => {
     const startDate = timeData.date.from.getTime();
@@ -124,7 +139,7 @@ export default function MachineData({ machineId }) {
                     headingRight={"(Nos)"}
                   >
                     <HorizontalBar
-                      data={Object.entries(data.Production.TGM).map(
+                      data={Object.entries(data.Production[KEY_MAP[machineId]]).map(
                         (entry) => ({
                           name: entry[0],
                           value: entry[1],

@@ -25,3 +25,18 @@ export const OVER_VIEW_ROUTES = {
   "PACMAC-4": "/tp/pacmac4",
   "PACMAC-5": "/tp/pacmac5",
 };
+
+
+export const KEY_MAP = {
+  tgm1: "TGM",
+  tgm2: "TGM",
+  tgm3: "TGM",
+  tgm4: "TGM",
+  n1: "NORDEN",
+  n2: "NORDEN",
+  pacmac1: "PACMAC",
+  pacmac2: "PACMAC",
+  pacmac3: "PACMAC",
+  pacmac4: "PACMAC",
+  pacmac5: "PACMAC",
+};
