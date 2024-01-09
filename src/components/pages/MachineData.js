@@ -62,7 +62,7 @@ export default function MachineData({ machineId }) {
 
   useEffect(() => {
     const startDate = timeData.date.from.getTime();
-    const endDate = timeData.date.end.getTime();
+    const endDate = timeData.date.to.getTime();
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios

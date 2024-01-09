@@ -4,7 +4,7 @@ import { ShiftTimings } from "../constants/shifts";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [activeShift, setActiveShift] = useState(null);
+  const [activeShift, setActiveShift] = useState("Shift-A"); //Default Shift A
   const [sideBarOpen, setSideBarOpen] = useState(false);
 
   useEffect(() => {
