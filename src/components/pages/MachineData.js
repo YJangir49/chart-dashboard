@@ -20,7 +20,10 @@ export default function MachineData({ machineId }) {
   const [data, setData] = useState();
   const [timeData, setTimeData] = useState({
     live: true,
-    date: new Date(),
+    date: {
+      from: addDays(new Date(), -10),
+      to: new Date()
+    },
   });
 
   const { activeShift } = useAppContext();
@@ -58,8 +61,8 @@ export default function MachineData({ machineId }) {
   }, [machineId]);
 
   useEffect(() => {
-    const startDate = addDays(timeData.date, -10).getTime();
-    const endDate = timeData.date.getTime();
+    const startDate = timeData.date.from.getTime();
+    const endDate = timeData.date.end.getTime();
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
@@ -94,6 +97,7 @@ export default function MachineData({ machineId }) {
                   <LogoSection
                     pageName={MACHINE_ROUTE_MAP[machineId]}
                     isLive={timeData.live}
+                    dateRange={timeData.date}
                     onLiveChange={(data) =>
                       setTimeData((prev) => ({ ...prev, ...data }))
                     }

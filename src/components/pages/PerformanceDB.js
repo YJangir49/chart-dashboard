@@ -20,7 +20,11 @@ export default function PerformanceDashboard() {
   const [barData, setBarData] = useState([]);
   const [timeData, setTimeData] = useState({
     live: true,
-    date: new Date(),
+    date: {
+      from: addDays(new Date(), -10),
+      to: new Date()
+    },
+    
   });
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -28,6 +32,7 @@ export default function PerformanceDashboard() {
     unit: "KWH/ton",
     label: "Power Consumption",
   });
+
 
   useEffect(() => {
     axios
@@ -39,14 +44,14 @@ export default function PerformanceDashboard() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err)
       })
       .finally(() => setLoding(false));
   }, []);
 
   useEffect(() => {
-    const startDate = addDays(timeData.date, -10).getTime();
-    const endDate = timeData.date.getTime();
+    const startDate = timeData.date.from.getTime();
+    const endDate = timeData.date.to.getTime();
     const body = {
       startDate,
       endDate,
@@ -88,10 +93,11 @@ export default function PerformanceDashboard() {
               <LogoSection
                 pageName={"TP"}
                 isLive={timeData.live}
+                dateRange={timeData.date}
                 onLiveChange={(data) => {
                   setTimeData((prev) => ({ ...prev, ...data }));
                 }}
-                runningStatus={1} //Replace key
+                runningStatus={1} //Replace key from the running status key from api response
               />
             </div>
             <div className="col-span-3 row-span-3 col-start-1 row-start-2 bg-[#151419] dotted-bg">

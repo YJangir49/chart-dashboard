@@ -54,9 +54,9 @@ code {
   background-position: -19px -19px;
 }
 
-.react-datepicker__input-container {
+/* .react-datepicker__input-container {
   display: none !important;
-}
+} */
 
 #customers td {
   padding: 7px 0;
