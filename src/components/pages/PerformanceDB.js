@@ -22,9 +22,8 @@ export default function PerformanceDashboard() {
     live: true,
     date: {
       from: addDays(new Date(), -10),
-      to: new Date()
+      to: new Date(),
     },
-    
   });
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -33,30 +32,27 @@ export default function PerformanceDashboard() {
     label: "Power Consumption",
   });
 
-
   useEffect(() => {
     const fetchUtitlityConstants = async (intervalId) => {
-      try{
-        const response = await axios.get(`${APP_URL}/tp/utility/constants`)
+      try {
+        const response = await axios.get(`${APP_URL}/tp/utility/constants`);
         if (response) {
           const data = response.data;
           setUtilityData(data);
         }
+      } catch (err) {
+        if (intervalId) clearInterval(intervalId);
+        console.log(err);
       }
-      catch(err){
-        if(intervalId) clearInterval(intervalId)
-        console.log(err)
-      }
-      setLoding(false)
-    }
-    fetchUtitlityConstants()
+      setLoding(false);
+    };
+    fetchUtitlityConstants();
 
     const intervalId = setInterval(() => {
       fetchUtitlityConstants(intervalId);
     }, process.env.REACT_APP_API_CALL_TIME || 60000);
-    
-    return () => clearInterval(intervalId);
 
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -86,6 +82,8 @@ export default function PerformanceDashboard() {
   if (!loding && !utility) {
     return <></>;
   }
+
+  console.log(graphInfo);
 
   return (
     <>
@@ -143,8 +141,8 @@ export default function PerformanceDashboard() {
             </div>
             <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]  dotted-bg">
               <CustomContainer
-                title={graphInfo.label}
-                subTitle={graphInfo.unit}
+                headingLeft={graphInfo.label}
+                headingRight={graphInfo.unit}
               >
                 {graphInfo.loading ? (
                   <Loader />
