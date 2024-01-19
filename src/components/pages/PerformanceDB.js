@@ -13,23 +13,26 @@ import { dateFormat } from "../../utils/date";
 import { APP_URL } from ".././../constants/url";
 import { addDays } from "date-fns";
 import Loader from "../reusable/Loader";
+import { useAppContext } from "../appContext";
 
 export default function PerformanceDashboard() {
   const [loding, setLoding] = useState(true);
   const [utility, setUtilityData] = useState();
   const [barData, setBarData] = useState([]);
-  const [timeData, setTimeData] = useState({
-    live: true,
-    date: {
-      from: addDays(new Date(), -10),
-      to: new Date(),
-    },
-  });
+  const { activeShift } = useAppContext();
+
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
     type: "power",
     unit: "KWH/ton",
     label: "Power Consumption",
+  });
+
+  const [timeData, setTimeData] = useState({
+    live: true,
+    date: new Date(),
+    activeShift,
+    noOfDays: 10,
   });
 
   useEffect(() => {
@@ -56,8 +59,8 @@ export default function PerformanceDashboard() {
   }, []);
 
   useEffect(() => {
-    const startDate = timeData.date.from.getTime();
-    const endDate = timeData.date.to.getTime();
+    const endDate = timeData.date.getTime();
+    const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
     const body = {
       startDate,
       endDate,
@@ -77,7 +80,13 @@ export default function PerformanceDashboard() {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [timeData.live, graphInfo.type, timeData.date]);
+  }, [
+    timeData.live,
+    graphInfo.type,
+    timeData.date,
+    timeData.activeShift,
+    timeData.noOfDays,
+  ]);
 
   if (!loding && !utility) {
     return <></>;
@@ -100,11 +109,8 @@ export default function PerformanceDashboard() {
             <div className="col-span-3 row-span-1">
               <LogoSection
                 pageName={"TP"}
-                isLive={timeData.live}
-                dateRange={timeData.date}
-                onLiveChange={(data) => {
-                  setTimeData((prev) => ({ ...prev, ...data }));
-                }}
+                timeData={timeData}
+                setTimeData={setTimeData}
                 runningStatus={1} //Replace key from the running status key from api response
               />
             </div>

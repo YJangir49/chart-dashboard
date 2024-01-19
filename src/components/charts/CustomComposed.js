@@ -13,7 +13,7 @@ import {
 import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
 import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
 
-const CustomLabel = ({ x, y, value, width, height, index }) => {
+const CustomLabel = ({ x, y, value = 0, width }) => {
   const fontSize = 10;
   const labelHeight = 14;
   const labelWidth = width * 0.8;
@@ -33,13 +33,13 @@ const CustomLabel = ({ x, y, value, width, height, index }) => {
         fill="white"
       />
       <text x={x + width * 0.1 + 4} y={textY} fill="black" fontSize={fontSize}>
-        {value.toFixed(2)}
+        {`${value.toFixed(2)} ton`}
       </text>
     </g>
   );
 };
 
-const CustomLineLabel = ({ x, y, value }) => {
+const CustomLineLabel = ({ x, y, value = 0 }) => {
   return (
     <text x={x} y={y} dy={-6} dx={-6} fill="white" fontSize={12}>
       {`${value.toFixed(2)} %`}

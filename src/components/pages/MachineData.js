@@ -18,13 +18,6 @@ import { useAppContext } from "../appContext";
 export default function MachineData({ machineId }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
-  const [timeData, setTimeData] = useState({
-    live: true,
-    date: {
-      from: addDays(new Date(), -10),
-      to: new Date()
-    },
-  });
 
   const { activeShift } = useAppContext();
 
@@ -32,6 +25,13 @@ export default function MachineData({ machineId }) {
     loading: false,
     data: {},
     shift: activeShift,
+  });
+
+  const [timeData, setTimeData] = useState({
+    live: true,
+    date: new Date(),
+    activeShift,
+    noOfDays: 10,
   });
 
   const getActiveShiftIndex = () => {
@@ -45,8 +45,6 @@ export default function MachineData({ machineId }) {
     }
   };
 
-
-
   useEffect(() => {
     const fetchTGMData = async (intervalId) => {
       try {
@@ -55,8 +53,8 @@ export default function MachineData({ machineId }) {
           setData(converter(response.data.Shift));
         }
       } catch (e) {
-        if(intervalId){
-          clearInterval(intervalId)
+        if (intervalId) {
+          clearInterval(intervalId);
         }
         console.log(e);
       }
@@ -68,16 +66,13 @@ export default function MachineData({ machineId }) {
     const intervalId = setInterval(() => {
       fetchTGMData(intervalId);
     }, process.env.REACT_APP_API_CALL_TIME || 60000);
-    
-    return () => clearInterval(intervalId);
 
+    return () => clearInterval(intervalId);
   }, [machineId]);
 
-
-
   useEffect(() => {
-    const startDate = timeData.date.from.getTime();
-    const endDate = timeData.date.to.getTime();
+    const endDate = timeData.date.getTime();
+    const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
@@ -92,7 +87,13 @@ export default function MachineData({ machineId }) {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [timeData.live, timeData.date, machineId]);
+  }, [
+    timeData.live,
+    timeData.date,
+    timeData.activeShift,
+    timeData.noOfDays,
+    machineId,
+  ]);
 
   return (
     <>
@@ -111,11 +112,8 @@ export default function MachineData({ machineId }) {
                 <div className="col-span-3 row-span-2">
                   <LogoSection
                     pageName={MACHINE_ROUTE_MAP[machineId]}
-                    isLive={timeData.live}
-                    dateRange={timeData.date}
-                    onLiveChange={(data) =>
-                      setTimeData((prev) => ({ ...prev, ...data }))
-                    }
+                    timeData={timeData}
+                    setTimeData={setTimeData}
                     runningStatus={data.RunningStatus}
                   >
                     <div className="flex justify-between px-2 text-sm mt-5">
@@ -139,12 +137,12 @@ export default function MachineData({ machineId }) {
                     headingRight={"(Nos)"}
                   >
                     <HorizontalBar
-                      data={Object.entries(data.Production[KEY_MAP[machineId]]).map(
-                        (entry) => ({
-                          name: entry[0],
-                          value: entry[1],
-                        })
-                      )}
+                      data={Object.entries(
+                        data.Production[KEY_MAP[machineId]]
+                      ).map((entry) => ({
+                        name: entry[0],
+                        value: entry[1],
+                      }))}
                     />
                   </CustomContainer>
                 </div>
@@ -189,19 +187,23 @@ export default function MachineData({ machineId }) {
                 </div>
                 <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419] dotted-bg">
                   <CustomContainer headingLeft="Daily Production & OEE">
-                    <CustomComposed
-                      data={Object.entries(graphInfo.data).map(
-                        ([key, value]) => ({
-                          name: key,
-                          value: value.Shift[graphInfo.shift].Production,
-                          oee: value.OEE,
-                        })
-                      )}
-                      xKey={"name"}
-                      yBarKey={"value"}
-                      yLineKey={"oee"}
-                      xFormatter={dateFormat}
-                    />
+                    {graphInfo.loading ? (
+                      <Loader />
+                    ) : (
+                      <CustomComposed
+                        data={Object.entries(graphInfo.data).map(
+                          ([key, value]) => ({
+                            name: key,
+                            value: value.Shift[graphInfo.shift].Production,
+                            oee: value.OEE,
+                          })
+                        )}
+                        xKey={"name"}
+                        yBarKey={"value"}
+                        yLineKey={"oee"}
+                        xFormatter={dateFormat}
+                      />
+                    )}
                   </CustomContainer>
                 </div>
                 <div

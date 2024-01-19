@@ -30,7 +30,7 @@ export default function Overview() {
 
     const intervalId = setInterval(() => {
       fetchOverViewData(intervalId);
-    }, process.env.REACT_APP_API_CALL_TIME || 5000);
+    }, process.env.REACT_APP_API_CALL_TIME || 60000);
 
     return () => clearInterval(intervalId);
   }, []);
