@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const NotFound = () => {
-  console.log("I rendered");
   return (
     <div
       className="w-full h-screen bg-cover bg-center p-10"

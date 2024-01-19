@@ -92,8 +92,6 @@ export default function PerformanceDashboard() {
     return <></>;
   }
 
-  console.log(graphInfo);
-
   return (
     <>
       <div
