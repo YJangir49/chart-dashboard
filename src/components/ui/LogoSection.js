@@ -12,7 +12,7 @@ export default function LogoSection({
 }) {
   const [show, setShow] = useState(false);
   return (
-    <div className="flex h-full flex-col ">
+    <div className="flex h-full flex-col">
       <div className="flex justify-between p-2">
         <div className="w-16 h-16">
           <img
@@ -23,18 +23,25 @@ export default function LogoSection({
           />
         </div>
 
-        <div className="flex">
-          <CustomButton name={pageName} status={runningStatus} />
-          <Link to="/">
-            <div className="w-8 h-8 mt-2 ml-2 cursor-pointer">
-              <img
-                height={"100%"}
-                width={"100%"}
-                src="/images/home-icon.png"
-                alt="home-icon"
-              />
-            </div>
-          </Link>
+        <div className="flex flex-col">
+          <div className="flex">
+            <CustomButton name={pageName} status={runningStatus} />
+            <Link to="/">
+              <div className="w-8 h-8 mt-2 ml-2 cursor-pointer">
+                <img
+                  height={"100%"}
+                  width={"100%"}
+                  src="/images/home-icon.png"
+                  alt="home-icon"
+                />
+              </div>
+            </Link>
+          </div>
+          <div className="text-center rounded-lg bg-gray-400">
+            <p className="text-sm text-slate-900 font-bold py-1">
+              Date: 23-05-2024
+            </p>
+          </div>
         </div>
       </div>
 

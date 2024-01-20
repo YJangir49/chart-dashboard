@@ -91,13 +91,14 @@ const QualityDB = () => {
         </>
       )}
       <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
-        <div className="col-span-3 row-span-2">
+        <div className="col-span-3 row-span-3">
           <LogoSection
             pageName={"Quality"}
             timeData={timeData}
             setTimeData={setTimeData}
             runningStatus={1} //Replace key from the running status key from api response
           >
+            <p className="mt-6 text-sm font-bold ml-2">Date: 23-jan-2024</p>
             <select
               className="mt-8"
               value={mixer}
@@ -109,9 +110,11 @@ const QualityDB = () => {
               <option value={MIXERS.m4}>{MIXER_TYPE_MAP[MIXERS.m4]}</option>
               <option value={MIXERS.m5}>{MIXER_TYPE_MAP[MIXERS.m5]}</option>
             </select>
-            <div className="mt-2 flex flex-row gap-2">
-              <p>Auto rotate all mixers</p>
+            <div className="mt-12 flex items-center gap-2">
+              <p className="font-bold text-sm">Auto-rotate All Mixers:</p>
+
               <input
+                className="mt-1 ml-2"
                 type="checkbox"
                 checked={autoRotateMixers}
                 onChange={() => setAutoRotateMixers((prev) => !prev)}

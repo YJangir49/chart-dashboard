@@ -14,12 +14,18 @@ const SpecificTimeModal = ({
   onClose,
 }) => {
   const ref = useRef(null);
+  const datePickerRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [numberOfDays, setNumberOfDays] = useState(noOfDays);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !isDatePickerOpen
+      ) {
         onClose();
       }
     };
@@ -27,7 +33,7 @@ const SpecificTimeModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isDatePickerOpen]);
 
   return (
     <div
@@ -51,12 +57,15 @@ const SpecificTimeModal = ({
               renderInput={(props) => <TextField {...props} fullWidth />}
               className="w-[70%]"
               views={["year", "day", "hours", "minutes", "seconds"]}
+              onOpen={() => setIsDatePickerOpen(true)}
+              onClose={() => setIsDatePickerOpen(false)}
             />
           </LocalizationProvider>
         </div>
         <div className="flex flex-row items-center gap-4">
           <p>No of days in trend: </p>
           <TextField
+            // ref={datePickerRef}
             type="number"
             value={numberOfDays}
             onChange={(event) => setNumberOfDays(event.target.value)}
