@@ -11,13 +11,14 @@ import Loader from "../reusable/Loader";
 import { converter } from "../../utils/helper";
 import { addDays } from "date-fns";
 import { dateFormat } from "../../utils/date";
-import { KEY_MAP, MACHINE_ROUTE_MAP } from "../../constants/routes";
+import { MACHINE_ROUTE_MAP } from "../../constants/routes";
 import { APP_URL } from "../../constants/url";
 import { useAppContext } from "../appContext";
 import { UTILITY_DATA_TIME } from "../../constants/config";
 
 export default function MachineData({ machineId }) {
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoding] = useState(true);
+  const [utilitiesLoading, setUtilitiesLoding] = useState(true);
   const [data, setData] = useState();
 
   const { activeShift, activeShiftIndex } = useAppContext();
@@ -32,34 +33,41 @@ export default function MachineData({ machineId }) {
   const [timeData, setTimeData] = useState({
     live: true,
     date: new Date(),
-    activeShift,
     noOfDays: 10,
   });
 
   useEffect(() => {
-    const fetchTGMData = async (intervalId) => {
+    // This code block will set new Date in every one minutes for live data
+    let liveDateIncrementIn60SecIntervalId;
+    if (timeData.live) {
+      liveDateIncrementIn60SecIntervalId = setInterval(() => {
+        setTimeData((prev) => ({ ...prev, date: new Date() }));
+      }, UTILITY_DATA_TIME);
+    }
+    return () => clearInterval(liveDateIncrementIn60SecIntervalId);
+  }, [timeData.live]);
+
+  useEffect(() => {
+    const fetchTGMData = async () => {
       try {
-        const response = await axios.get(`${APP_URL}/tp/${machineId}`);
+        setUtilitiesLoding(true);
+        const response = timeData.live
+          ? await axios.get(`${APP_URL}/tp/${machineId}`)
+          : await axios.post(`${APP_URL}/tp/${machineId}`, {
+              startDate: timeData.date.getTime(),
+            });
         if (response) {
           setData(converter(response.data.Shift));
         }
-      } catch (e) {
-        if (intervalId) {
-          clearInterval(intervalId);
-        }
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
-      setLoading(false);
+      setPageLoding(false);
+      setUtilitiesLoding(false);
     };
 
     fetchTGMData();
-
-    const intervalId = setInterval(() => {
-      fetchTGMData(intervalId);
-    }, UTILITY_DATA_TIME);
-
-    return () => clearInterval(intervalId);
-  }, [machineId]);
+  }, [machineId, timeData.live, timeData.date]);
 
   useEffect(() => {
     const endDate = timeData.date.getTime();
@@ -78,13 +86,7 @@ export default function MachineData({ machineId }) {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [
-    timeData.live,
-    timeData.date,
-    timeData.activeShift,
-    timeData.noOfDays,
-    machineId,
-  ]);
+  }, [timeData.date, timeData.noOfDays, machineId]);
 
   const entries = Object.entries(graphInfo.data);
   let shiftData = {
@@ -102,7 +104,7 @@ export default function MachineData({ machineId }) {
         className="w-full h-screen bg-no-repeat bg-cover bg-center p-2"
         style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
       >
-        {loading ? (
+        {pageLoading ? (
           <div className="h-screen">
             <Loader dotStyle={{ backgroundColor: "black" }} />
           </div>
@@ -110,6 +112,12 @@ export default function MachineData({ machineId }) {
           <>
             {data ? (
               <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
+                {utilitiesLoading && (
+                  <>
+                    <div className="absolute inset-0 bg-black opacity-90 z-40"></div>
+                    <Loader className="bg-white" />
+                  </>
+                )}
                 <div className="col-span-3 row-span-2">
                   <LogoSection
                     pageName={MACHINE_ROUTE_MAP[machineId]}
@@ -206,7 +214,7 @@ export default function MachineData({ machineId }) {
                 </div>
                 <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419] dotted-bg">
                   <CustomContainer headingLeft="Daily Production & OEE">
-                    {graphInfo.loading ? (
+                    {!utilitiesLoading && graphInfo.loading ? (
                       <Loader />
                     ) : (
                       <CustomComposed
