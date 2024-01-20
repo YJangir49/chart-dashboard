@@ -87,16 +87,6 @@ export default function LogoSection({
         </div>
         {children}
       </div>
-
-      {pageName === "Quality" && (
-        <select name="cars" id="cars" className="mt-8">
-          <option value="m-1">Mixer-1</option>
-          <option value="m-2">Mixer-2</option>
-          <option value="m-3">Mixer-3</option>
-          <option value="m-4">Mixer-4</option>
-          <option value="m-5">Mixer-5</option>
-        </select>
-      )}
     </div>
   );
 }

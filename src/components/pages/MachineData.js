@@ -14,6 +14,7 @@ import { dateFormat } from "../../utils/date";
 import { KEY_MAP, MACHINE_ROUTE_MAP } from "../../constants/routes";
 import { APP_URL } from "../../constants/url";
 import { useAppContext } from "../appContext";
+import { UTILITY_DATA_TIME } from "../../constants/config";
 
 export default function MachineData({ machineId }) {
   const [loading, setLoading] = useState(true);
@@ -54,7 +55,7 @@ export default function MachineData({ machineId }) {
 
     const intervalId = setInterval(() => {
       fetchTGMData(intervalId);
-    }, process.env.REACT_APP_API_CALL_TIME || 60000);
+    }, UTILITY_DATA_TIME);
 
     return () => clearInterval(intervalId);
   }, [machineId]);

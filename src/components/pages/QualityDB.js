@@ -1,58 +1,95 @@
 import React, { useEffect, useState } from "react";
 import LogoSection from "../ui/LogoSection";
-// import { useAppContext } from "../appContext";
 import CustomContainer from "../reusable/CustomContainer";
-import CustomLine from "../charts/CustomLine";
 import { APP_URL } from "../../constants/url";
 import axios from "axios";
 import { addDays } from "date-fns";
+import { MIXERS, MIXER_TYPE_MAP } from "../../constants/mixer";
+import Loader from "../reusable/Loader";
+import Multiline from "../charts/MultilineGraph";
+import {
+  MIXER_CYCLE_DATA_TIME,
+  MIXER_LIVE_DATA_RENEW_TIME,
+} from "../../constants/config";
 
 const QualityDB = () => {
+  const [loading, setLoading] = useState(true);
+
+  const [mixer, setMixer] = useState(MIXERS.m1);
+  const [autoRotateMixers, setAutoRotateMixers] = useState(false);
+  const [data, setData] = useState([]);
+
   const [timeData, setTimeData] = useState({
     live: true,
     date: new Date(),
-    // activeShift,
     noOfDays: 10,
   });
 
-  // const { activeShift } = useAppContext();
+  useEffect(() => {
+    // This code block will set new Date in every one minutes for live data
+    let interval;
+    if (autoRotateMixers) {
+      const mixers = Object.values(MIXERS);
+      const currentMixerIndex = mixers.findIndex((m) => m === mixer);
+      let nextMixer =
+        currentMixerIndex === mixers.length - 1
+          ? mixers[0]
+          : mixers[currentMixerIndex + 1];
+
+      interval = setInterval(() => {
+        setMixer(nextMixer);
+      }, MIXER_CYCLE_DATA_TIME);
+    }
+    return () => clearInterval(interval);
+  }, [autoRotateMixers, mixer]);
 
   useEffect(() => {
+    // This code block will set new Date in every one minutes for live data
+    let liveDataRenewIntervalId;
+    if (timeData.live) {
+      liveDataRenewIntervalId = setInterval(() => {
+        setTimeData((prev) => ({ ...prev, date: new Date() }));
+      }, MIXER_LIVE_DATA_RENEW_TIME);
+    }
+    return () => clearInterval(liveDataRenewIntervalId);
+  }, [timeData.live]);
+
+  useEffect(() => {
+    setLoading(true);
     const endDate = timeData.date.getTime();
     const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
     const body = {
       startDate,
       endDate,
-      type: "m2",
+      type: mixer,
     };
-    // setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
       .post(`${APP_URL}/tp/mixer`, body)
       .then((response) => {
         if (response) {
           const data = response.data;
           console.log("QDB-data", data);
-          // setBarData(data);
+          setData(data);
         }
-        // setGraphInfo((prev) => ({ ...prev, loading: false }));
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        // setGraphInfo((prev) => ({ ...prev, loading: false }));
+        setLoading(false);
       });
-  }, [
-    timeData.live,
-    // graphInfo.type,
-    timeData.date,
-    timeData.activeShift,
-    timeData.noOfDays,
-  ]);
+  }, [timeData.live, mixer, timeData.date, timeData.noOfDays]);
 
   return (
     <div
       className="w-full bg-no-repeat bg-cover bg-center p-2"
       style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
     >
+      {loading && (
+        <>
+          <div className="absolute inset-0 bg-black opacity-90 z-40"></div>
+          <Loader className="bg-white" />
+        </>
+      )}
       <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
         <div className="col-span-3 row-span-2">
           <LogoSection
@@ -60,16 +97,36 @@ const QualityDB = () => {
             timeData={timeData}
             setTimeData={setTimeData}
             runningStatus={1} //Replace key from the running status key from api response
-          />
+          >
+            <select
+              className="mt-8"
+              value={mixer}
+              onChange={(e) => setMixer(e.target.value)}
+            >
+              <option value={MIXERS.m1}>{MIXER_TYPE_MAP[MIXERS.m1]}</option>
+              <option value={MIXERS.m2}>{MIXER_TYPE_MAP[MIXERS.m2]}</option>
+              <option value={MIXERS.m3}>{MIXER_TYPE_MAP[MIXERS.m3]}</option>
+              <option value={MIXERS.m4}>{MIXER_TYPE_MAP[MIXERS.m4]}</option>
+              <option value={MIXERS.m5}>{MIXER_TYPE_MAP[MIXERS.m5]}</option>
+            </select>
+            <div className="mt-2 flex flex-row gap-2">
+              <p>Auto rotate all mixers</p>
+              <input
+                type="checkbox"
+                checked={autoRotateMixers}
+                onChange={() => setAutoRotateMixers((prev) => !prev)}
+              />
+            </div>
+          </LogoSection>
         </div>
 
         <div className="col-span-8 row-span-4 col-start-4 row-start-1 bg-[#151419] dotted-bg">
           <CustomContainer
             headingLeft="PH-Value Trend"
             headingRight="(last 20 batches)"
-            headingCenter="Mixer-1"
+            headingCenter={MIXER_TYPE_MAP[mixer]}
           >
-            <CustomLine />
+            <Multiline data={data} name="BATCH" value={"PH"} min={6} max={8} />
           </CustomContainer>
         </div>
 
@@ -77,9 +134,15 @@ const QualityDB = () => {
           <CustomContainer
             headingLeft="Viscosity-Value Trend"
             headingRight="(last 20 batches)"
-            headingCenter="Mixer-2"
+            headingCenter={MIXER_TYPE_MAP[mixer]}
           >
-            <CustomLine />
+            <Multiline
+              data={data}
+              name="BATCH"
+              value={"VISCOSITY"}
+              min={120000}
+              max={150000}
+            />
           </CustomContainer>
         </div>
       </div>
