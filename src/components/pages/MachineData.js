@@ -66,7 +66,7 @@ export default function MachineData({ machineId }) {
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
-      .post(`${APP_URL}/tp/historical/${machineId}`, body)
+      .post(`${APP_URL}/tp/historical/${machineId}`, body )
       .then((response) => {
         if (response) {
           const data = response.data;
@@ -123,12 +123,12 @@ export default function MachineData({ machineId }) {
                 </div>
                 <div className="col-span-3 row-span-2 col-start-1 row-start-3 dotted-bg">
                   <CustomContainer
-                    headingLeft="Production"
+                    headingLeft="Stop Time"
                     headingRight={"(Nos)"}
                   >
                     <HorizontalBar
                       data={Object.entries(
-                        data.Production[KEY_MAP[machineId]]
+                        data.StopTime[KEY_MAP[machineId]]
                       ).map((entry) => ({
                         name: entry[0],
                         value: entry[1],
@@ -139,14 +139,14 @@ export default function MachineData({ machineId }) {
                 <div className="col-span-3 row-span-2 col-start-1 row-start-5 dotted-bg">
                   <CustomContainer headingLeft="Power" headingRight={"(KWH)"}>
                     <GroupBar
-                      data={Object.entries(graphInfo.data)
-                        .slice(7)
-                        .map(([key, value]) => ({
+                      data={Object.entries(graphInfo.data).map(
+                        ([key, value]) => ({
                           name: key,
                           value1: value.Shift["Shift-A"].Power,
                           value2: value.Shift["Shift-B"].Power,
                           value3: value.Shift["Shift-C"].Power,
-                        }))}
+                        })
+                      )}
                       xFormatter={dateFormat}
                     />
                   </CustomContainer>
