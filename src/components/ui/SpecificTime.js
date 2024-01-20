@@ -17,18 +17,17 @@ const SpecificTimeModal = ({
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [numberOfDays, setNumberOfDays] = useState(noOfDays);
 
-  const handleClickOutside = (event) => {
-    // if (ref.current && !ref.current.contains(event.target)) {
-    //   onClose();
-    // }
-  };
-
   useEffect(() => {
-    if (show) document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onClose();
+      }
     };
-  }, [show]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div
@@ -42,7 +41,7 @@ const SpecificTimeModal = ({
         <p className="absolute bg-white text-blue-700 left-4 top-[-5%] z-50 px-2">
           Date Range
         </p>
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row justify-between items-center my-4">
           <p>Log Date-Time:</p>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
