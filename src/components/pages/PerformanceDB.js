@@ -9,7 +9,7 @@ import SwitchBoard from "../ui/SwitchBoard";
 import { reverseConverter } from "../../utils/helper";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { dateFormat } from "../../utils/date";
+import { dateFormat, findTimeDifference } from "../../utils/date";
 import { APP_URL } from ".././../constants/url";
 import { addDays } from "date-fns";
 import Loader from "../reusable/Loader";
@@ -17,6 +17,7 @@ import { useAppContext } from "../appContext";
 
 export default function PerformanceDashboard() {
   const [loding, setLoding] = useState(true);
+  const [dbMeterLoading, setDBMeterLoading] = useState(true);
   const [utility, setUtilityData] = useState();
   const [barData, setBarData] = useState([]);
   const { activeShift } = useAppContext();
@@ -35,6 +36,13 @@ export default function PerformanceDashboard() {
     noOfDays: 10,
   });
 
+  const [meterData, setMeterData] = useState({
+    data: [],
+    meter: "",
+    hours: 0,
+    meters: [],
+  });
+
   const getActiveShiftIndex = () => {
     switch (activeShift) {
       case "Shift-A":
@@ -44,6 +52,13 @@ export default function PerformanceDashboard() {
       default:
         return 2;
     }
+  };
+
+  const getHoursString = () => {
+    if (meterData.hours) {
+      return `Past ${parseInt(meterData.hours)} hours`;
+    }
+    return "";
   };
 
   useEffect(() => {
@@ -99,6 +114,37 @@ export default function PerformanceDashboard() {
     timeData.noOfDays,
   ]);
 
+  useEffect(() => {
+    const fetchDBMeterData = async (intervalId) => {
+      try {
+        const endDate = timeData.date.getTime();
+        const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
+
+        const response = await axios.post(`${APP_URL}/tp/utility/dbmeter`, {
+          startDate,
+          endDate,
+        });
+
+        if (response) {
+          const data = response.data;
+          const meters = data[0]
+            ? Object.keys(data[0]).filter((key) => key !== "Date")
+            : [];
+          if (data.length > 1) {
+            const timeDiff =
+              findTimeDifference(data[0].Date, data[data.length - 1].Date) / 60;
+            setMeterData({ data, meter: meters[0], hours: timeDiff, meters });
+          } else setMeterData({ data, meter: meters[0], hours: 0, meters });
+        }
+      } catch (err) {
+        if (intervalId) clearInterval(intervalId);
+        console.log(err);
+      }
+      setDBMeterLoading(false);
+    };
+    fetchDBMeterData();
+  }, [timeData.date, timeData.noOfDays]);
+
   if (!loding && !utility) {
     return <></>;
   }
@@ -130,10 +176,19 @@ export default function PerformanceDashboard() {
             </div>
             <div className="col-span-3 row-span-2 col-start-1 row-start-5 bg-[#151419]  dotted-bg">
               <CustomContainer
-                headingLeft="dB Meter-1"
-                headingRight="last 8 hours"
+                headingLeft={`dB ${meterData.meter || "meter"}`}
+                headingRight={getHoursString()}
               >
-                <CustomLine />
+                {dbMeterLoading ? (
+                  <Loader />
+                ) : (
+                  <CustomLine
+                    data={meterData.data}
+                    value={meterData.meter}
+                    name={"Date"}
+                    xFormatter={dateFormat}
+                  />
+                )}
               </CustomContainer>
             </div>
             <div className="col-span-3 row-span-2 col-start-1 row-start-7 bg-[#151419]  dotted-bg">

@@ -45,7 +45,7 @@ const CustomBar = ({ data, xKey, yKey, xFormatter }) => {
         <XAxis
           dataKey={xKey}
           interval={0}
-          tick={<CustomXAxisLabel formatter={xFormatter} />}
+          tick={<CustomXAxisLabel format={xFormatter} />}
         />
         <YAxis tick={<CustomYAxisLabel />} padding={{ top: 30 }} />
         <Bar dataKey={yKey} fill="#418cf1" type="number">
