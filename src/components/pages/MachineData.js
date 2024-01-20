@@ -21,7 +21,7 @@ export default function MachineData({ machineId }) {
   const [utilitiesLoading, setUtilitiesLoding] = useState(true);
   const [data, setData] = useState();
 
-  const { activeShift, activeShiftIndex } = useAppContext();
+  const { activeShift, activeShiftIndex, setSystemDate } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -58,6 +58,7 @@ export default function MachineData({ machineId }) {
             });
         if (response) {
           setData(converter(response.data.Shift));
+          setSystemDate(response.DateAndTime || new Date());
         }
       } catch (err) {
         console.log(err);

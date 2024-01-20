@@ -15,6 +15,7 @@ const getActiveShiftIndex = (shift) => {
 };
 
 export const AppProvider = ({ children }) => {
+  const [systemDate, setSystemDate] = useState(new Date());
   const [activeShift, setActiveShift] = useState("Shift-A"); //Default Shift A
   const [sideBarOpen, setSideBarOpen] = useState(false);
 
@@ -22,7 +23,7 @@ export const AppProvider = ({ children }) => {
 
   useEffect(() => {
     const getCurrentShift = () => {
-      const currentHour = new Date().getHours();
+      const currentHour = systemDate.getHours();
       if (
         currentHour >= ShiftTimings["Shift-A"].start &&
         currentHour < ShiftTimings["Shift-A"].end
@@ -49,7 +50,14 @@ export const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ activeShift, sideBarOpen, setSideBarOpen, activeShiftIndex }}
+      value={{
+        activeShift,
+        sideBarOpen,
+        setSideBarOpen,
+        activeShiftIndex,
+        setSystemDate,
+        systemDate
+      }}
     >
       {children}
     </AppContext.Provider>

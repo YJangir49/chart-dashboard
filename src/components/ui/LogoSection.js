@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import CustomButton from "../reusable/CustomButton";
 import SpecificTimeModal from "./SpecificTime";
+import { useAppContext } from "../appContext";
 
 export default function LogoSection({
   pageName,
@@ -11,6 +12,8 @@ export default function LogoSection({
   setTimeData,
 }) {
   const [show, setShow] = useState(false);
+  const { systemDate } = useAppContext();
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex justify-between p-2">
@@ -37,15 +40,15 @@ export default function LogoSection({
               </div>
             </Link>
           </div>
-          <div className="text-center rounded-lg bg-gray-400">
-            <p className="text-sm text-slate-900 font-bold py-1">
-              Date: 23-05-2024
-            </p>
-          </div>
         </div>
       </div>
 
       <div className="flex flex-col flex-1 justify-end">
+        {!timeData.live && (
+          <p className="text-sm text-slate-900 font-bold py-1 text-end">
+            Date: {systemDate.toLocaleString()}
+          </p>
+        )}
         <div className="flex justify-between items-center px-2 font-bold">
           <p className="text-xs">Log-Time</p>
           <div className="flex items-center text-xs gap-4 relative">
