@@ -35,6 +35,17 @@ export default function PerformanceDashboard() {
     noOfDays: 10,
   });
 
+  const getActiveShiftIndex = () => {
+    switch (activeShift) {
+      case "Shift-A":
+        return 0;
+      case "Shift-B":
+        return 1;
+      default:
+        return 2;
+    }
+  };
+
   useEffect(() => {
     const fetchUtitlityConstants = async (intervalId) => {
       try {
@@ -141,6 +152,7 @@ export default function PerformanceDashboard() {
               <CustomTables
                 data={reverseConverter(utility?.Shift)}
                 title="Shift Parameters"
+                activeCol={getActiveShiftIndex()}
               />
             </div>
             <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]  dotted-bg">

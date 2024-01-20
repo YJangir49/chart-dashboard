@@ -206,12 +206,7 @@ export default function MachineData({ machineId }) {
                     )}
                   </CustomContainer>
                 </div>
-                <div
-                  className="col-span-3 row-span-2 col-start-4 row-start-7 dotted-bg cursor-pointer"
-                  onClick={() =>
-                    setGraphInfo((prev) => ({ ...prev, shift: "Shift-A" }))
-                  }
-                >
+                <div className="col-span-3 row-span-2 col-start-4 row-start-7 dotted-bg">
                   <GauzeWithHeader
                     heading={"Speed"}
                     subHeading={"(Shift-A)"}
@@ -226,10 +221,8 @@ export default function MachineData({ machineId }) {
                   />
                 </div>
                 <div
-                  className="col-span-2 row-span-2 col-start-7 row-start-7 dotted-bg cursor-pointer"
-                  onClick={() =>
-                    setGraphInfo((prev) => ({ ...prev, shift: "Shift-B" }))
-                  }
+                  className="col-span-2 row-span-2 col-start-7 row-start-7 dotted-bg"
+                  s
                 >
                   <GauzeWithHeader
                     heading={"Speed"}
@@ -244,12 +237,7 @@ export default function MachineData({ machineId }) {
                     greenTo={100}
                   />
                 </div>
-                <div
-                  className="col-span-3 row-span-2 col-start-9 row-start-7 dotted-bg cursor-pointer"
-                  onClick={() =>
-                    setGraphInfo((prev) => ({ ...prev, shift: "Shift-C" }))
-                  }
-                >
+                <div className="col-span-3 row-span-2 col-start-9 row-start-7 dotted-bg">
                   <GauzeWithHeader
                     heading={"Speed"}
                     subHeading={"(Shift-C)"}
