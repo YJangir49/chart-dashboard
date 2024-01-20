@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoSection from "../ui/LogoSection";
 // import { useAppContext } from "../appContext";
 import CustomContainer from "../reusable/CustomContainer";
+import CustomLine from "../charts/CustomLine";
+import { APP_URL } from "../../constants/url";
+import axios from "axios";
+import { addDays } from "date-fns";
 
 const QualityDB = () => {
   const [timeData, setTimeData] = useState({
@@ -12,13 +16,45 @@ const QualityDB = () => {
   });
 
   // const { activeShift } = useAppContext();
+
+  useEffect(() => {
+    const endDate = timeData.date.getTime();
+    const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
+    const body = {
+      startDate,
+      endDate,
+      type: "m2",
+    };
+    // setGraphInfo((prev) => ({ ...prev, loading: true }));
+    axios
+      .post(`${APP_URL}/tp/mixer`, body)
+      .then((response) => {
+        if (response) {
+          const data = response.data;
+          console.log("QDB-data", data);
+          // setBarData(data);
+        }
+        // setGraphInfo((prev) => ({ ...prev, loading: false }));
+      })
+      .catch((err) => {
+        console.log(err);
+        // setGraphInfo((prev) => ({ ...prev, loading: false }));
+      });
+  }, [
+    timeData.live,
+    // graphInfo.type,
+    timeData.date,
+    timeData.activeShift,
+    timeData.noOfDays,
+  ]);
+
   return (
     <div
       className="w-full bg-no-repeat bg-cover bg-center p-2"
       style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
     >
       <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
-        <div className="col-span-3 row-span-1">
+        <div className="col-span-3 row-span-2">
           <LogoSection
             pageName={"Quality"}
             timeData={timeData}
@@ -33,7 +69,7 @@ const QualityDB = () => {
             headingRight="(last 20 batches)"
             headingCenter="Mixer-1"
           >
-            {/* Line graph */}
+            <CustomLine />
           </CustomContainer>
         </div>
 
@@ -43,7 +79,7 @@ const QualityDB = () => {
             headingRight="(last 20 batches)"
             headingCenter="Mixer-2"
           >
-            {/* Line graph 2 */}
+            <CustomLine />
           </CustomContainer>
         </div>
       </div>

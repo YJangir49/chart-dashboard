@@ -38,7 +38,7 @@ export default function LogoSection({
         </div>
       </div>
 
-      <div className="flex flex-col flex-1  justify-end">
+      <div className="flex flex-col flex-1 justify-end">
         <div className="flex justify-between items-center px-2 font-bold">
           <p className="text-xs">Log-Time</p>
           <div className="flex items-center text-xs gap-4 relative">
@@ -85,6 +85,16 @@ export default function LogoSection({
         </div>
         {children}
       </div>
+
+      {pageName === "Quality" && (
+        <select name="cars" id="cars" className="mt-8">
+          <option value="m-1">Mixer-1</option>
+          <option value="m-2">Mixer-2</option>
+          <option value="m-3">Mixer-3</option>
+          <option value="m-4">Mixer-4</option>
+          <option value="m-5">Mixer-5</option>
+        </select>
+      )}
     </div>
   );
 }
