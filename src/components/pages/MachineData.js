@@ -19,7 +19,7 @@ export default function MachineData({ machineId }) {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState();
 
-  const { activeShift } = useAppContext();
+  const { activeShift, activeShiftIndex } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -33,17 +33,6 @@ export default function MachineData({ machineId }) {
     activeShift,
     noOfDays: 10,
   });
-
-  const getActiveShiftIndex = () => {
-    switch (graphInfo.shift) {
-      case "Shift-A":
-        return 0;
-      case "Shift-B":
-        return 1;
-      default:
-        return 2;
-    }
-  };
 
   useEffect(() => {
     const fetchTGMData = async (intervalId) => {
@@ -175,14 +164,14 @@ export default function MachineData({ machineId }) {
                   <CustomTables
                     data={data.StopTime}
                     title="Stop-Time"
-                    activeCol={getActiveShiftIndex()}
+                    activeCol={activeShiftIndex}
                   />
                 </div>
                 <div className="col-span-4 row-span-2 col-start-8 row-start-1 bg-[#151419] text-white text-sm dotted-bg">
                   <CustomTables
                     data={data.Production}
                     title="Production"
-                    activeCol={getActiveShiftIndex()}
+                    activeCol={activeShiftIndex}
                   />
                 </div>
                 <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419] dotted-bg">
@@ -220,10 +209,7 @@ export default function MachineData({ machineId }) {
                     greenTo={100}
                   />
                 </div>
-                <div
-                  className="col-span-2 row-span-2 col-start-7 row-start-7 dotted-bg"
-                  s
-                >
+                <div className="col-span-2 row-span-2 col-start-7 row-start-7 dotted-bg">
                   <GauzeWithHeader
                     heading={"Speed"}
                     subHeading={"(Shift-B)"}

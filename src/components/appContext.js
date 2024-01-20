@@ -3,9 +3,22 @@ import { ShiftTimings } from "../constants/shifts";
 
 const AppContext = createContext();
 
+const getActiveShiftIndex = (shift) => {
+  switch (shift) {
+    case "Shift-A":
+      return 0;
+    case "Shift-B":
+      return 1;
+    default:
+      return 2;
+  }
+};
+
 export const AppProvider = ({ children }) => {
   const [activeShift, setActiveShift] = useState("Shift-A"); //Default Shift A
   const [sideBarOpen, setSideBarOpen] = useState(false);
+
+  const activeShiftIndex = getActiveShiftIndex(activeShift);
 
   useEffect(() => {
     const getCurrentShift = () => {
@@ -35,7 +48,9 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   return (
-    <AppContext.Provider value={{ activeShift, sideBarOpen, setSideBarOpen }}>
+    <AppContext.Provider
+      value={{ activeShift, sideBarOpen, setSideBarOpen, activeShiftIndex }}
+    >
       {children}
     </AppContext.Provider>
   );

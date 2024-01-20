@@ -1,0 +1,2 @@
+export const UTILITY_DATA_TIME = process.env.REACT_APP_API_CALL_TIME || 60000
+export const CHANGE_DB_METER_TYPE = process.env.REACT_APP_DB_METER_SWITCH_TIME || 300000

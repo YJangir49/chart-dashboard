@@ -14,13 +14,16 @@ import { APP_URL } from ".././../constants/url";
 import { addDays } from "date-fns";
 import Loader from "../reusable/Loader";
 import { useAppContext } from "../appContext";
+import { CHANGE_DB_METER_TYPE, UTILITY_DATA_TIME } from "../../constants/config";
 
 export default function PerformanceDashboard() {
-  const [loding, setLoding] = useState(true);
+  const [pageLoading, setPageLoding] = useState(true);
+  const [utilitiesLoading, setUtilitiesLoding] = useState(true);
+
   const [dbMeterLoading, setDBMeterLoading] = useState(true);
   const [utility, setUtilityData] = useState();
   const [barData, setBarData] = useState([]);
-  const { activeShift } = useAppContext();
+  const { activeShiftIndex } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -32,7 +35,6 @@ export default function PerformanceDashboard() {
   const [timeData, setTimeData] = useState({
     live: true,
     date: new Date(),
-    activeShift,
     noOfDays: 10,
   });
 
@@ -43,17 +45,6 @@ export default function PerformanceDashboard() {
     meters: [],
   });
 
-  const getActiveShiftIndex = () => {
-    switch (activeShift) {
-      case "Shift-A":
-        return 0;
-      case "Shift-B":
-        return 1;
-      default:
-        return 2;
-    }
-  };
-
   const getHoursString = () => {
     if (meterData.hours) {
       return `Past ${parseInt(meterData.hours)} hours`;
@@ -62,29 +53,59 @@ export default function PerformanceDashboard() {
   };
 
   useEffect(() => {
-    const fetchUtitlityConstants = async (intervalId) => {
+    // This code block will set new Date in every one minutes for live data
+    let liveDateIncrementIn60SecIntervalId;
+    if (timeData.live) {
+      liveDateIncrementIn60SecIntervalId = setInterval(() => {
+        setTimeData((prev) => ({ ...prev, date: new Date() }));
+      }, UTILITY_DATA_TIME);
+    }
+    return () => clearInterval(liveDateIncrementIn60SecIntervalId);
+  }, [timeData.live]);
+
+  useEffect(() => {
+    let changeDBMeterInterval = setInterval(() => {
+      let currentMeter = "";
+      if (meterData.meter) {
+        const currentMeterIndex = meterData.meters.findIndex(
+          (meter) => meterData.meter === meter
+        );
+        if (currentMeterIndex === -1) {
+          currentMeter = meterData.meter || "";
+        } else if (currentMeterIndex === meterData.meters.length - 1) {
+          currentMeter = meterData.meters[0];
+        } else currentMeter = meterData.meters[currentMeterIndex + 1];
+      }
+      setMeterData((prev) => ({ ...prev, meter: currentMeter }));
+    }, CHANGE_DB_METER_TYPE);
+    return () => clearInterval(changeDBMeterInterval);
+  }, [meterData.meters, meterData.meter]);
+
+  useEffect(() => {
+    const fetchUtitlityConstants = async () => {
       try {
-        const response = await axios.get(`${APP_URL}/tp/utility/constants`);
+        setUtilitiesLoding(true);
+        const response = timeData.live
+          ? await axios.get(`${APP_URL}/tp/utility/constants`)
+          : await axios.post(`${APP_URL}/tp/utility/constants`, {
+              startDate: timeData.date.getTime(),
+            });
         if (response) {
           const data = response.data;
           setUtilityData(data);
         }
       } catch (err) {
-        if (intervalId) clearInterval(intervalId);
         console.log(err);
       }
-      setLoding(false);
+      setPageLoding(false);
+      setUtilitiesLoding(false);
     };
+
     fetchUtitlityConstants();
-
-    const intervalId = setInterval(() => {
-      fetchUtitlityConstants(intervalId);
-    }, process.env.REACT_APP_API_CALL_TIME || 60000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  }, [timeData.live, timeData.date]);
 
   useEffect(() => {
+    // This block will fetch data for the tp historical graph on any dependency change
     const endDate = timeData.date.getTime();
     const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
     const body = {
@@ -106,17 +127,12 @@ export default function PerformanceDashboard() {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [
-    timeData.live,
-    graphInfo.type,
-    timeData.date,
-    timeData.activeShift,
-    timeData.noOfDays,
-  ]);
+  }, [graphInfo.type, timeData.date, timeData.noOfDays]);
 
   useEffect(() => {
     const fetchDBMeterData = async (intervalId) => {
       try {
+        setDBMeterLoading(true);
         const endDate = timeData.date.getTime();
         const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
 
@@ -133,8 +149,19 @@ export default function PerformanceDashboard() {
           if (data.length > 1) {
             const timeDiff =
               findTimeDifference(data[0].Date, data[data.length - 1].Date) / 60;
-            setMeterData({ data, meter: meters[0], hours: timeDiff, meters });
-          } else setMeterData({ data, meter: meters[0], hours: 0, meters });
+            setMeterData({
+              data,
+              meter: meterData.meter || meters[0],
+              hours: timeDiff,
+              meters,
+            });
+          } else
+            setMeterData({
+              data,
+              meter: meterData.meter || meters[0],
+              hours: 0,
+              meters,
+            });
         }
       } catch (err) {
         if (intervalId) clearInterval(intervalId);
@@ -143,9 +170,11 @@ export default function PerformanceDashboard() {
       setDBMeterLoading(false);
     };
     fetchDBMeterData();
+  // fetch on date range change for the graph
+  // eslint-disable-next-line
   }, [timeData.date, timeData.noOfDays]);
 
-  if (!loding && !utility) {
+  if (!pageLoading && !utility) {
     return <></>;
   }
 
@@ -155,12 +184,18 @@ export default function PerformanceDashboard() {
         className="w-full bg-no-repeat bg-cover bg-center p-2"
         style={{ backgroundImage: `url('/images/silver-bg.jpg')` }}
       >
-        {loding ? (
+        {pageLoading ? (
           <div className="h-screen">
             <Loader dotStyle={{ backgroundColor: "black" }} />
           </div>
         ) : (
           <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
+            {utilitiesLoading && (
+              <>
+                <div className="absolute inset-0 bg-black opacity-90 z-40"></div>
+                <Loader className="bg-white" />
+              </>
+            )}
             <div className="col-span-3 row-span-1">
               <LogoSection
                 pageName={"TP"}
@@ -179,7 +214,7 @@ export default function PerformanceDashboard() {
                 headingLeft={`dB ${meterData.meter || "meter"}`}
                 headingRight={getHoursString()}
               >
-                {dbMeterLoading ? (
+                {!utilitiesLoading && dbMeterLoading ? (
                   <Loader />
                 ) : (
                   <CustomLine
@@ -207,7 +242,7 @@ export default function PerformanceDashboard() {
               <CustomTables
                 data={reverseConverter(utility?.Shift)}
                 title="Shift Parameters"
-                activeCol={getActiveShiftIndex()}
+                activeCol={activeShiftIndex}
               />
             </div>
             <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419]  dotted-bg">
@@ -215,7 +250,7 @@ export default function PerformanceDashboard() {
                 headingLeft={graphInfo.label}
                 headingRight={graphInfo.unit}
               >
-                {graphInfo.loading ? (
+                {!utilitiesLoading && graphInfo.loading ? (
                   <Loader />
                 ) : (
                   <CustomBar

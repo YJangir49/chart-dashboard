@@ -45,12 +45,14 @@ export default function LogoSection({
             <label
               className="flex align-middle gap-1"
               onClick={() => {
-                setTimeData({
-                  ...timeData,
-                  live: true,
-                  date: new Date(),
-                  noOfDays: 10,
-                });
+                if (!timeData.live) {
+                  setTimeData({
+                    ...timeData,
+                    live: true,
+                    date: new Date(),
+                    noOfDays: 10,
+                  });
+                }
               }}
             >
               <input type="radio" value="live" checked={timeData.live} />
@@ -66,9 +68,9 @@ export default function LogoSection({
             </label>
             {show && (
               <SpecificTimeModal
+                show={show}
                 currentDate={timeData.date}
                 noOfDays={timeData.noOfDays}
-                activeShift={timeData.activeShift}
                 onClose={() => setShow(false)}
                 onSave={({ selectedDate, noOfDays }) => {
                   setTimeData({
