@@ -20,9 +20,11 @@ const SpecificTimeModal = ({
   const [numberOfDays, setNumberOfDays] = useState(noOfDays);
 
   return (
-    <div className="absolute bg-white w-[600px] z-40 top-6 left-14">
-      <div className="bg-cyan-300 text-white px-2 py-1">Filter Options...</div>
-      <div className="mx-6 mt-6 border border-1 relative bg-none p-4">
+    <div className="absolute bg-white w-[600px] z-40 top-6 left-14 rounded-lg">
+      <div className="bg-[#00c8ba] text-base text-white px-2 py-2 rounded-t-lg">
+        Filter Options...
+      </div>
+      <div className="mx-6 mt-6 border border-1 relative bg-none p-4 text-base">
         <p className="absolute bg-white text-blue-700 left-4 top-[-5%] z-50 px-2">
           Date Range
         </p>

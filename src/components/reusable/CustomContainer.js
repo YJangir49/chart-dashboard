@@ -4,6 +4,7 @@ export default function CustomContainer({
   subHeadingLeft,
   headingRight,
   subHeadingRight,
+  headingCenter,
   style,
 }) {
   return (
@@ -14,6 +15,9 @@ export default function CustomContainer({
           {subHeadingLeft !== undefined && (
             <p className="text-xs ml-1 text-[#bd9755]">{subHeadingLeft}</p>
           )}
+        </div>
+        <div className="flex items-center">
+          <p className="text-base font-bold text-[#09babb]">{headingCenter}</p>
         </div>
         <div className="flex items-center">
           {subHeadingRight !== undefined && (
