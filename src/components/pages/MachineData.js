@@ -26,6 +26,7 @@ export default function MachineData({ machineId }) {
     loading: false,
     data: {},
     shift: activeShift,
+    type: "power",
   });
 
   const [timeData, setTimeData] = useState({
@@ -66,7 +67,7 @@ export default function MachineData({ machineId }) {
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
-      .post(`${APP_URL}/tp/historical/${machineId}`, body )
+      .post(`${APP_URL}/tp/historical/${machineId}`, body)
       .then((response) => {
         if (response) {
           const data = response.data;
@@ -84,6 +85,16 @@ export default function MachineData({ machineId }) {
     timeData.noOfDays,
     machineId,
   ]);
+
+  const entries = Object.entries(graphInfo.data);
+  let shiftData = {
+    "Shift-A": { StopTime: 0, Power: 0 },
+    "Shift-B": { StopTime: 0, Power: 0 },
+    "Shift-C": { StopTime: 0, Power: 0 },
+  };
+  if (entries.length) {
+    shiftData = entries[entries.length - 1][1].Shift;
+  }
 
   return (
     <>
@@ -121,32 +132,50 @@ export default function MachineData({ machineId }) {
                     </div>
                   </LogoSection>
                 </div>
-                <div className="col-span-3 row-span-2 col-start-1 row-start-3 dotted-bg">
+                <div
+                  className="col-span-3 row-span-2 col-start-1 row-start-3 dotted-bg cursor-pointer"
+                  onClick={() =>
+                    setGraphInfo((prev) => ({ ...prev, type: "stoptime" }))
+                  }
+                >
                   <CustomContainer
                     headingLeft="Stop Time"
                     headingRight={"(Nos)"}
                   >
                     <HorizontalBar
-                      data={Object.entries(
-                        data.StopTime[KEY_MAP[machineId]]
-                      ).map((entry) => ({
-                        name: entry[0],
-                        value: entry[1],
-                      }))}
+                      data={[
+                        {
+                          name: "Shift-A",
+                          value: shiftData["Shift-A"].StopTime,
+                        },
+                        {
+                          name: "Shift-B",
+                          value: shiftData["Shift-B"].StopTime,
+                        },
+                        {
+                          name: "Shift-C",
+                          value: shiftData["Shift-C"].StopTime,
+                        },
+                      ]}
                     />
                   </CustomContainer>
                 </div>
-                <div className="col-span-3 row-span-2 col-start-1 row-start-5 dotted-bg">
+                <div
+                  className="col-span-3 row-span-2 col-start-1 row-start-5 dotted-bg cursor-pointer"
+                  onClick={() =>
+                    setGraphInfo((prev) => ({ ...prev, type: "power" }))
+                  }
+                >
                   <CustomContainer headingLeft="Power" headingRight={"(KWH)"}>
                     <GroupBar
-                      data={Object.entries(graphInfo.data).map(
-                        ([key, value]) => ({
+                      data={entries
+                        .slice(entries.length - 2)
+                        .map(([key, value]) => ({
                           name: key,
                           value1: value.Shift["Shift-A"].Power,
                           value2: value.Shift["Shift-B"].Power,
                           value3: value.Shift["Shift-C"].Power,
-                        })
-                      )}
+                        }))}
                       xFormatter={dateFormat}
                     />
                   </CustomContainer>
@@ -184,7 +213,10 @@ export default function MachineData({ machineId }) {
                         data={Object.entries(graphInfo.data).map(
                           ([key, value]) => ({
                             name: key,
-                            value: value.Shift[graphInfo.shift].Production,
+                            value:
+                              graphInfo.type === "power"
+                                ? value.DAY_PROD_TON
+                                : value.KW_PER_TON,
                             oee: value.OEE,
                           })
                         )}
