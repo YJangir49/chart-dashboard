@@ -8,11 +8,12 @@ export default function LogoSection({
   pageName,
   children,
   runningStatus = 0,
-  timeData,
-  setTimeData,
+  noOfDays,
+  setNoOfDays,
 }) {
   const [show, setShow] = useState(false);
-  const { systemDate } = useAppContext();
+  const { backendDate, systemDate, live, setLive, setSystemDate } =
+    useAppContext();
 
   return (
     <div className="flex h-full flex-col">
@@ -44,9 +45,9 @@ export default function LogoSection({
       </div>
 
       <div className="flex flex-col flex-1 justify-end">
-        {!timeData.live && (
+        {!live && backendDate && (
           <p className="text-sm text-slate-900 font-bold py-1 text-end">
-            Date: {systemDate.toLocaleString()}
+            Date: {backendDate.toLocaleString()}
           </p>
         )}
         <div className="flex justify-between items-center px-2 font-bold">
@@ -55,17 +56,14 @@ export default function LogoSection({
             <label
               className="flex align-middle gap-1"
               onClick={() => {
-                if (!timeData.live) {
-                  setTimeData({
-                    ...timeData,
-                    live: true,
-                    date: new Date(),
-                    noOfDays: 10,
-                  });
+                if (!live) {
+                  setLive(true);
+                  setSystemDate(new Date());
+                  setNoOfDays(10);
                 }
               }}
             >
-              <input type="radio" value="live" checked={timeData.live} />
+              <input type="radio" value="live" checked={live} />
               Live
             </label>
 
@@ -73,22 +71,19 @@ export default function LogoSection({
               className="flex align-middle gap-1"
               onClick={() => setShow(true)}
             >
-              <input type="radio" checked={!timeData.live} />
+              <input type="radio" checked={!live} />
               Specific Time
             </label>
             {show && (
               <SpecificTimeModal
                 show={show}
-                currentDate={timeData.date}
-                noOfDays={timeData.noOfDays}
+                currentDate={systemDate}
+                noOfDays={noOfDays}
                 onClose={() => setShow(false)}
                 onSave={({ selectedDate, noOfDays }) => {
-                  setTimeData({
-                    ...timeData,
-                    live: false,
-                    date: selectedDate,
-                    noOfDays,
-                  });
+                  setLive(false);
+                  setSystemDate(selectedDate);
+                  setNoOfDays(noOfDays);
                   setShow(false);
                 }}
               />

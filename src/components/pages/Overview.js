@@ -5,6 +5,7 @@ import { OVER_VIEW_ROUTES } from "../../constants/routes";
 import { APP_URL } from "../../constants/url";
 import Sidebar from "../reusable/Sidebar";
 import OverviewGrid from "../reusable/OverviewGrid";
+import { UTILITY_DATA_TIME } from "../../constants/config";
 
 export default function Overview() {
   const [data, setData] = useState({});
@@ -30,7 +31,7 @@ export default function Overview() {
 
     const intervalId = setInterval(() => {
       fetchOverViewData(intervalId);
-    }, process.env.REACT_APP_API_CALL_TIME || 60000);
+    }, UTILITY_DATA_TIME);
 
     return () => clearInterval(intervalId);
   }, []);

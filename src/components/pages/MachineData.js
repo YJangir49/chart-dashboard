@@ -14,14 +14,14 @@ import { dateFormat } from "../../utils/date";
 import { MACHINE_ROUTE_MAP } from "../../constants/routes";
 import { APP_URL } from "../../constants/url";
 import { useAppContext } from "../appContext";
-import { UTILITY_DATA_TIME } from "../../constants/config";
 
 export default function MachineData({ machineId }) {
   const [pageLoading, setPageLoding] = useState(true);
   const [utilitiesLoading, setUtilitiesLoding] = useState(true);
   const [data, setData] = useState();
 
-  const { activeShift, activeShiftIndex, setSystemDate } = useAppContext();
+  const { live, systemDate, activeShift, activeShiftIndex, setBackendDate } =
+    useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -30,35 +30,21 @@ export default function MachineData({ machineId }) {
     type: "power",
   });
 
-  const [timeData, setTimeData] = useState({
-    live: true,
-    date: new Date(),
-    noOfDays: 10,
-  });
-
-  useEffect(() => {
-    // This code block will set new Date in every one minutes for live data
-    let liveDateIncrementIn60SecIntervalId;
-    if (timeData.live) {
-      liveDateIncrementIn60SecIntervalId = setInterval(() => {
-        setTimeData((prev) => ({ ...prev, date: new Date() }));
-      }, UTILITY_DATA_TIME);
-    }
-    return () => clearInterval(liveDateIncrementIn60SecIntervalId);
-  }, [timeData.live]);
+  const [noOfDays, setNoOfDays] = useState(10);
 
   useEffect(() => {
     const fetchTGMData = async () => {
       try {
         setUtilitiesLoding(true);
-        const response = timeData.live
+        const response = live
           ? await axios.get(`${APP_URL}/tp/${machineId}`)
           : await axios.post(`${APP_URL}/tp/${machineId}`, {
-              startDate: timeData.date.getTime(),
+              startDate: systemDate.getTime(),
             });
         if (response) {
           setData(converter(response.data.Shift));
-          setSystemDate(response.DateAndTime || new Date());
+          if (response.data?.Shift?.DateAndTime)
+            setBackendDate(new Date(response.data.Shift.DateAndTime));
         }
       } catch (err) {
         console.log(err);
@@ -68,11 +54,11 @@ export default function MachineData({ machineId }) {
     };
 
     fetchTGMData();
-  }, [machineId, timeData.live, timeData.date]);
+  }, [systemDate, machineId]);
 
   useEffect(() => {
-    const endDate = timeData.date.getTime();
-    const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
+    const endDate = systemDate.getTime();
+    const startDate = addDays(systemDate, -noOfDays).getTime();
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
@@ -87,7 +73,7 @@ export default function MachineData({ machineId }) {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [timeData.date, timeData.noOfDays, machineId]);
+  }, [systemDate, noOfDays, machineId]);
 
   const entries = Object.entries(graphInfo.data);
   let shiftData = {
@@ -122,8 +108,8 @@ export default function MachineData({ machineId }) {
                 <div className="col-span-3 row-span-2">
                   <LogoSection
                     pageName={MACHINE_ROUTE_MAP[machineId]}
-                    timeData={timeData}
-                    setTimeData={setTimeData}
+                    noOfDays={noOfDays}
+                    setNoOfDays={setNoOfDays}
                     runningStatus={data.RunningStatus}
                   >
                     <div className="flex justify-between px-2 text-sm mt-5">

@@ -14,7 +14,10 @@ import { APP_URL } from ".././../constants/url";
 import { addDays } from "date-fns";
 import Loader from "../reusable/Loader";
 import { useAppContext } from "../appContext";
-import { CHANGE_DB_METER_TYPE, UTILITY_DATA_TIME } from "../../constants/config";
+import {
+  CHANGE_DB_METER_TYPE,
+  UTILITY_DATA_TIME,
+} from "../../constants/config";
 
 export default function PerformanceDashboard() {
   const [pageLoading, setPageLoding] = useState(true);
@@ -23,7 +26,8 @@ export default function PerformanceDashboard() {
   const [dbMeterLoading, setDBMeterLoading] = useState(true);
   const [utility, setUtilityData] = useState();
   const [barData, setBarData] = useState([]);
-  const { activeShiftIndex } = useAppContext();
+  const { live, systemDate, activeShiftIndex, setBackendDate } =
+    useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -32,11 +36,7 @@ export default function PerformanceDashboard() {
     label: "Power Consumption",
   });
 
-  const [timeData, setTimeData] = useState({
-    live: true,
-    date: new Date(),
-    noOfDays: 10,
-  });
+  const [noOfDays, setNoOfDays] = useState(10);
 
   const [meterData, setMeterData] = useState({
     data: [],
@@ -51,17 +51,6 @@ export default function PerformanceDashboard() {
     }
     return "";
   };
-
-  useEffect(() => {
-    // This code block will set new Date in every one minutes for live data
-    let liveDateIncrementIn60SecIntervalId;
-    if (timeData.live) {
-      liveDateIncrementIn60SecIntervalId = setInterval(() => {
-        setTimeData((prev) => ({ ...prev, date: new Date() }));
-      }, UTILITY_DATA_TIME);
-    }
-    return () => clearInterval(liveDateIncrementIn60SecIntervalId);
-  }, [timeData.live]);
 
   useEffect(() => {
     let changeDBMeterInterval = setInterval(() => {
@@ -85,14 +74,15 @@ export default function PerformanceDashboard() {
     const fetchUtitlityConstants = async () => {
       try {
         setUtilitiesLoding(true);
-        const response = timeData.live
+        const response = live
           ? await axios.get(`${APP_URL}/tp/utility/constants`)
           : await axios.post(`${APP_URL}/tp/utility/constants`, {
-              startDate: timeData.date.getTime(),
+              startDate: systemDate.getTime(),
             });
         if (response) {
           const data = response.data;
           setUtilityData(data);
+          if (data?.DateAndTime) setBackendDate(new Date(data.DateAndTime));
         }
       } catch (err) {
         console.log(err);
@@ -102,12 +92,12 @@ export default function PerformanceDashboard() {
     };
 
     fetchUtitlityConstants();
-  }, [timeData.live, timeData.date]);
+  }, [systemDate]);
 
   useEffect(() => {
     // This block will fetch data for the tp historical graph on any dependency change
-    const endDate = timeData.date.getTime();
-    const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
+    const endDate = systemDate.getTime();
+    const startDate = addDays(systemDate, -noOfDays).getTime();
     const body = {
       startDate,
       endDate,
@@ -127,14 +117,14 @@ export default function PerformanceDashboard() {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [graphInfo.type, timeData.date, timeData.noOfDays]);
+  }, [graphInfo.type, systemDate, noOfDays]);
 
   useEffect(() => {
     const fetchDBMeterData = async (intervalId) => {
       try {
         setDBMeterLoading(true);
-        const endDate = timeData.date.getTime();
-        const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
+        const endDate = systemDate.getTime();
+        const startDate = addDays(systemDate, -noOfDays).getTime();
 
         const response = await axios.post(`${APP_URL}/tp/utility/dbmeter`, {
           startDate,
@@ -170,9 +160,9 @@ export default function PerformanceDashboard() {
       setDBMeterLoading(false);
     };
     fetchDBMeterData();
-  // fetch on date range change for the graph
-  // eslint-disable-next-line
-  }, [timeData.date, timeData.noOfDays]);
+    // fetch on date range change for the graph
+    // eslint-disable-next-line
+  }, [systemDate, noOfDays]);
 
   if (!pageLoading && !utility) {
     return <></>;
@@ -196,15 +186,17 @@ export default function PerformanceDashboard() {
                 <Loader className="bg-white" />
               </>
             )}
-            <div className="col-span-3 row-span-1">
+            <div className="col-span-3 row-span-2">
               <LogoSection
                 pageName={"TP"}
-                timeData={timeData}
-                setTimeData={setTimeData}
+                noOfDays={noOfDays}
+                setNoOfDays={setNoOfDays}
                 runningStatus={1} //Replace key from the running status key from api response
-              />
+              >
+                <div className="h-[10%]" />
+              </LogoSection>
             </div>
-            <div className="col-span-3 row-span-3 col-start-1 row-start-2 bg-[#151419] dotted-bg">
+            <div className="col-span-3 row-span-2 col-start-1 row-start-3 bg-[#151419] dotted-bg">
               <CustomContainer headingLeft="Sound" headingRight="dB">
                 <CustomPie data={utility?.Sound} title="Sound" unit={"db"} />
               </CustomContainer>

@@ -7,10 +7,8 @@ import { addDays } from "date-fns";
 import { MIXERS, MIXER_TYPE_MAP } from "../../constants/mixer";
 import Loader from "../reusable/Loader";
 import Multiline from "../charts/MultilineGraph";
-import {
-  MIXER_CYCLE_DATA_TIME,
-  MIXER_LIVE_DATA_RENEW_TIME,
-} from "../../constants/config";
+import { MIXER_CYCLE_DATA_TIME } from "../../constants/config";
+import { useAppContext } from "../appContext";
 
 const QualityDB = () => {
   const [loading, setLoading] = useState(true);
@@ -18,12 +16,9 @@ const QualityDB = () => {
   const [mixer, setMixer] = useState(MIXERS.m1);
   const [autoRotateMixers, setAutoRotateMixers] = useState(false);
   const [data, setData] = useState([]);
+  const { live, systemDate, setBackendDate } = useAppContext();
 
-  const [timeData, setTimeData] = useState({
-    live: true,
-    date: new Date(),
-    noOfDays: 10,
-  });
+  const [noOfDays, setNoOfDays] = useState(10);
 
   useEffect(() => {
     // This code block will set new Date in every one minutes for live data
@@ -44,20 +39,9 @@ const QualityDB = () => {
   }, [autoRotateMixers, mixer]);
 
   useEffect(() => {
-    // This code block will set new Date in every one minutes for live data
-    let liveDataRenewIntervalId;
-    if (timeData.live) {
-      liveDataRenewIntervalId = setInterval(() => {
-        setTimeData((prev) => ({ ...prev, date: new Date() }));
-      }, MIXER_LIVE_DATA_RENEW_TIME);
-    }
-    return () => clearInterval(liveDataRenewIntervalId);
-  }, [timeData.live]);
-
-  useEffect(() => {
     setLoading(true);
-    const endDate = timeData.date.getTime();
-    const startDate = addDays(timeData.date, -timeData.noOfDays).getTime();
+    const endDate = systemDate.getTime();
+    const startDate = addDays(systemDate, -noOfDays).getTime();
     const body = {
       startDate,
       endDate,
@@ -68,7 +52,9 @@ const QualityDB = () => {
       .then((response) => {
         if (response) {
           const data = response.data;
-          console.log("QDB-data", data);
+          if (!live) {
+            setBackendDate(systemDate);
+          }
           setData(data);
         }
         setLoading(false);
@@ -77,7 +63,7 @@ const QualityDB = () => {
         console.log(err);
         setLoading(false);
       });
-  }, [timeData.live, mixer, timeData.date, timeData.noOfDays]);
+  }, [mixer, systemDate, noOfDays]);
 
   return (
     <div
@@ -94,13 +80,12 @@ const QualityDB = () => {
         <div className="col-span-3 row-span-3">
           <LogoSection
             pageName={"Quality"}
-            timeData={timeData}
-            setTimeData={setTimeData}
+            noOfDays={noOfDays}
+            setNoOfDays={setNoOfDays}
             runningStatus={1} //Replace key from the running status key from api response
           >
-            <p className="mt-6 text-sm font-bold ml-2">Date: 23-jan-2024</p>
             <select
-              className="mt-8"
+              className="mt-4"
               value={mixer}
               onChange={(e) => setMixer(e.target.value)}
             >
@@ -110,7 +95,7 @@ const QualityDB = () => {
               <option value={MIXERS.m4}>{MIXER_TYPE_MAP[MIXERS.m4]}</option>
               <option value={MIXERS.m5}>{MIXER_TYPE_MAP[MIXERS.m5]}</option>
             </select>
-            <div className="mt-12 flex items-center gap-2">
+            <div className="mt-4 flex items-center gap-2">
               <p className="font-bold text-sm">Auto-rotate All Mixers:</p>
 
               <input
@@ -129,7 +114,15 @@ const QualityDB = () => {
             headingRight="(last 20 batches)"
             headingCenter={MIXER_TYPE_MAP[mixer]}
           >
-            <Multiline data={data} name="BATCH" value={"PH"} min={6} max={8} />
+            <Multiline
+              data={data.filter(
+                (item) => item.BATCH !== undefined && item.PH !== undefined
+              )}
+              name="BATCH"
+              value={"PH"}
+              min={6}
+              max={8}
+            />
           </CustomContainer>
         </div>
 
@@ -140,7 +133,10 @@ const QualityDB = () => {
             headingCenter={MIXER_TYPE_MAP[mixer]}
           >
             <Multiline
-              data={data}
+              data={data.filter(
+                (item) =>
+                  item.BATCH !== undefined && item.VISCOSITY !== undefined
+              )}
               name="BATCH"
               value={"VISCOSITY"}
               min={120000}
