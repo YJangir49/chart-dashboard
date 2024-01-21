@@ -20,8 +20,15 @@ export default function MachineData({ machineId }) {
   const [utilitiesLoading, setUtilitiesLoding] = useState(true);
   const [data, setData] = useState();
 
-  const { live, systemDate, activeShift, activeShiftIndex, setBackendDate } =
-    useAppContext();
+  const {
+    live,
+    setLive,
+    systemDate,
+    activeShift,
+    activeShiftIndex,
+    setBackendDate,
+    setSystemDate,
+  } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -31,6 +38,14 @@ export default function MachineData({ machineId }) {
   });
 
   const [noOfDays, setNoOfDays] = useState(10);
+
+  useEffect(() => {
+    if (!live) {
+      setLive(true);
+      setSystemDate(new Date());
+    }
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     const fetchTGMData = async () => {
@@ -54,7 +69,8 @@ export default function MachineData({ machineId }) {
     };
 
     fetchTGMData();
-  }, [systemDate, machineId]);
+    // eslint-disable-next-line
+  }, [systemDate, machineId, setBackendDate]);
 
   useEffect(() => {
     const endDate = systemDate.getTime();
@@ -76,14 +92,8 @@ export default function MachineData({ machineId }) {
   }, [systemDate, noOfDays, machineId]);
 
   const entries = Object.entries(graphInfo.data);
-  // let shiftData = {
-  //   "Shift-A": { StopTime: 0, Power: 0 },
-  //   "Shift-B": { StopTime: 0, Power: 0 },
-  //   "Shift-C": { StopTime: 0, Power: 0 },
-  // };
-  // if (entries.length) {
-  //   shiftData = entries[entries.length - 1][1].Shift;
-  // }
+  const sliceEntries =
+    entries.length > 3 ? entries.slice(entries.length - 3) : entries;
 
   return (
     <>
@@ -140,31 +150,13 @@ export default function MachineData({ machineId }) {
                     {!utilitiesLoading && graphInfo.loading ? (
                       <Loader />
                     ) : (
-                      // <HorizontalBar
-                      //   data={[
-                      //     {
-                      //       name: "Shift-A",
-                      //       value: shiftData["Shift-A"].StopTime,
-                      //     },
-                      //     {
-                      //       name: "Shift-B",
-                      //       value: shiftData["Shift-B"].StopTime,
-                      //     },
-                      //     {
-                      //       name: "Shift-C",
-                      //       value: shiftData["Shift-C"].StopTime,
-                      //     },
-                      //   ]}
-                      // />
                       <GroupBar
-                        data={entries
-                          .slice(entries.length - 3)
-                          .map(([key, value]) => ({
-                            name: key,
-                            value1: value.Shift["Shift-A"].StopTime,
-                            value2: value.Shift["Shift-B"].StopTime,
-                            value3: value.Shift["Shift-C"].StopTime,
-                          }))}
+                        data={sliceEntries.map(([key, value]) => ({
+                          name: key,
+                          value1: value.Shift["Shift-A"].StopTime,
+                          value2: value.Shift["Shift-B"].StopTime,
+                          value3: value.Shift["Shift-C"].StopTime,
+                        }))}
                         xFormatter={dateFormat}
                       />
                     )}
@@ -181,14 +173,12 @@ export default function MachineData({ machineId }) {
                       <Loader />
                     ) : (
                       <GroupBar
-                        data={entries
-                          .slice(entries.length - 3)
-                          .map(([key, value]) => ({
-                            name: key,
-                            value1: value.Shift["Shift-A"].Power,
-                            value2: value.Shift["Shift-B"].Power,
-                            value3: value.Shift["Shift-C"].Power,
-                          }))}
+                        data={sliceEntries.map(([key, value]) => ({
+                          name: key,
+                          value1: value.Shift["Shift-A"].Power,
+                          value2: value.Shift["Shift-B"].Power,
+                          value3: value.Shift["Shift-C"].Power,
+                        }))}
                         xFormatter={dateFormat}
                       />
                     )}

@@ -14,10 +14,7 @@ import { APP_URL } from ".././../constants/url";
 import { addDays } from "date-fns";
 import Loader from "../reusable/Loader";
 import { useAppContext } from "../appContext";
-import {
-  CHANGE_DB_METER_TYPE,
-  UTILITY_DATA_TIME,
-} from "../../constants/config";
+import { CHANGE_DB_METER_TYPE } from "../../constants/config";
 
 export default function PerformanceDashboard() {
   const [pageLoading, setPageLoding] = useState(true);
@@ -26,8 +23,14 @@ export default function PerformanceDashboard() {
   const [dbMeterLoading, setDBMeterLoading] = useState(true);
   const [utility, setUtilityData] = useState();
   const [barData, setBarData] = useState([]);
-  const { live, systemDate, activeShiftIndex, setBackendDate } =
-    useAppContext();
+  const {
+    live,
+    systemDate,
+    activeShiftIndex,
+    setBackendDate,
+    setLive,
+    setSystemDate,
+  } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
     loading: false,
@@ -51,6 +54,14 @@ export default function PerformanceDashboard() {
     }
     return "";
   };
+
+  useEffect(() => {
+    if (!live) {
+      setLive(true);
+      setSystemDate(new Date());
+    }
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     let changeDBMeterInterval = setInterval(() => {
@@ -92,7 +103,8 @@ export default function PerformanceDashboard() {
     };
 
     fetchUtitlityConstants();
-  }, [systemDate]);
+    // eslint-disable-next-line
+  }, [systemDate, setBackendDate]);
 
   useEffect(() => {
     // This block will fetch data for the tp historical graph on any dependency change

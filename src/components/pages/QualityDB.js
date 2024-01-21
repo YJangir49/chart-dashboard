@@ -16,9 +16,18 @@ const QualityDB = () => {
   const [mixer, setMixer] = useState(MIXERS.m1);
   const [autoRotateMixers, setAutoRotateMixers] = useState(false);
   const [data, setData] = useState([]);
-  const { live, systemDate, setBackendDate } = useAppContext();
+  const { live, systemDate, setBackendDate, setLive, setSystemDate } =
+    useAppContext();
 
   const [noOfDays, setNoOfDays] = useState(10);
+
+  useEffect(() => {
+    if (!live) {
+      setLive(true);
+      setSystemDate(new Date());
+    }
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     // This code block will set new Date in every one minutes for live data
@@ -63,6 +72,7 @@ const QualityDB = () => {
         console.log(err);
         setLoading(false);
       });
+    // eslint-disable-next-line
   }, [mixer, systemDate, noOfDays]);
 
   return (

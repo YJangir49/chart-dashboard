@@ -7,14 +7,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 
 const SpecificTimeModal = ({
-  show,
   currentDate = new Date(),
   noOfDays = 10,
   onSave,
   onClose,
 }) => {
   const ref = useRef(null);
-  const datePickerRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [numberOfDays, setNumberOfDays] = useState(noOfDays);
@@ -33,6 +31,7 @@ const SpecificTimeModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
+    // eslint-disable-next-line
   }, [isDatePickerOpen]);
 
   return (
