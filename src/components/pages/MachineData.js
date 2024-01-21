@@ -151,22 +151,26 @@ export default function MachineData({ machineId }) {
                     headingLeft="Stop Time"
                     headingRight={"(Nos)"}
                   >
-                    <HorizontalBar
-                      data={[
-                        {
-                          name: "Shift-A",
-                          value: shiftData["Shift-A"].StopTime,
-                        },
-                        {
-                          name: "Shift-B",
-                          value: shiftData["Shift-B"].StopTime,
-                        },
-                        {
-                          name: "Shift-C",
-                          value: shiftData["Shift-C"].StopTime,
-                        },
-                      ]}
-                    />
+                    {!utilitiesLoading && graphInfo.loading ? (
+                      <Loader />
+                    ) : (
+                      <HorizontalBar
+                        data={[
+                          {
+                            name: "Shift-A",
+                            value: shiftData["Shift-A"].StopTime,
+                          },
+                          {
+                            name: "Shift-B",
+                            value: shiftData["Shift-B"].StopTime,
+                          },
+                          {
+                            name: "Shift-C",
+                            value: shiftData["Shift-C"].StopTime,
+                          },
+                        ]}
+                      />
+                    )}
                   </CustomContainer>
                 </div>
                 <div
@@ -176,17 +180,21 @@ export default function MachineData({ machineId }) {
                   }
                 >
                   <CustomContainer headingLeft="Power" headingRight={"(KWH)"}>
-                    <GroupBar
-                      data={entries
-                        .slice(entries.length - 2)
-                        .map(([key, value]) => ({
-                          name: key,
-                          value1: value.Shift["Shift-A"].Power,
-                          value2: value.Shift["Shift-B"].Power,
-                          value3: value.Shift["Shift-C"].Power,
-                        }))}
-                      xFormatter={dateFormat}
-                    />
+                    {!utilitiesLoading && graphInfo.loading ? (
+                      <Loader />
+                    ) : (
+                      <GroupBar
+                        data={entries
+                          .slice(entries.length - 2)
+                          .map(([key, value]) => ({
+                            name: key,
+                            value1: value.Shift["Shift-A"].Power,
+                            value2: value.Shift["Shift-B"].Power,
+                            value3: value.Shift["Shift-C"].Power,
+                          }))}
+                        xFormatter={dateFormat}
+                      />
+                    )}
                   </CustomContainer>
                 </div>
                 <div className="col-span-3 row-span-2 col-start-1 row-start-7 dotted-bg">
