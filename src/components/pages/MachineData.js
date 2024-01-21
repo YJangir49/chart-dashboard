@@ -76,14 +76,14 @@ export default function MachineData({ machineId }) {
   }, [systemDate, noOfDays, machineId]);
 
   const entries = Object.entries(graphInfo.data);
-  let shiftData = {
-    "Shift-A": { StopTime: 0, Power: 0 },
-    "Shift-B": { StopTime: 0, Power: 0 },
-    "Shift-C": { StopTime: 0, Power: 0 },
-  };
-  if (entries.length) {
-    shiftData = entries[entries.length - 1][1].Shift;
-  }
+  // let shiftData = {
+  //   "Shift-A": { StopTime: 0, Power: 0 },
+  //   "Shift-B": { StopTime: 0, Power: 0 },
+  //   "Shift-C": { StopTime: 0, Power: 0 },
+  // };
+  // if (entries.length) {
+  //   shiftData = entries[entries.length - 1][1].Shift;
+  // }
 
   return (
     <>
@@ -140,21 +140,32 @@ export default function MachineData({ machineId }) {
                     {!utilitiesLoading && graphInfo.loading ? (
                       <Loader />
                     ) : (
-                      <HorizontalBar
-                        data={[
-                          {
-                            name: "Shift-A",
-                            value: shiftData["Shift-A"].StopTime,
-                          },
-                          {
-                            name: "Shift-B",
-                            value: shiftData["Shift-B"].StopTime,
-                          },
-                          {
-                            name: "Shift-C",
-                            value: shiftData["Shift-C"].StopTime,
-                          },
-                        ]}
+                      // <HorizontalBar
+                      //   data={[
+                      //     {
+                      //       name: "Shift-A",
+                      //       value: shiftData["Shift-A"].StopTime,
+                      //     },
+                      //     {
+                      //       name: "Shift-B",
+                      //       value: shiftData["Shift-B"].StopTime,
+                      //     },
+                      //     {
+                      //       name: "Shift-C",
+                      //       value: shiftData["Shift-C"].StopTime,
+                      //     },
+                      //   ]}
+                      // />
+                      <GroupBar
+                        data={entries
+                          .slice(entries.length - 3)
+                          .map(([key, value]) => ({
+                            name: key,
+                            value1: value.Shift["Shift-A"].StopTime,
+                            value2: value.Shift["Shift-B"].StopTime,
+                            value3: value.Shift["Shift-C"].StopTime,
+                          }))}
+                        xFormatter={dateFormat}
                       />
                     )}
                   </CustomContainer>
@@ -171,7 +182,7 @@ export default function MachineData({ machineId }) {
                     ) : (
                       <GroupBar
                         data={entries
-                          .slice(entries.length - 2)
+                          .slice(entries.length - 3)
                           .map(([key, value]) => ({
                             name: key,
                             value1: value.Shift["Shift-A"].Power,
