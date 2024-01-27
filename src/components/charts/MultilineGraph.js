@@ -11,6 +11,21 @@ import {
 import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
 import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
 
+const CustomLineLabel = ({ x, y, value = 0, index }) => (
+  <g transform={`translate(${x},${y}) rotate(-60)`}>
+    <text
+      x={0}
+      y={index % 2 === 0 ? -10 : 10}
+      dy={10}
+      textAnchor="end"
+      fill="white"
+      fontSize={12}
+    >
+      {Number.isInteger(value) ? value.toString() : value.toFixed(2)}
+    </text>
+  </g>
+);
+
 const Multiline = ({ data, name, value, xFormatter, min, max }) => {
   const dataWithTrendLine = data.map((item) => ({ ...item, min, max }));
 
@@ -26,6 +41,7 @@ const Multiline = ({ data, name, value, xFormatter, min, max }) => {
           strokeWidth={2}
           type="number"
           dot={null}
+          label={<CustomLineLabel />}
         />
         {min ? (
           <Line

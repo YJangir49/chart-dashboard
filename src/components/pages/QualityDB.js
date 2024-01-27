@@ -14,7 +14,7 @@ const QualityDB = () => {
   const [loading, setLoading] = useState(true);
 
   const [mixer, setMixer] = useState(MIXERS.m1);
-  const [autoRotateMixers, setAutoRotateMixers] = useState(false);
+  const [autoRotateMixers, setAutoRotateMixers] = useState(true);
   const [data, setData] = useState([]);
   const { live, systemDate, setBackendDate, setLive, setSystemDate } =
     useAppContext();

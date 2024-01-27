@@ -81,9 +81,9 @@ export default function LogoSection({
                 noOfDays={noOfDays}
                 onClose={() => setShow(false)}
                 onSave={({ selectedDate, noOfDays }) => {
-                  setLive(false);
                   setSystemDate(selectedDate);
                   setNoOfDays(noOfDays);
+                  setLive(false);
                   setShow(false);
                 }}
               />
