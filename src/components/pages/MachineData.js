@@ -210,6 +210,7 @@ export default function MachineData({ machineId }) {
                 </div>
                 <div className="col-span-8 row-span-4 col-start-4 row-start-3 bg-[#151419] dotted-bg">
                   <CustomContainer headingLeft="Daily Production & OEE">
+                    {/**  graphInfo.type === "stoptime" ? "Stop Time & OEE" : Daily Production & OEE   */}
                     {!utilitiesLoading && graphInfo.loading ? (
                       <Loader />
                     ) : (
@@ -218,7 +219,7 @@ export default function MachineData({ machineId }) {
                           ([key, value]) => ({
                             name: key,
                             value:
-                              graphInfo.type === "power"
+                              graphInfo.type === "stoptime" // SWAP ACTION
                                 ? value.DAY_PROD_TON
                                 : value.KW_PER_TON,
                             oee: value.OEE,
