@@ -12,8 +12,14 @@ export default function LogoSection({
   setNoOfDays,
 }) {
   const [show, setShow] = useState(false);
-  const { backendDate, systemDate, live, setLive, setSystemDate } =
-    useAppContext();
+  const {
+    backendDate,
+    systemDate,
+    live,
+    setLive,
+    setSystemDate,
+    setHistoricDate,
+  } = useAppContext();
 
   return (
     <div className="flex h-full flex-col">
@@ -59,6 +65,7 @@ export default function LogoSection({
                 if (!live) {
                   setLive(true);
                   setSystemDate(new Date());
+                  setHistoricDate(new Date());
                   setNoOfDays(10);
                 }
               }}
@@ -82,6 +89,7 @@ export default function LogoSection({
                 onClose={() => setShow(false)}
                 onSave={({ selectedDate, noOfDays }) => {
                   setSystemDate(selectedDate);
+                  setHistoricDate(selectedDate);
                   setNoOfDays(noOfDays);
                   setLive(false);
                   setShow(false);

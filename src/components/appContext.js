@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { ShiftTimings } from "../constants/shifts";
-import { UTILITY_DATA_TIME } from "../constants/config";
+import {
+  HISTORIC_DATA_RENEW_TIME,
+  UTILITY_DATA_TIME,
+} from "../constants/config";
 
 const AppContext = createContext();
 
@@ -18,6 +21,7 @@ const getActiveShiftIndex = (shift) => {
 export const AppProvider = ({ children }) => {
   const [live, setLive] = useState(true);
   const [systemDate, setSystemDate] = useState(new Date());
+  const [historicDate, setHistoricDate] = useState(new Date());
   const [activeShift, setActiveShift] = useState("Shift-A"); //Default Shift A
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [backendDate, setBackendDate] = useState(null);
@@ -28,10 +32,25 @@ export const AppProvider = ({ children }) => {
     // This code block will set new Date in every one minutes for live data
     let intervalId;
     if (live) {
-      //setSystemDate(new Date()); //As soon as system enters in live state update the live date and set an interval of 60 sec
       intervalId = setInterval(
         () => setSystemDate(new Date()),
         UTILITY_DATA_TIME
+      );
+    }
+    return () => clearInterval(intervalId);
+  }, [live]);
+
+  useEffect(() => {
+    // This code block will set new Date for historic graphs in defined time
+    let intervalId;
+    if (
+      live &&
+      HISTORIC_DATA_RENEW_TIME &&
+      Number(HISTORIC_DATA_RENEW_TIME) > 0
+    ) {
+      intervalId = setInterval(
+        () => setHistoricDate(new Date()),
+        HISTORIC_DATA_RENEW_TIME
       );
     }
     return () => clearInterval(intervalId);
@@ -68,6 +87,8 @@ export const AppProvider = ({ children }) => {
         setLive,
         backendDate,
         setBackendDate,
+        historicDate,
+        setHistoricDate,
       }}
     >
       {children}

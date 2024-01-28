@@ -28,6 +28,8 @@ export default function MachineData({ machineId }) {
     activeShiftIndex,
     setBackendDate,
     setSystemDate,
+    historicDate,
+    setHistoricDate,
   } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
@@ -40,10 +42,11 @@ export default function MachineData({ machineId }) {
   const [noOfDays, setNoOfDays] = useState(10);
 
   useEffect(() => {
-    if (!live) {
+    return () => {
       setLive(true);
       setSystemDate(new Date());
-    }
+      setHistoricDate(new Date());
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -73,8 +76,8 @@ export default function MachineData({ machineId }) {
   }, [systemDate, machineId, setBackendDate]);
 
   useEffect(() => {
-    const endDate = systemDate.getTime();
-    const startDate = addDays(systemDate, -noOfDays).getTime();
+    const endDate = historicDate.getTime();
+    const startDate = addDays(historicDate, -noOfDays).getTime();
     const body = { startDate, endDate };
     setGraphInfo((prev) => ({ ...prev, loading: true }));
     axios
@@ -89,7 +92,7 @@ export default function MachineData({ machineId }) {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [systemDate, noOfDays, machineId]);
+  }, [historicDate, noOfDays, machineId]);
 
   const entries = Object.entries(graphInfo.data);
   const sliceEntries =

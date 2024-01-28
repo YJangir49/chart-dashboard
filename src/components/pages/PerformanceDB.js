@@ -30,6 +30,8 @@ export default function PerformanceDashboard() {
     setBackendDate,
     setLive,
     setSystemDate,
+    historicDate,
+    setHistoricDate,
   } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
@@ -56,10 +58,11 @@ export default function PerformanceDashboard() {
   };
 
   useEffect(() => {
-    if (!live) {
+    return () => {
       setLive(true);
       setSystemDate(new Date());
-    }
+      setHistoricDate(new Date());
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -108,8 +111,8 @@ export default function PerformanceDashboard() {
 
   useEffect(() => {
     // This block will fetch data for the tp historical graph on any dependency change
-    const endDate = systemDate.getTime();
-    const startDate = addDays(systemDate, -noOfDays).getTime();
+    const endDate = historicDate.getTime();
+    const startDate = addDays(historicDate, -noOfDays).getTime();
     const body = {
       startDate,
       endDate,
@@ -129,7 +132,7 @@ export default function PerformanceDashboard() {
         console.log(err);
         setGraphInfo((prev) => ({ ...prev, loading: false }));
       });
-  }, [graphInfo.type, systemDate, noOfDays]);
+  }, [graphInfo.type, historicDate, noOfDays]);
 
   useEffect(() => {
     const fetchDBMeterData = async (intervalId) => {

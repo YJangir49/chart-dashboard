@@ -16,16 +16,23 @@ const QualityDB = () => {
   const [mixer, setMixer] = useState(MIXERS.m1);
   const [autoRotateMixers, setAutoRotateMixers] = useState(true);
   const [data, setData] = useState([]);
-  const { live, systemDate, setBackendDate, setLive, setSystemDate } =
-    useAppContext();
+  const {
+    live,
+    systemDate,
+    setBackendDate,
+    setLive,
+    setSystemDate,
+    setHistoricDate,
+  } = useAppContext();
 
   const [noOfDays, setNoOfDays] = useState(10);
 
   useEffect(() => {
-    if (!live) {
+    return () => {
       setLive(true);
       setSystemDate(new Date());
-    }
+      setHistoricDate(new Date());
+    };
     // eslint-disable-next-line
   }, []);
 
