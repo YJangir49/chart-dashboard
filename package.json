@@ -1,6 +1,10 @@
 {
   "name": "chart-dashboard",
   "version": "0.1.0",
+  "author": {
+    "name": "Yogender Jangir",
+    "email": "y.lkjangir49@gmail.com"
+  },
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",

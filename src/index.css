@@ -75,3 +75,7 @@ code {
 .show {
   left: 0;
 }
+
+* {
+  outline: none;
+}
