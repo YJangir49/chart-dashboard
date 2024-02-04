@@ -8,46 +8,29 @@ const GauzeWithHeader = ({
   value,
   minValue = 0,
   maxValue = 500,
-  noOfTicks = 6,
-  redFrom,
-  redTo,
-  yellowFrom,
-  yellowTo,
-  greenFrom,
-  greenTo,
+  segmentColors,
+  segmentsStops,
   hideHeader = false,
+  startColor,
+  endColor,
+  needleColor = "white",
+  width,
+  height,
 }) => {
-  const getMajorTicks = () => {
-    const gap = (maxValue - minValue) / (noOfTicks - 1);
-    let tickGenerator = minValue;
-    const tick = [minValue.toString()];
-    while (tickGenerator < maxValue) {
-      tickGenerator = tickGenerator + gap;
-      tick.push(tickGenerator.toString());
-    }
-    return tick;
-  };
-
   return (
     <>
       {hideHeader ? (
         <CustomGaugeChart
-          gauzeOptions={{
-            majorTicks: getMajorTicks(),
-            minorTicks: 10,
-            max: maxValue,
-            min: minValue,
-            redFrom,
-            redTo,
-            yellowFrom,
-            yellowTo,
-            greenFrom,
-            greenTo,
-          }}
-          data={[
-            ["Label", "Value"],
-            ["", value],
-          ]}
+          minValue={minValue}
+          maxValue={maxValue}
+          segmentsStops={segmentsStops}
+          segmentColors={segmentColors}
+          value={value}
+          startColor={startColor}
+          endColor={endColor}
+          needleColor={needleColor}
+          width={width}
+          height={height}
         />
       ) : (
         <CustomContainer
@@ -62,22 +45,16 @@ const GauzeWithHeader = ({
           }}
         >
           <CustomGaugeChart
-            gauzeOptions={{
-              majorTicks: getMajorTicks(),
-              minorTicks: 10,
-              max: maxValue,
-              min: minValue,
-              redFrom,
-              redTo,
-              yellowFrom,
-              yellowTo,
-              greenFrom,
-              greenTo,
-            }}
-            data={[
-              ["Label", "Value"],
-              ["", value],
-            ]}
+            minValue={minValue}
+            maxValue={maxValue}
+            segmentsStops={segmentsStops}
+            segmentColors={segmentColors}
+            value={value}
+            startColor={startColor}
+            endColor={endColor}
+            needleColor={needleColor}
+            width={width}
+            height={height}
           />
         </CustomContainer>
       )}

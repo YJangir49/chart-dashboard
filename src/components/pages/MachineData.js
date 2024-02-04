@@ -242,12 +242,15 @@ export default function MachineData({ machineId }) {
                     subHeading={"(Shift-A)"}
                     uom={"Per/min"}
                     value={data.Speed["Shift-A"]}
-                    redFrom={200}
-                    redTo={500}
-                    yellowFrom={100}
-                    yellowTo={200}
-                    greenFrom={0}
-                    greenTo={100}
+                    segmentsStops={[0, 100, 200, 300, 400, 500]}
+                    segmentColors={[
+                      "#d60c0d",
+                      "#fbb103",
+                      "#00f806",
+                      "#00f806",
+                      "#00f806",
+                    ]}
+                    width={"70%"}
                   />
                 </div>
                 <div className="col-span-2 row-span-2 col-start-7 row-start-7 dotted-bg">
@@ -256,12 +259,14 @@ export default function MachineData({ machineId }) {
                     subHeading={"(Shift-B)"}
                     uom={"Per/min"}
                     value={data.Speed["Shift-B"]}
-                    redFrom={200}
-                    redTo={500}
-                    yellowFrom={100}
-                    yellowTo={200}
-                    greenFrom={0}
-                    greenTo={100}
+                    segmentsStops={[0, 100, 200, 300, 400, 500]}
+                    segmentColors={[
+                      "#d60c0d",
+                      "#fbb103",
+                      "#00f806",
+                      "#00f806",
+                      "#00f806",
+                    ]}
                   />
                 </div>
                 <div className="col-span-3 row-span-2 col-start-9 row-start-7 dotted-bg">
@@ -270,12 +275,15 @@ export default function MachineData({ machineId }) {
                     subHeading={"(Shift-C)"}
                     uom={"Per/min"}
                     value={data.Speed["Shift-C"]}
-                    redFrom={200}
-                    redTo={500}
-                    yellowFrom={100}
-                    yellowTo={200}
-                    greenFrom={0}
-                    greenTo={100}
+                    segmentsStops={[0, 100, 200, 300, 400, 500]}
+                    segmentColors={[
+                      "#d60c0d",
+                      "#fbb103",
+                      "#00f806",
+                      "#00f806",
+                      "#00f806",
+                    ]}
+                    width={"70%"}
                   />
                 </div>
               </div>

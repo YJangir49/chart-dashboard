@@ -284,12 +284,16 @@ export default function PerformanceDashboard() {
                 uom={"KWH"}
                 value={utility.Shift["Shift-A"].Power}
                 maxValue={5000}
-                redFrom={2000}
-                redTo={5000}
-                yellowFrom={1000}
-                yellowTo={2000}
-                greenFrom={0}
-                greenTo={1000}
+                // startColor={"#00f806"}
+                // endColor={"#d60c0d"}
+                segmentsStops={[0, 1000, 2000, 3000, 4000, 5000]}
+                segmentColors={[
+                  "#00f806",
+                  "#fbb103",
+                  "#d60c0d",
+                  "#d60c0d",
+                  "#d60c0d",
+                ]}
               />
             </div>
             <div
@@ -307,12 +311,11 @@ export default function PerformanceDashboard() {
                 uom={"Kg/hour"}
                 value={utility.Shift["Shift-A"].Steam}
                 maxValue={1000}
-                redFrom={600}
-                redTo={1000}
-                yellowFrom={300}
-                yellowTo={600}
-                greenFrom={0}
-                greenTo={300}
+                minValue={0}
+                startColor={"#00f806"}
+                endColor={"#d60c0d"}
+                segmentsStops={[0, 300, 600, 800, 1000]}
+                segmentColors={["#d60c0d", "#fbb103", "#00f806", "#00f806"]}
               />
             </div>
             <div
@@ -330,12 +333,17 @@ export default function PerformanceDashboard() {
                 uom={"CFM"}
                 value={utility.Shift["Shift-A"].Air}
                 maxValue={5000}
-                redFrom={2000}
-                redTo={5000}
-                yellowFrom={1000}
-                yellowTo={2000}
-                greenFrom={0}
-                greenTo={1000}
+                minValue={0}
+                startColor={"#00f806"}
+                endColor={"#d60c0d"}
+                segmentsStops={[0, 1000, 2000, 3000, 4000, 5000]}
+                segmentColors={[
+                  "#d60c0d",
+                  "#fbb103",
+                  "#00f806",
+                  "#00f806",
+                  "#00f806",
+                ]}
               />
             </div>
             <div
@@ -352,12 +360,18 @@ export default function PerformanceDashboard() {
                 heading={"Water"}
                 uom={"Mt3/Hour"}
                 value={utility.Shift["Shift-A"].Water}
-                redFrom={200}
-                redTo={500}
-                yellowFrom={100}
-                yellowTo={200}
-                greenFrom={0}
-                greenTo={100}
+                startColor={"#00f806"}
+                endColor={"#d60c0d"}
+                minValue={0}
+                maxValue={500}
+                segmentsStops={[0, 100, 200, 300, 400, 500]}
+                segmentColors={[
+                  "#d60c0d",
+                  "#fbb103",
+                  "#00f806",
+                  "#00f806",
+                  "#00f806",
+                ]}
               />
             </div>
           </div>

@@ -28,7 +28,7 @@ export default function CustomContainer({
           )}
         </div>
       </div>
-      <div className="w-full h-full pt-8 overflow-y-scroll" style={style}>
+      <div className="w-full h-full pt-8 overflow-y-scroll overflow-x-hidden" style={style}>
         {children}
       </div>
     </div>
