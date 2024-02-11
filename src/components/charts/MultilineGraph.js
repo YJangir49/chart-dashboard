@@ -19,7 +19,7 @@ const CustomLineLabel = ({ x, y, value = 0, index }) => (
       dy={10}
       textAnchor="end"
       fill="white"
-      fontSize={12}
+      fontSize={14}
     >
       {Number.isInteger(value) ? value.toString() : value.toFixed(2)}
     </text>

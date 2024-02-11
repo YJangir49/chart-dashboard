@@ -53,13 +53,13 @@ export default function LogoSection({
 
       <div className="flex flex-col flex-1 justify-end">
         {!live && backendDate && (
-          <p className="text-sm text-slate-900 font-bold py-1 text-end">
+          <p className="text-base text-slate-900 font-bold py-1 text-end">
             Date: {backendDate.toLocaleString()}
           </p>
         )}
         <div className="flex justify-between items-center px-2 font-bold">
-          <p className="text-xs">Log-Time</p>
-          <div className="flex items-center text-xs gap-4 relative">
+          <p className="text-base">Log-Time</p>
+          <div className="flex items-center text-base gap-4 relative">
             <label
               className="flex align-middle gap-1"
               onClick={() => {

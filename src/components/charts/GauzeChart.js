@@ -41,7 +41,7 @@ const CustomGaugeChart = ({
         paddingHorizontal={32}
         maxSegmentLabels={5}
         ringWidth={30}
-        labelFontSize={10}
+        labelFontSize={12}
         valueTextFontSize={16}
         currentValueText={`${value}`}
         

@@ -22,7 +22,7 @@ export default function CustomTables({ data, title, subTitle, activeCol }) {
     <CustomContainer headingLeft={title} headingRight={subTitle}>
       <div className="h-full w-full px-2 flex align-middle">
         <table className="w-full border-separate">
-          <tr className="text-xs font-[500] text-[#bd9755]">
+          <tr className="text-base font-[500] text-[#bd9755]">
             <th></th>
             {columns.map((c) => (
               <th key={c.id}>{c.name}</th>
@@ -30,7 +30,7 @@ export default function CustomTables({ data, title, subTitle, activeCol }) {
           </tr>
           {rows.map((row) => (
             <tr key={row.id} className="">
-              <td className="text-xs">{row.name}</td>
+              <td className="text-base">{row.name}</td>
 
               {columns.map((c, index) => (
                 <td

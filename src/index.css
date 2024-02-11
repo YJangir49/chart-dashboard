@@ -42,8 +42,8 @@ code {
 .digital-font {
   font-family: "digital-clock-font";
   color: #10c000;
-  font-weight: 500;
-  font-size: larger;
+  font-weight: 600;
+  font-size: 22px;
   letter-spacing: 2px;
 }
 

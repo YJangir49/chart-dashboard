@@ -60,7 +60,7 @@ export default function Sidebar2({ children }) {
                     <path d="M77.962,65.126H21.107V29.909h56.855V65.126z M55.691,69.246c0,0.436-0.717,0.791-1.61,0.791h-9.096  c-0.879,0-1.604-0.355-1.604-0.791v-0.794h12.31V69.246z M82.478,68.452V27.805c0-1.044-0.857-1.885-1.883-1.885H18.487  c-1.029,0-1.875,0.84-1.875,1.885v40.647h-9.54v2.812c0,1.554,3.046,2.816,4.815,2.816h75.298c1.769,0,4.815-1.262,4.815-2.816  v-2.812H82.478z" />
                   </svg>
                 </div>
-                <p className="text-sm ml-4">Performance Dashboard</p>
+                <p className="text-base ml-4">Performance Dashboard</p>
               </div>
             </Link>
             <Link to="/quality-db">
@@ -100,7 +100,7 @@ export default function Sidebar2({ children }) {
                     </g>
                   </svg>
                 </div>
-                <p className="text-sm ml-4">Quality Dashboard</p>
+                <p className="text-base ml-4">Quality Dashboard</p>
               </div>
             </Link>
           </div>

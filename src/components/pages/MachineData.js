@@ -130,16 +130,16 @@ export default function MachineData({ machineId }) {
                     setNoOfDays={setNoOfDays}
                     runningStatus={data.RunningStatus}
                   >
-                    <div className="flex justify-between px-2 text-sm mt-5">
-                      <p>OEE</p>
-                      <div className="flex w-full bg-black justify-end items-center ml-16">
+                    <div className="flex justify-between px-2 text-base mt-5 ">
+                      <p className="font-semibold">OEE</p>
+                      <div className="flex w-full bg-black justify-end items-center ml-16 py-1">
                         <p className="digital-font text-right">{data.OEE}</p>
-                        <span className="text-[9px] text-white">%</span>
+                        <span className="text-[12px] text-white">%</span>
                       </div>
                     </div>
-                    <div className="flex justify-between px-2 text-sm mt-2">
-                      <p className="pr-[6px]">OR</p>
-                      <div className="flex w-full bg-black justify-end items-center ml-16">
+                    <div className="flex justify-between px-2 text-base mt-2">
+                      <p className="pr-[6px] font-semibold">OR</p>
+                      <div className="flex w-full bg-black justify-end items-center ml-16 py-1">
                         <p className="digital-font text-right">{data.OR}</p>
                       </div>
                     </div>

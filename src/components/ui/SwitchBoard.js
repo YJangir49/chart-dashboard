@@ -1,13 +1,13 @@
 export default function SwitchBoard({ data }) {
   return (
     <div className="pl-4 pr-8">
-      <div className="text-right text-xs font-semibold text-[#bd9755] mb-3">
+      <div className="text-right text-base font-semibold text-[#bd9755] mb-3">
         On/ Off Status
       </div>
       {Object.entries(data).map((entry) => (
         <div
           key={entry[0]}
-          className="flex justify-between text-white text-sm mb-4"
+          className="flex justify-between text-white text-base mb-4"
         >
           <p>{entry[0]}</p>
           <div className="pr-8">
