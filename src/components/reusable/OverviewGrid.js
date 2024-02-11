@@ -62,16 +62,15 @@ export default function OverviewGrid({ name, value, route }) {
         <GauzeWithHeader
           value={value[ShiftNameMapping[activeShift]].Speed}
           hideHeader={true}
-          maxValue={500}
           startColor={"#00f806"}
           endColor={"#d60c0d"}
           segmentsStops={[0, 100, 200, 300, 400, 500]}
           segmentColors={[
-            "#00f806",
+            "#d60c0d",
             "#fbb103",
-            "#d60c0d",
-            "#d60c0d",
-            "#d60c0d",
+            "#00f806",
+            "#00f806",
+            "#00f806",
           ]}
           needleColor={"black"}
           width={"70%"}
