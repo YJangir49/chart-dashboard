@@ -25,6 +25,7 @@ export const AppProvider = ({ children }) => {
   const [activeShift, setActiveShift] = useState("Shift-A"); //Default Shift A
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const [backendDate, setBackendDate] = useState(null);
+  const [showLoader, setLoaderVisibility] = useState(true)
 
   const activeShiftIndex = getActiveShiftIndex(activeShift);
 
@@ -89,6 +90,8 @@ export const AppProvider = ({ children }) => {
         setBackendDate,
         historicDate,
         setHistoricDate,
+        showLoader,
+        setLoaderVisibility
       }}
     >
       {children}

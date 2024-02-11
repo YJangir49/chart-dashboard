@@ -48,22 +48,22 @@ export default function Overview() {
             <h1 className="px-4 pt-8 pb-4 text-lg font-bold">Overview</h1>
 
             <div className="grid grid-cols-12 grid-rows-1 gap-4 mx-4">
-              <div className="col-span-3 row-span-3 text-lg font-bold">
+              <div className="col-span-2 row-span-3 text-lg font-bold">
                 Name
               </div>
-              <div className="row-span-3 col-start-4 text-lg font-bold">
+              <div className="col-span-1 row-span-3 col-start-3 text-lg font-bold">
                 Shift
               </div>
-              <div className="col-span-2 row-span-3 col-start-5 text-lg font-bold">
+              <div className="col-span-1 row-span-3 col-start-4 text-lg font-bold">
                 Production
               </div>
-              <div className="col-span-2 row-span-3 col-start-7 text-lg font-bold">
+              <div className="col-span-1 row-span-3 col-start-5 text-lg font-bold">
                 Power
               </div>
-              <div className="col-span-2 row-span-3 col-start-9 text-lg font-bold">
+              <div className="col-span-4 row-span-3 col-start-6 text-lg font-bold">
                 Stop-Time
               </div>
-              <div className="col-span-2 row-span-3 col-start-11 text-lg font-bold">
+              <div className="col-span-3 row-span-3 col-start-10 text-lg font-bold">
                 Speed
               </div>
             </div>

@@ -19,6 +19,7 @@ export default function LogoSection({
     setLive,
     setSystemDate,
     setHistoricDate,
+    setLoaderVisibility,
   } = useAppContext();
 
   return (
@@ -67,6 +68,7 @@ export default function LogoSection({
                   setSystemDate(new Date());
                   setHistoricDate(new Date());
                   setNoOfDays(10);
+                  setLoaderVisibility(true);
                 }
               }}
             >
@@ -93,6 +95,7 @@ export default function LogoSection({
                   setNoOfDays(noOfDays);
                   setLive(false);
                   setShow(false);
+                  setLoaderVisibility(true);
                 }}
               />
             )}

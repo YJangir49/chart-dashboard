@@ -32,6 +32,8 @@ export default function PerformanceDashboard() {
     setSystemDate,
     historicDate,
     setHistoricDate,
+    showLoader,
+    setLoaderVisibility,
   } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
@@ -103,6 +105,9 @@ export default function PerformanceDashboard() {
       }
       setPageLoding(false);
       setUtilitiesLoding(false);
+      if(showLoader && live){
+        setLoaderVisibility(false)
+      }
     };
 
     fetchUtitlityConstants();
@@ -195,7 +200,7 @@ export default function PerformanceDashboard() {
           </div>
         ) : (
           <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
-            {utilitiesLoading && (
+            {showLoader && utilitiesLoading && (
               <>
                 <div className="absolute inset-0 bg-black opacity-90 z-40"></div>
                 <Loader className="bg-white" />
@@ -289,8 +294,8 @@ export default function PerformanceDashboard() {
                   "#00f806",
                   "#fbb103",
                   "#d60c0d",
-                  "#a00202",
-                  "#750101",
+                  "#d60c0d",
+                  "#d60c0d",
                 ]}
               />
             </div>
@@ -311,7 +316,7 @@ export default function PerformanceDashboard() {
                 maxValue={1000}
                 minValue={0}
                 segmentsStops={[0, 300, 600, 800, 1000]}
-                segmentColors={["#d60c0d", "#fbb103", "#00f806", "#00bf00"]}
+                segmentColors={["#d60c0d", "#fbb103", "#00f806", "#00f806"]}
               />
             </div>
             <div
@@ -335,8 +340,8 @@ export default function PerformanceDashboard() {
                   "#d60c0d",
                   "#fbb103",
                   "#00f806",
-                  "#00bf00",
-                  "#009c00",
+                  "#00f806",
+                  "#00f806",
                 ]}
               />
             </div>
@@ -361,8 +366,8 @@ export default function PerformanceDashboard() {
                   "#d60c0d",
                   "#fbb103",
                   "#00f806",
-                  "#00bf00",
-                  "#009c00",
+                  "#00f806",
+                  "#00f806",
                 ]}
               />
             </div>

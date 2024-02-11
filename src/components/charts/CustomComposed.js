@@ -33,7 +33,7 @@ const CustomLabel = ({ x, y, value = 0, width }) => {
         fill="white"
       />
       <text x={x + width * 0.1 + 4} y={textY} fill="black" fontSize={fontSize}>
-        {`${value.toFixed(2)} ton`}
+        {`${value.toFixed(2)} Kw/ton`}
       </text>
     </g>
   );

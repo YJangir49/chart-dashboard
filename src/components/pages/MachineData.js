@@ -30,6 +30,8 @@ export default function MachineData({ machineId }) {
     setSystemDate,
     historicDate,
     setHistoricDate,
+    showLoader,
+    setLoaderVisibility,
   } = useAppContext();
 
   const [graphInfo, setGraphInfo] = useState({
@@ -69,6 +71,9 @@ export default function MachineData({ machineId }) {
       }
       setPageLoding(false);
       setUtilitiesLoding(false);
+      if(showLoader && live){
+        setLoaderVisibility(false)
+      }
     };
 
     fetchTGMData();
@@ -112,7 +117,7 @@ export default function MachineData({ machineId }) {
           <>
             {data ? (
               <div className="grid grid-cols-11 grid-rows-8 gap-4 h-screen">
-                {utilitiesLoading && (
+                {showLoader && utilitiesLoading && (
                   <>
                     <div className="absolute inset-0 bg-black opacity-90 z-40"></div>
                     <Loader className="bg-white" />
@@ -194,6 +199,7 @@ export default function MachineData({ machineId }) {
                         name: entry[0],
                         value: entry[1],
                       }))}
+                      fontSize={12}
                     />
                   </CustomContainer>
                 </div>
