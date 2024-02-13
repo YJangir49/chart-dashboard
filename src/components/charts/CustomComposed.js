@@ -13,7 +13,7 @@ import {
 import CustomXAxisLabel from "../reusable/CustomXAxisLabel";
 import CustomYAxisLabel from "../reusable/CustomYAxisLabel";
 
-const CustomLabel = ({ x, y, value = 0, width }) => {
+const CustomLabel = ({ x, y, value = 0, width, unit = "" }) => {
   const fontSize = 10;
   const labelHeight = 14;
   const labelWidth = width * 0.8;
@@ -33,7 +33,7 @@ const CustomLabel = ({ x, y, value = 0, width }) => {
         fill="white"
       />
       <text x={x + width * 0.1 + 4} y={textY} fill="black" fontSize={fontSize}>
-        {`${value.toFixed(2)} Kw/ton`}
+        {`${value.toFixed(2)} ${unit}`}
       </text>
     </g>
   );
@@ -47,7 +47,14 @@ const CustomLineLabel = ({ x, y, value = 0 }) => {
   );
 };
 
-const CustomComposed = ({ data, xKey, yBarKey, yLineKey, xFormatter }) => {
+const CustomComposed = ({
+  data,
+  xKey,
+  yBarKey,
+  yLineKey,
+  xFormatter,
+  unit = "",
+}) => {
   return (
     <ResponsiveContainer width={"100%"} height={"100%"}>
       <ComposedChart data={data}>
@@ -61,7 +68,7 @@ const CustomComposed = ({ data, xKey, yBarKey, yLineKey, xFormatter }) => {
           <LabelList
             dataKey={yBarKey}
             position="top"
-            content={<CustomLabel />}
+            content={<CustomLabel unit={unit} />}
           />
         </Bar>
         <Line

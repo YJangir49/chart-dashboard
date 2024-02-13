@@ -71,8 +71,8 @@ export default function MachineData({ machineId }) {
       }
       setPageLoding(false);
       setUtilitiesLoding(false);
-      if(showLoader && live){
-        setLoaderVisibility(false)
+      if (showLoader && live) {
+        setLoaderVisibility(false);
       }
     };
 
@@ -238,6 +238,7 @@ export default function MachineData({ machineId }) {
                         yBarKey={"value"}
                         yLineKey={"oee"}
                         xFormatter={dateFormat}
+                        unit={graphInfo.type === "stoptime" ? "Kw/ton" : "ton"} //SWAP here if not correct
                       />
                     )}
                   </CustomContainer>
