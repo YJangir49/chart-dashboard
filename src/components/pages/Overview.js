@@ -51,19 +51,19 @@ export default function Overview() {
               <div className="col-span-2 row-span-3 text-lg font-bold">
                 Name
               </div>
-              <div className="col-span-1 row-span-3 col-start-3 text-lg font-bold">
+              <div className="row-span-3 col-start-3 text-lg font-bold">
                 Shift
               </div>
-              <div className="col-span-1 row-span-3 col-start-4 text-lg font-bold">
+              <div className="col-span-2 row-span-3 col-start-4 text-lg font-bold">
                 Production
               </div>
-              <div className="col-span-1 row-span-3 col-start-5 text-lg font-bold">
+              <div className="col-span-2 row-span-3 col-start-6 text-lg font-bold">
                 Power
               </div>
-              <div className="col-span-4 row-span-3 col-start-6 text-lg font-bold">
+              <div className="col-span-3 row-span-3 col-start-8 text-lg font-bold">
                 Stop-Time
               </div>
-              <div className="col-span-3 row-span-3 col-start-10 text-lg font-bold">
+              <div className="col-span-2 row-span-3 col-start-11 text-lg font-bold">
                 Speed
               </div>
             </div>
